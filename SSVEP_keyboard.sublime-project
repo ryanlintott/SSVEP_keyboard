@@ -1,0 +1,46 @@
+
+{
+	"folders":
+	[
+	{
+		"follow_symlinks": true,
+		"path": ".",
+		"file_exclude_patterns": [
+			"*.meta",
+			"*.csproj",
+			"*.booproj",
+			"*.unityproj",
+			"*.wav",
+			"*.png",
+			"*.jpg",
+			"*.tga",
+			"*.mp4",
+			"*.mov",
+			"*.tga",
+			"*.prefab",
+			"*.controller",
+			"*.fbx",
+			"*.mat"
+		],
+		"folder_include_patterns": [
+			"Assets",
+			"Assets/*"
+		],
+		"folder_exclude_patterns": [
+			"Models",
+			"Models/*",
+			"Materials",
+			"Materials/*",
+			"Textures",
+			"Textures/*",
+			"Audio",
+			"Audio/*",
+			"Prefabs",
+			"Prefabs/*",
+			"Scenes",
+			"Scenes/*"
+		]
+	}
+	],
+	"solution_file": "./SSVEP_keyboard.sln"
+}

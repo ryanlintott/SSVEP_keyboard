@@ -1,0 +1,14 @@
+Library
+Temp
+*.csproj
+*.sln
+*.userprefs
+*.mp4
+Assets/Resources/*.wav
+Assets/Resources/*.mp4
+
+#lovely apple things
+.DS_Store
+.AppleDouble
+.LSOverride
+obj
