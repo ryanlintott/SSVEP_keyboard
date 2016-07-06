@@ -16,6 +16,8 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	public SSVEPKeyboardView _SSVEPKeyboardView;
 	private string[] keyStrings;
 	private int keysLeft;
+	public TextOutputDisplay _textOutputDisplay;
+	private string textOutput = "";
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +27,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 			keys[i].key = keyStrings[i];
 			keys[i].status = 0;
 		}
+		_textOutputDisplay.SetTextOutput("");
 	}
 	
 	// Update is called once per frame
@@ -71,6 +74,15 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	void PressKeyboardKey () {
 		for (int i = 0; i < numKeys; i++) {
 			if (keys[i].status > 0) {
+				switch (keys[i].key) {
+					case "space":
+						textOutput += " ";
+						break;
+					default:
+						textOutput += keys[i].key;
+						break;
+				}
+				_textOutputDisplay.SetTextOutput(textOutput);
 				Debug.Log(keys[i].key);
 				//add a letter to the display screen
 			}
