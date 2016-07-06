@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class flicker : MonoBehaviour
+public class Flicker : MonoBehaviour
 {
     public Color c1;
     public Color c2;
