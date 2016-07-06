@@ -75,7 +75,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 		for (int i = 0; i < numKeys; i++) {
 			if (keys[i].status > 0) {
 				switch (keys[i].key) {
-					case "space":
+					case "Space":
 						textOutput += " ";
 						break;
 					default:
