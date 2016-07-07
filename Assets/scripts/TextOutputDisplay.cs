@@ -4,10 +4,10 @@ using System.Collections;
 
 public class TextOutputDisplay : MonoBehaviour {
 
-	private Text textOutputUI;
+	private Text text;
 	// Use this for initialization
     void Start() {
-    	textOutputUI = gameObject.GetComponent<Text>();
+    	text = gameObject.GetComponent<Text>();
     }
 	
 	// Update is called once per frame
@@ -16,6 +16,6 @@ public class TextOutputDisplay : MonoBehaviour {
 	}
 
 	public void SetTextOutput (string t) {
-		textOutputUI.text = t;
+		text.text = t;
 	}
 }

@@ -27,7 +27,6 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 			keys[i].key = keyStrings[i];
 			keys[i].status = 0;
 		}
-		_textOutputDisplay.SetTextOutput("");
 	}
 	
 	// Update is called once per frame
