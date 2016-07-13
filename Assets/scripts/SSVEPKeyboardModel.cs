@@ -5,6 +5,8 @@ using System.Collections;
 public struct KeyboardKey {
 	public string key;
 	public int status;
+	public float probability;
+	public int keyPosition;
 }
 
 public class SSVEPKeyboardModel : MonoBehaviour {
@@ -18,6 +20,10 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	private int keysLeft;
 	public TextOutputDisplay _textOutputDisplay;
 	private string textOutput = "";
+	private string lastLetter;
+	private float probSum;
+	private float halfProbSum;
+	public NextLetterProbability _nextLetterProbability;
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +32,9 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 		for (int i = 0; i < numKeys; i++) {
 			keys[i].key = keyStrings[i];
 			keys[i].status = 0;
+			keys[i].keyPosition = i;
 		}
+		lastLetter = " ";
 	}
 	
 	// Update is called once per frame
@@ -63,41 +71,68 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	void ChooseKeyState (int state) {
 		keysLeft = 0;
 		toggle = 0;
+		probSum = 0.0f;
 		for (int i = 0; i < numKeys; i++) {
 			if (keys[i].status == state) {
-				keys[i].status = toggle+1;
-				toggle = (toggle+1) % 2;
+				//Debug.Log("Last Letter: "+lastLetter+" Key: "+keys[i].key);
+				keys[i].probability = _nextLetterProbability.GetProbability(lastLetter,keys[i].key);
+
+				probSum += keys[i].probability;
+				//Debug.Log(keys[i].probability.ToString());
+			}
+		}
+		Debug.Log(probSum.ToString());
+		halfProbSum = probSum/2.0f;
+		probSum = 0.0f;
+		System.Array.Sort(keys, ProbabilityCondition);
+
+		for (int i = 0; i < numKeys; i++) {
+			if (keys[i].status == state) {
+				keys[i].status = (toggle+1);
+				probSum += keys[i].probability;
+				//Debug.Log(keys[i].key+keys[i].probability.ToString());
+				Debug.Log(probSum.ToString());
 				keysLeft++;
 			} else {
 				keys[i].status = 0;
 			}
-			UpdateKeyboardKey(i);
+			UpdateKeyboardKey(keys[i]);
+			if (toggle == 0 & probSum > halfProbSum) toggle = 1;
 		}
 		if (keysLeft == 1) {
 			PressKeyboardKey();
 		}
 	}
 
+	int ProbabilityCondition(KeyboardKey itemA, KeyboardKey itemB) {
+		if (itemA.probability > itemB.probability) return -1;
+		if (itemA.probability < itemB.probability) return 1;
+		return 0;
+	}
+
 	void PressKeyboardKey () {
 		for (int i = 0; i < numKeys; i++) {
 			if (keys[i].status > 0) {
-				switch (keys[i].key) {
-					case "Space":
-						textOutput += " ";
-						break;
-					default:
-						textOutput += keys[i].key;
-						break;
-				}
+				// switch (keys[i].key) {
+				// 	case "Space":
+				// 		lastLetter = " ";
+				// 		break;
+				// 	default:
+				// 		lastLetter = keys[i].key;
+				// 		break;
+				// }
+				lastLetter = keys[i].key;
+				textOutput += lastLetter;
 				_textOutputDisplay.SetTextOutput(textOutput);
 				Debug.Log(keys[i].key);
+				
 				//add a letter to the display screen
 			}
 		}
 		ResetKeyboardKeys();
 	}
 
-	void UpdateKeyboardKey (int i) {
-		_SSVEPKeyboardView.SetKeyboardKey(i, keys[i].status, keys[i].key);
+	void UpdateKeyboardKey (KeyboardKey _keyboardKey) {
+		_SSVEPKeyboardView.SetKeyboardKey(_keyboardKey.keyPosition, _keyboardKey.status, _keyboardKey.key);
 	}
 }
