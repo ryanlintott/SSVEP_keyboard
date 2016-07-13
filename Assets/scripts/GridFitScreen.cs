@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class assigncolour : MonoBehaviour {
+public class GridFitScreen : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

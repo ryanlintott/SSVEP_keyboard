@@ -4,7 +4,7 @@ using System.Collections;
 
 public class SSVEPKeyboardView : MonoBehaviour {
 
-	public GameObject grid;
+	public GridLayoutGroup grid;
 	private Flicker[] gridKeys;
 	private Text[] gridKeyText;
 
@@ -18,11 +18,12 @@ public class SSVEPKeyboardView : MonoBehaviour {
 	void Start () {
 		gridKeys = GetComponentsInChildren<Flicker>();
 		gridKeyText = GetComponentsInChildren<Text>();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 	public void SetKeyLetters (string[] keys) {
