@@ -14,7 +14,7 @@ public class MicrophoneInput : MonoBehaviour {
 		audio.clip = Microphone.Start("Built-in Microphone", true, 10, 44100);
 		audio.loop = true;
 		samples = new float[numSamples];
-		//while (!Microphone.GetPosition(null)){}
+		while (Microphone.GetPosition(null) <= 0){}
 		audio.Play();
 	}
 	
@@ -22,6 +22,7 @@ public class MicrophoneInput : MonoBehaviour {
 	void Update () {
 		
 		audio.GetSpectrumData (samples, 0, FFTWindow.Hamming);
+		//audio.GetOutputData (samples, 0, FFTWindow.Hamming);
 		_eqView.UpdateEQ(samples);
 
 		//Debug.Log(samples[512].ToString());
