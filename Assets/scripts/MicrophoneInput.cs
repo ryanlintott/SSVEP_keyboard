@@ -24,6 +24,6 @@ public class MicrophoneInput : MonoBehaviour {
 		audio.GetSpectrumData (samples, 0, FFTWindow.Hamming);
 		_eqView.UpdateEQ(samples);
 
-		Debug.Log(samples[512].ToString());
+		//Debug.Log(samples[512].ToString());
 	}
 }
