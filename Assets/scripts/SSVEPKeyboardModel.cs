@@ -72,6 +72,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 		keysLeft = 0;
 		toggle = 0;
 		probSum = 0.0f;
+		//Debug.Log("lastLetter: "+lastLetter);
 		for (int i = 0; i < numKeys; i++) {
 			if (keys[i].status == state) {
 				//Debug.Log("Last Letter: "+lastLetter+" Key: "+keys[i].key);
@@ -81,8 +82,9 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 				//Debug.Log(keys[i].probability.ToString());
 			}
 		}
-		Debug.Log(probSum.ToString());
-		halfProbSum = probSum/2.0f;
+		halfProbSum = (probSum / 2.0f);
+		//Debug.Log("probSum: "+probSum.ToString());
+		//Debug.Log("halfProbSum: "+halfProbSum.ToString());
 		probSum = 0.0f;
 		System.Array.Sort(keys, ProbabilityCondition);
 
@@ -91,13 +93,13 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 				keys[i].status = (toggle+1);
 				probSum += keys[i].probability;
 				//Debug.Log(keys[i].key+keys[i].probability.ToString());
-				Debug.Log(probSum.ToString());
+				//Debug.Log(probSum.ToString());
 				keysLeft++;
 			} else {
 				keys[i].status = 0;
 			}
 			UpdateKeyboardKey(keys[i]);
-			if (toggle == 0 & probSum > halfProbSum) toggle = 1;
+			if (toggle == 0 && probSum >= halfProbSum) toggle = 1;
 		}
 		if (keysLeft == 1) {
 			PressKeyboardKey();
@@ -122,9 +124,9 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 				// 		break;
 				// }
 				lastLetter = keys[i].key;
-				textOutput += lastLetter;
+				textOutput += lastLetter[0];
 				_textOutputDisplay.SetTextOutput(textOutput);
-				Debug.Log(keys[i].key);
+				//Debug.Log(keys[i].key);
 				
 				//add a letter to the display screen
 			}

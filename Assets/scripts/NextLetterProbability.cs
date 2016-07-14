@@ -30,8 +30,9 @@ public class NextLetterProbability : MonoBehaviour {
 
 	public float GetProbability(string a, string b) {
 		nonLetter = false;
-		aInt = System.Convert.ToInt32(a.ToLower()[0])-97;
-		bInt = System.Convert.ToInt32(b.ToLower()[0])-97;
+		aInt = System.Convert.ToInt32(a.ToLower()[0])-96;
+		bInt = System.Convert.ToInt32(b.ToLower()[0])-96;
+		//Debug.Log("a: "+a.ToLower()+" aInt: "+aInt.ToString()+" b: "+b.ToLower()+" bInt: "+bInt.ToString());
 		if (aInt < 0 || aInt > 27) {
 			aInt = 0;
 		}
