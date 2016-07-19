@@ -7,14 +7,17 @@ public class MicrophoneInput : MonoBehaviour {
 	public AudioSource audio;
 	private float[] samples;
 	public EQView _eqView;
+	public bool useMicrophone = true;
 
 	private int numSamples = 1024;
 	// Use this for initialization
 	void Start () {
-		audio.clip = Microphone.Start("Built-in Microphone", true, 10, 44100);
 		audio.loop = true;
 		samples = new float[numSamples];
-		while (Microphone.GetPosition(null) <= 0){}
+		if (useMicrophone) {
+			audio.clip = Microphone.Start("Built-in Microphone", true, 10, 44100);
+			while (Microphone.GetPosition(null) <= 0){}
+		}
 		audio.Play();
 	}
 	

@@ -4,7 +4,7 @@ Temp
 *.sln
 *.userprefs
 *.mp4
-Assets/Resources/*.wav
+Assets/Resources/Audio/*.wav
 Assets/Resources/*.mp4
 
 #lovely apple things
