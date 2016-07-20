@@ -32,7 +32,10 @@ public class MicrophoneInput : MonoBehaviour {
 		}
 		//audio.mute = true;
 		audio.Play();
-		audio.GetSpectrumData (lastSamples, 0, FFTWindow.Hanning);
+		audio.GetSpectrumData (samples, 0, FFTWindow.Hanning);
+		for (int i = 0; i < numSamples; i++) {
+			samples[i] = Mathf.Abs(samples[i]);
+		}
 	}
 	
 	// Update is called once per frame
@@ -40,8 +43,9 @@ public class MicrophoneInput : MonoBehaviour {
 		System.Array.Copy(samples,lastSamples,numSamples);
 		audio.GetSpectrumData (samples, 0, FFTWindow.Hanning);
 		//audio.GetOutputData (samples, 0);
+		float maxSample = Mathf.Max(samples);
 		for (int i = 0; i < numSamples; i++) {
-			samples[i] = smoothing * lastSamples[i] + (1/smoothing) * samples[i];
+			samples[i] = smoothing * lastSamples[i] + (1/smoothing) * Mathf.Abs(samples[i])/maxSample;
 		}
 
 		// int xScale = 8;
