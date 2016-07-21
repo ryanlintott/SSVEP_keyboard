@@ -21,7 +21,7 @@ public class EQView : MonoBehaviour {
 	}
 
 	private void UpdateEQ (float[] values) {
-		Debug.Log("Length: "+values.Length.ToString()+" Start: "+startValue.ToString()+" End: "+endValue.ToString()+"groupValues: "+groupValues.ToString());
+		//Debug.Log("Length: "+values.Length.ToString()+" Start: "+startValue.ToString()+" End: "+endValue.ToString()+"groupValues: "+groupValues.ToString());
 		for (int i = 0; i < eqBars.Length; i++) {
 			float tempValue = 0.0f;
 			int iGroups = Mathf.RoundToInt(i * groupValues);
@@ -32,7 +32,7 @@ public class EQView : MonoBehaviour {
 				tempValue /=  Mathf.FloorToInt(groupValues);
 			}
 			//boost values to make them more visible
-			//tempValue = Mathf.Sqrt(tempValue);
+			tempValue = Mathf.Sqrt(Mathf.Sqrt(tempValue));
 
 			if (tempValue > max) {
 				max = tempValue;

@@ -24,6 +24,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	private float probSum;
 	private float halfProbSum;
 	public NextLetterProbability _nextLetterProbability;
+	public MicrophoneInput _microphoneInput;
 
 	// Use this for initialization
 	void Start () {
@@ -54,10 +55,12 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 
 	public void LowFrequency () {
 		ChooseKeyState(1);
+		_microphoneInput.ResetSamples();
 	}
 
 	public void HighFrequency () {
 		ChooseKeyState(2);
+		_microphoneInput.ResetSamples();
 	}
 
 	public void ResetKeyboardKeys () {
@@ -66,6 +69,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 			keys[i].status = 0;
 		}
 		ChooseKeyState(0);
+		_microphoneInput.ResetSamples();
 	}
 
 	void ChooseKeyState (int state) {
