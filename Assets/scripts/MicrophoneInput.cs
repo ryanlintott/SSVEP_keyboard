@@ -68,7 +68,11 @@ public class MicrophoneInput : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		ReadSamples();
+	}
+
+	void ReadSamples () {
+
 		System.Array.Copy(samples,lastSamples,numSamples);
 		audio.GetSpectrumData (samples, 0, specFFTwindow);
 		//audio.GetOutputData (samples, 0);
@@ -108,5 +112,6 @@ public class MicrophoneInput : MonoBehaviour {
 		}
 		
 		//Debug.Log(samples[512].ToString());
+
 	}
 }

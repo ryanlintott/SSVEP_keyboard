@@ -45,17 +45,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		// if (Input.GetButtonUp("Fire1")) {
-		// 	Debug.Log("Fire1");
-		// 	ChooseKeyState(1);
-		// }
-		// if (Input.GetButtonUp("Fire2")) {
-		// 	Debug.Log("Fire2");
-		// 	ChooseKeyState(2);
-		// }
-		// if (Input.GetKeyUp("space")) {
-		// 	ResetKeyboardKeys();
-		// }
+
 	}
 
 	public void LowFrequency () {
