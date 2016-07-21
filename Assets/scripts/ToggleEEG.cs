@@ -17,7 +17,7 @@ public class ToggleEEG : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		eeggrid = GetComponentInChildren<GridLayoutGroup>();
 		eegrect = GetComponent<RectTransform>();
 		topSmall = eegrect.GetTop().y;

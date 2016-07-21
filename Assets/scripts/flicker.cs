@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class Flicker : MonoBehaviour
-{
+public class Flicker : MonoBehaviour {
     public Color c1;
     public Color c2;
     private Image image;
@@ -12,12 +11,15 @@ public class Flicker : MonoBehaviour
 
     float dtime = 0; // delta time
 
-    void Start() {
+    void Awake() {
     	image = gameObject.GetComponent<Image>();
     }
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+
+    }
+
+    public void MakeFlicker() {
         // update frequency time-step
         dtime += Time.deltaTime;
 
@@ -28,22 +30,18 @@ public class Flicker : MonoBehaviour
         //print (wave);
 
         // Cycle between sprites based on the waveform.
-        if (wave > 0.0f)
-        {
-        	image.color = c1;
+        if (wave > 0.0f) {
+            image.color = c1;
             //print ("Black");
-        }
-        else
-        {
-        	image.color = c2;
+        } else {
+            image.color = c2;
             //print ("White");
         }
 
         // prevents dtime from climbing to infinity,
         // by stepping it back in the waveform to a point
         // of equal value.
-        if (wave == 0.0f)
-        {
+        if (wave == 0.0f) {
             dtime = 0.0f;
         }
     }

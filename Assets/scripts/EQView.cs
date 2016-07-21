@@ -9,9 +9,12 @@ public class EQView : MonoBehaviour {
 	private float groupValues;
 	private int startValue;
 	private int endValue;
+	public float eqScale = 1.0f;
+	public float eqCenter = 0.5f;
+	public float eqShift = 0.0f;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		eqBars = GetComponentsInChildren<Slider>();
 	}
 	
@@ -22,6 +25,8 @@ public class EQView : MonoBehaviour {
 
 	private void UpdateEQ (float[] values) {
 		//Debug.Log("Length: "+values.Length.ToString()+" Start: "+startValue.ToString()+" End: "+endValue.ToString()+"groupValues: "+groupValues.ToString());
+		//max = Mathf.Max(values);
+		float tempMax = max;
 		for (int i = 0; i < eqBars.Length; i++) {
 			float tempValue = 0.0f;
 			int iGroups = Mathf.RoundToInt(i * groupValues);
@@ -34,12 +39,15 @@ public class EQView : MonoBehaviour {
 			//boost values to make them more visible
 			tempValue = Mathf.Sqrt(Mathf.Sqrt(tempValue));
 
-			if (tempValue > max) {
-				max = tempValue;
+			if (tempValue > tempMax) {
+				tempMax = tempValue;
 				//Debug.Log("Max: "+max.ToString());
 			}
-			eqBars[i].value = (tempValue/max);
+			//eqBars[i].value = (Mathf.Log(max) / Mathf.Log(tempValue)) * eqScale + (1 - eqScale) * eqCenter;
+			//Debug.Log(tempValue.ToString());
+			eqBars[i].value = (tempValue / max) * eqScale + (1 - eqScale) * eqCenter;
 		}
+		max = tempMax;
 	}
 
 	public void UpdateEQClamped (float[] values, float start, float end) {

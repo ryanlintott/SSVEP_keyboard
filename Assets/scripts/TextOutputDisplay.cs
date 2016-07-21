@@ -12,7 +12,7 @@ public class TextOutputDisplay : MonoBehaviour {
 	private int maxStringLength = 24;
 
 	// Use this for initialization
-    void Start() {
+    void Awake() {
     	text = gameObject.GetComponent<Text>();
     }
 	
@@ -20,12 +20,12 @@ public class TextOutputDisplay : MonoBehaviour {
 	void Update () {
 		if (Time.time - m_TimeStamp >= 0.5) {
 			m_TimeStamp = Time.time;
-			if (cursor == false) {
-				cursor = true;
-				cursorChar = "_";
-			} else {
+			if (cursor) {
 				cursor = false;
 				cursorChar = "";
+			} else {
+				cursor = true;
+				cursorChar = "_";
 			}
 		}
 		text.text = enteredString + cursorChar;

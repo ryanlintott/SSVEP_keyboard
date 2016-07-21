@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 //using UnityEngine.Microphone;
 
 public class MicrophoneInput : MonoBehaviour {
@@ -7,19 +8,26 @@ public class MicrophoneInput : MonoBehaviour {
 	public AudioSource audio;
 	private float[] samples;
 	private float[] lastSamples;
+	private float[] smallSamples;
+	private List<float[]> smallSampleArrays;
 	public EQView _eqView;
 	public bool useMicrophone = true;
 	public bool useClamp = true;
 	public float leftClamp = 0.0f;
 	public float rightClamp = 1.0f;
 	public float smoothing = 0.0f;
-	public int inputHz = 40000;
+	public int inputHz = 441000;
 	public int fTarget = 1000;
 	public int fWidth = 120;
+	private int startValue;
+	private int endValue;
+	private int numSamplesTaken = 0;
+	public int maxSampesTaken = 0;
 	private int numSamples = 8192;
 	private float fMax;
-	// Use this for initialization
-	void Start () {
+	private FFTWindow specFFTwindow = FFTWindow.Hanning;
+	
+	void Awake () {
 		audio.loop = true;
 		samples = new float[numSamples];
 		lastSamples = new float[numSamples];
@@ -32,28 +40,45 @@ public class MicrophoneInput : MonoBehaviour {
 		}
 		//audio.mute = true;
 		audio.Play();
-		audio.GetSpectrumData (samples, 0, FFTWindow.BlackmanHarris);
+		audio.GetSpectrumData (samples, 0, specFFTwindow);
+
 		for (int i = 0; i < numSamples; i++) {
 			samples[i] = Mathf.Abs(samples[i]);
 		}
+
+		// startValue = Mathf.FloorToInt((fTarget - (fWidth / 2)) * numSamples / fMax);
+		// endValue = Mathf.FloorToInt((fTarget + (fWidth / 2)) * numSamples / fMax);
+
+		// smallSamples = new float[endValue - startValue];
+		// smallSampleArrays = new List<float[]>();
+
+		// for (int i = startValue; i < endValue; i++) {
+		// 	smallSamples[i - startValue] = Mathf.Abs(samples[i]);
+		// 	samples[i] = Mathf.Abs(samples[i]);
+		// }
 	}
 
 	public void ResetSamples() {
-		audio.GetSpectrumData (samples, 0, FFTWindow.BlackmanHarris);
+		audio.GetSpectrumData (samples, 0, specFFTwindow);
 		for (int i = 0; i < numSamples; i++) {
 			samples[i] = Mathf.Abs(samples[i]);
 		}
+		numSamplesTaken = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
 		System.Array.Copy(samples,lastSamples,numSamples);
-		audio.GetSpectrumData (samples, 0, FFTWindow.BlackmanHarris);
+		audio.GetSpectrumData (samples, 0, specFFTwindow);
 		//audio.GetOutputData (samples, 0);
 		float maxSample = Mathf.Max(samples);
 		for (int i = 0; i < numSamples; i++) {
 			samples[i] = smoothing * lastSamples[i] + (1/smoothing) * Mathf.Abs(samples[i])/maxSample;
+			//samples[i] = (lastSamples[i] * numSamplesTaken + Mathf.Abs(samples[i])) / (numSamplesTaken + 1);
 		}
+		numSamplesTaken++;
+		//Debug.Log(numSamplesTaken.ToString());
 
 		// int xScale = 8;
 		// int yScale = 400;

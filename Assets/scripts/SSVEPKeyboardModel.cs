@@ -25,9 +25,10 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	private float halfProbSum;
 	public NextLetterProbability _nextLetterProbability;
 	public MicrophoneInput _microphoneInput;
+	public int letterDelay = 3;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		keys = new KeyboardKey[numKeys];
 		keyStrings = keyboardfile.text.Split('\n');
 		for (int i = 0; i < numKeys; i++) {
@@ -36,6 +37,10 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 			keys[i].keyPosition = i;
 		}
 		lastLetter = " ";
+	}
+
+	void Start () {
+		ResetKeyboardKeys();
 	}
 	
 	// Update is called once per frame
@@ -127,18 +132,28 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 				// 		lastLetter = keys[i].key;
 				// 		break;
 				// }
+				keys[i].status = 3;
 				lastLetter = keys[i].key;
 				textOutput += lastLetter[0];
 				_textOutputDisplay.SetTextOutput(textOutput);
 				//Debug.Log(keys[i].key);
 				
 				//add a letter to the display screen
+			} else {
+				//keys[i].status = 4;
 			}
+			UpdateKeyboardKey(keys[i]);
 		}
-		ResetKeyboardKeys();
+		//wait for some time
+		Invoke("ResetKeyboardKeys", letterDelay);
 	}
 
 	void UpdateKeyboardKey (KeyboardKey _keyboardKey) {
 		_SSVEPKeyboardView.SetKeyboardKey(_keyboardKey.keyPosition, _keyboardKey.status, _keyboardKey.key);
+	}
+
+	public void ClearOutput () {
+		textOutput = "";
+		_textOutputDisplay.SetTextOutput(textOutput);
 	}
 }

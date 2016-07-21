@@ -12,7 +12,8 @@ public class NextLetterProbability : MonoBehaviour {
 	private int numNonLetters = 4;  //Number of non-letter characters on the keyboard
 	private string test = "_";
 	// Use this for initialization
-	void Start () {
+
+	void Awake () {
 		//Debug.Log("Test Parse: "+float.Parse("0.02000139453"));
 		rawTextLines = nextLetterFile.text.Split('\n');
 		for (int i = 0; i < 27; i++) {
