@@ -4,6 +4,62 @@
 		"selected_items":
 		[
 			[
+				"num",
+				"numSamples	int"
+			],
+			[
+				"val",
+				"value	float { get; set; }"
+			],
+			[
+				"lo",
+				"Log(object message)	void"
+			],
+			[
+				"numsam",
+				"numSamplesTaken"
+			],
+			[
+				"a",
+				"Abs(float f)	float"
+			],
+			[
+				"bott",
+				"bottomLarge"
+			],
+			[
+				"Microphone",
+				"MicrophoneInput	MicrophoneInput"
+			],
+			[
+				"Bla",
+				"BlackmanHarris	FFTWindow"
+			],
+			[
+				"to",
+				"ToggleEEG	ToggleEEG"
+			],
+			[
+				"eqh",
+				"eqHeightLarge"
+			],
+			[
+				"eqHei",
+				"eqHeightSmall"
+			],
+			[
+				"eegre",
+				"eegrect"
+			],
+			[
+				"eegrec",
+				"eegrectLarge"
+			],
+			[
+				"Rect",
+				"RectTransform"
+			],
+			[
 				"upda",
 				"UpdateEQ()	void"
 			],
@@ -58,10 +114,6 @@
 			[
 				"Getcom",
 				"GetComponent<T>()	T"
-			],
-			[
-				"to",
-				"ToString()	string"
 			],
 			[
 				"pro",
@@ -136,18 +188,10 @@
 	"buffers":
 	[
 		{
-			"file": "Assets/scripts/Flicker.cs",
+			"file": "Assets/scripts/SSVEPKeyboardModel.cs",
 			"settings":
 			{
-				"buffer_size": 1118,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/scripts/TextOutputDisplay.cs",
-			"settings":
-			{
-				"buffer_size": 764,
+				"buffer_size": 3660,
 				"line_ending": "Unix"
 			}
 		},
@@ -155,23 +199,7 @@
 			"file": "Assets/scripts/SSVEPKeyboardView.cs",
 			"settings":
 			{
-				"buffer_size": 1520,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/scripts/SSVEPKeyboardModel.cs",
-			"settings":
-			{
-				"buffer_size": 3465,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/scripts/EQView.cs",
-			"settings":
-			{
-				"buffer_size": 1710,
+				"buffer_size": 1466,
 				"line_ending": "Unix"
 			}
 		},
@@ -179,39 +207,15 @@
 			"file": "Assets/scripts/MicrophoneInput.cs",
 			"settings":
 			{
-				"buffer_size": 2613,
+				"buffer_size": 3824,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": ".gitignore",
+			"file": "Assets/scripts/EQView.cs",
 			"settings":
 			{
-				"buffer_size": 159,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/Resources/Text/keyboard.txt",
-			"settings":
-			{
-				"buffer_size": 64,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/scripts/NextLetterProbability.cs",
-			"settings":
-			{
-				"buffer_size": 1347,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/Resources/Text/NextLetter.txt",
-			"settings":
-			{
-				"buffer_size": 10042,
+				"buffer_size": 2068,
 				"line_ending": "Unix"
 			}
 		}
@@ -275,13 +279,22 @@
 	],
 	"file_history":
 	[
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/TextOutputDisplay.cs",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/RektTransform.cs",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/NextLetterProbability.cs",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/EQView.cs",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/SSVEPKeyboardView.cs",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/Flicker.cs",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/LineOutput.cs",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/MicrophoneInput.cs",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/ToggleEEG.cs",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/Resources/Text/NextLetter.txt",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/Resources/Text/keyboard.txt",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/.gitignore",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/SSVEPKeyboardModel.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/BlinkingCursor.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/GridFitScreen.cs",
-		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/.gitignore",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/SSVEP_keyboard.sublime-project",
-		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/Resources/Text/NextLetter.txt",
-		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/Resources/Text/keyboard.txt",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/assigncolour.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/KeyboardView.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/KeyboardModel.cs",
@@ -327,6 +340,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"SetKeyStates",
+			"SetKeyboardKey",
+			"SetKeyStates",
+			"SetKeyboardKey",
+			"flicker",
+			"grid",
 			"targetHz",
 			"focusHzWidth",
 			"targetHz",
@@ -363,128 +382,24 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Assets/scripts/Flicker.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1118,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1100,
-								1100
-							]
-						],
-						"settings":
-						{
-							"apply_syntax_touched": true,
-							"oops":
-							{
-								"1051,1055": "Comparison of floating point numbers can be unequal due to the differing precision of the two values.",
-								"42,47": "Using directive is not used by code and can be removed safely."
-							},
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Assets/scripts/TextOutputDisplay.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 764,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								752,
-								752
-							]
-						],
-						"settings":
-						{
-							"apply_syntax_touched": true,
-							"oops":
-							{
-								"41,46": "Using directive is not used by code and can be removed safely.",
-								"536,537": "Comparison with 'false' is redundant"
-							},
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Assets/scripts/SSVEPKeyboardView.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1520,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								428,
-								382
-							]
-						],
-						"settings":
-						{
-							"apply_syntax_touched": true,
-							"oops":
-							{
-								"41,46": "Using directive is not used by code and can be removed safely."
-							},
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 333.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
 					"file": "Assets/scripts/SSVEPKeyboardModel.cs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3465,
+						"buffer_size": 3660,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1688,
-								1653
+								1112,
+								1112
 							]
 						],
 						"settings":
@@ -493,35 +408,66 @@
 							"oops":
 							{
 								"19,24": "Using directive is not used by code and can be removed safely.",
-								"2744,2746": "Convert to 'return' statement",
-								"3342,3354": "no known errors.",
+								"2701,2703": "Convert to 'return' statement",
+								"3255,3259": "Redundant 'else' keyword",
+								"3436,3448": "no known errors.",
 								"376,394": "'_SSVEPKeyboardView' should start with a lower case letter. (Rule 'Fields')"
 							},
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 426.0,
+						"translation.y": 141.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Assets/scripts/SSVEPKeyboardView.cs",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 1466,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 148.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "Assets/scripts/EQView.cs",
+					"buffer": 2,
+					"file": "Assets/scripts/MicrophoneInput.cs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1710,
+						"buffer_size": 3824,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								945,
-								945
+								3712,
+								3712
 							]
 						],
 						"settings":
@@ -529,32 +475,37 @@
 							"apply_syntax_touched": true,
 							"oops":
 							{
-								"41,46": "Using directive is not used by code and can be removed safely."
+								"19,24": "Using directive is not used by code and can be removed safely.",
+								"260,272": "The private field 'smallSamples' is never assigned",
+								"297,314": "The private field 'smallSampleArrays' is never assigned",
+								"599,609": "The private field 'startValue' is never assigned",
+								"624,632": "The private field 'endValue' is never assigned"
 							},
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 978.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "Assets/scripts/MicrophoneInput.cs",
+					"buffer": 3,
+					"file": "Assets/scripts/EQView.cs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2613,
+						"buffer_size": 2068,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1488,
-								1488
+								1088,
+								1088
 							]
 						],
 						"settings":
@@ -562,136 +513,18 @@
 							"apply_syntax_touched": true,
 							"oops":
 							{
-								"19,24": "Using directive is not used by code and can be removed safely."
+								"41,46": "Using directive is not used by code and can be removed safely.",
+								"512,517": "Parameter can be declared with base type",
+								"520,526": "Parameter can be IList"
 							},
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 221.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": ".gitignore",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 159,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								69,
-								69
-							]
-						],
-						"settings":
-						{
-							"apply_syntax_touched": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "Assets/Resources/Text/keyboard.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 64,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								59,
-								59
-							]
-						],
-						"settings":
-						{
-							"apply_syntax_touched": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "Assets/scripts/NextLetterProbability.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1347,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1008,
-								1008
-							]
-						],
-						"settings":
-						{
-							"apply_syntax_touched": true,
-							"oops":
-							{
-								"118,135": "Convert to readonly",
-								"19,24": "Using directive is not used by code and can be removed safely."
-							},
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "Assets/Resources/Text/NextLetter.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10042,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10042,
-								10042
-							]
-						],
-						"settings":
-						{
-							"apply_syntax_touched": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 10143.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
 					"type": "text"
 				}
 			]
