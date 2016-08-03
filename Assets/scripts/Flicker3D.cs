@@ -1,23 +1,29 @@
-﻿
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using System.Collections;
 
-public class Flicker : MonoBehaviour {
+public class Flicker3D : MonoBehaviour {
     public Color c1;
     public Color c2;
-    private Image image;
+    public Material mat;
     public float cycleHz; // Hz, the mesurement of cycles.
+    private int updateCounter;
 
     float dtime = 0; // delta time
 
     void Awake() {
-    	image = gameObject.GetComponent<Image>();
+    	//mat = gameObject.GetComponent<Material>();
         //Application.targetFrameRate = 60;
+        updateCounter = 0;
     }
     // Update is called once per frame
-    void Update() {
 
+    void Start() {
+    	mat.color = c1;
+    }
+
+    void Update() {
+    	MakeFlicker();
+    	//Debug.Log((1/Time.deltaTime).ToString());
     }
 
     public void MakeFlicker() {
@@ -32,10 +38,10 @@ public class Flicker : MonoBehaviour {
 
         // Cycle between sprites based on the waveform.
         if (wave > 0.0f) {
-            image.color = c1;
+            mat.color = c1;
             //print ("Black");
         } else {
-            image.color = c2;
+            mat.color = c2;
             //print ("White");
         }
 

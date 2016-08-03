@@ -35,9 +35,7 @@ public class MicrophoneInput : MonoBehaviour {
 
 	
 	void Awake () {
-		if (readSamplesOn) {
-			InitializeAudio();
-		}
+		InitializeAudio();
 	}
 
 	void InitializeAudio () {
