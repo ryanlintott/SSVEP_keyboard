@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class MicrophoneInput : MonoBehaviour {
 
+	public bool readSamplesOn = true;
 	public AudioSource audio;
 	private float[] samples;
 	private float[] processedSamples;
@@ -25,6 +26,7 @@ public class MicrophoneInput : MonoBehaviour {
 	private int numSamplesTaken = 0;
 	public int maxSampesTaken = 0;
 	public int sampleAverageWidth = 0;
+	public int sampleProcessingMode = 0;
 	private int numSamples = 8192;
 	private float fMax;
 	private FFTWindow specFFTwindow = FFTWindow.Hanning;
@@ -33,6 +35,12 @@ public class MicrophoneInput : MonoBehaviour {
 
 	
 	void Awake () {
+		if (readSamplesOn) {
+			InitializeAudio();
+		}
+	}
+
+	void InitializeAudio () {
 		audio.loop = true;
 		//audio.clip.set(audioClips[activeAudioClip]);
 		samples = new float[numSamples];
@@ -76,7 +84,9 @@ public class MicrophoneInput : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		ReadSamples();
+		if (readSamplesOn) {
+			ReadSamples();
+		}
 	}
 
 	void NoProcessSamples () {
@@ -155,11 +165,23 @@ public class MicrophoneInput : MonoBehaviour {
 			//samples[i] = (lastSamples[i] * numSamplesTaken + Mathf.Abs(samples[i])) / (numSamplesTaken + 1);
 		}
 
-		//AverageSamples();
-		//AverageNeighbourSamples();
-		PeakSamples();
-		//PeaksOnlySamples();
-		//NoProcessSamples();
+		switch (sampleProcessingMode) {
+			case 0:
+				NoProcessSamples();
+				break;
+			case 1:
+				AverageSamples();
+				break;
+			case 2:
+				AverageNeighbourSamples();
+				break;
+			case 3:
+				PeakSamples();
+				break;
+			case 4:
+				PeaksOnlySamples();
+				break;
+		}
 
 		maxSample = Mathf.Max(processedSamples);
 		for (int i = 0; i < numSamples; i++) {
