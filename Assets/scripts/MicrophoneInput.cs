@@ -18,7 +18,7 @@ public class MicrophoneInput : MonoBehaviour {
 	public float leftClamp = 0.0f;
 	public float rightClamp = 1.0f;
 	public float smoothing = 0.0f;
-	public int inputHz = 441000;
+	public int inputHz;
 	public int fTarget = 1000;
 	public int fWidth = 120;
 	private int startValue;
@@ -109,6 +109,7 @@ public class MicrophoneInput : MonoBehaviour {
 		}
 	}
 
+
 	void PeakSamples () {
 		for (int i = 0; i < numSamples; i++) {
 			if (samples[i] > samples[Mathf.Max(i-sampleAverageWidth,0)] && samples[i] > samples[Mathf.Min(i+sampleAverageWidth,numSamples-1)]) {
@@ -158,8 +159,13 @@ public class MicrophoneInput : MonoBehaviour {
 		//audio.GetOutputData (samples, 0);
 		//float maxSample = Mathf.Max(samples);
 		float maxSample = Mathf.Max(samples);
+		float totalSamples = 0;
 		for (int i = 0; i < numSamples; i++) {
-			samples[i] = smoothing * lastSamples[i] + (1/smoothing) * Mathf.Abs(samples[i])/maxSample;
+			totalSamples += samples[i];
+		}
+
+		for (int i = 0; i < numSamples; i++) {
+			samples[i] = smoothing * lastSamples[i] + (1/smoothing) * Mathf.Abs(samples[i])/totalSamples;
 			//samples[i] = (lastSamples[i] * numSamplesTaken + Mathf.Abs(samples[i])) / (numSamplesTaken + 1);
 		}
 
