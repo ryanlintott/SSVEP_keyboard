@@ -8,28 +8,31 @@ public class MicrophoneInput : MonoBehaviour {
 
 	public bool readSamplesOn = true;
 	public AudioSource audio;
-	private float[] samples;				//full range of recorded samples
-	private float[] sampleSet;				//small subset of samples used for analysis
+	private float[] samples;					//full range of recorded samples
+	private float[] sampleSet;					//small subset of samples used for analysis
 	private float[] sampleSetAvg;				//small subset of samples used for analysis
-	private float[,] sampleSetPrev;			//saved from previous read
-	private float[] sampleSetProcessed;		//processed for interpretation
+	private float[,] sampleSetPrev;				//saved from previous read
+	private float[] sampleSetProcessed;			//processed for interpretation
 	private float[,] sampleSetProcessedPrev;	//saved from previous read
 	public EQView _eqView;
 	public bool useMicrophone = true;
 	public bool useClamp = true;
 	public float leftClamp = 0.0f;
 	public float rightClamp = 1.0f;
-	public float smoothing = 0.0f;
 	public int inputHz;
 	public int fTarget = 1000;
 	public int fWidth = 120;
+	public int ssvepLowF = 12;
+	public int ssvepHighF = 20;
 	private int startValue;
 	private int endValue;
 	private int sampleSetSize;
+	private int[] ssvepLowValues;
+	private int[] ssvepHighValues;
 	private int numSamplesTaken = 0;
 	public bool averageOverTime = false;
-	public int maxSamples = 0;				//Set to 0 for infinite samples
-	private int sampleSetCounter = 0;
+	public int maxSamples = 0;					//Set to 0 for infinite samples
+	private int sampleSetCounter = 0;			//Keeps track of location in sampleSetPrev
 	private bool useMaxSamples;
 	public int sAvgWidth = 0;
 	public int sampleProcessingMode = 0;
@@ -69,6 +72,14 @@ public class MicrophoneInput : MonoBehaviour {
 		endValue = Mathf.FloorToInt((fTarget + (fWidth / 2)) * numSamples / fMax);
 		sampleSetSize = endValue - startValue;
 
+		ssvepLowValues = new int[2];
+		ssvepLowValues[0] = Mathf.FloorToInt((fTarget - ssvepLowF) * numSamples / fMax) - startValue;
+		ssvepLowValues[1] = Mathf.FloorToInt((fTarget + ssvepLowF) * numSamples / fMax) - startValue;
+
+		ssvepHighValues = new int[2];
+		ssvepHighValues[0] = Mathf.FloorToInt((fTarget - ssvepHighF) * numSamples / fMax) - startValue;
+		ssvepHighValues[1] = Mathf.FloorToInt((fTarget + ssvepHighF) * numSamples / fMax) - startValue;		
+
 		if (maxSamples > 0 ) {
 			useMaxSamples = true;
 		} else {
@@ -90,70 +101,29 @@ public class MicrophoneInput : MonoBehaviour {
 		//audio.mute = true;
 		audio.Play();
 		audio.GetSpectrumData (samples, 0, specFFTwindow);
-
-		//for (int i = 0; i < numSamples; i++) {
-			//samples[i] = Mathf.Abs(samples[i]);
-			//samples[i] = 0.0f;
-		//}
-
-		// startValue = Mathf.FloorToInt((fTarget - (fWidth / 2)) * numSamples / fMax);
-		// endValue = Mathf.FloorToInt((fTarget + (fWidth / 2)) * numSamples / fMax);
-
-		// smallSamples = new float[endValue - startValue];
-		// smallSampleArrays = new List<float[]>();
-
-		// for (int i = startValue; i < endValue; i++) {
-		// 	smallSamples[i - startValue] = Mathf.Abs(samples[i]);
-		// 	samples[i] = Mathf.Abs(samples[i]);
-		// }
 	}
 
 	void ReadSamples () {
-
-		//System.Array.Copy(sampleSet,sampleSetPrev,sampleSetSize);
-		//System.Array.Copy(sampleSetProcessed,sampleSetProcessedPrev,sampleSetSize);
-
 		// Read in audio data to samples
 		audio.GetSpectrumData (samples, 0, specFFTwindow);
 		//audio.GetOutputData (samples, 0);
 
 		numSamplesTaken++;
-		
 
 		// Copy a small subset of samples to sampleSet
-		// for (int i = 0; i < sampleSetSize; i++) {
-		// 	sampleSet[i] = samples[i+startValue];
-		// 	//calculate the average by removing the last term and adding the next
-		// }
 		System.Array.Copy(samples,startValue,sampleSet,0,sampleSet.Length);
 
 		// Create a processed sample set
 		System.Array.Copy(sampleSet,sampleSetProcessed,sampleSet.Length);		
-		//Average
-		//Normalize the array
-		
 
-		//Smooth the samples
-
-		// for (int i = 0; i < numSamples; i++) {
-		// 	processedSamples[i] = smoothing * lastProcessedSamples[i] + (1/smoothing) * Mathf.Abs(processedSamples[i])/totalSamples;
-		// 	processedSamples[i] = (lastSamples[i] * numSamplesTaken + Mathf.Abs(processedSamples[i])) / (numSamplesTaken + 1);
-		// }
-
-		//for (int i = 0; i < numSamples; i++) {
-			//samples[i] = smoothing * lastSamples[i] + (1/smoothing) * Mathf.Abs(samples[i])/totalSamples;
-			//samples[i] = (lastSamples[i] * numSamplesTaken + Mathf.Abs(samples[i])) / (numSamplesTaken + 1);
-		//}
+		// Normalize the data
+		sampleSetProcessed = NormalizeSamples(sampleSetProcessed);
 
 		// Average the samples over time.  If maxSamples = 1 this will just retrun the same values
 		if (averageOverTime) {
 			sampleSetAvg = AverageSamplesTime(sampleSetProcessed, sampleSetAvg, sampleSetPrev, numSamplesTaken, sampleSetCounter, useMaxSamples);
 			sampleSetProcessed = sampleSetAvg;
 		}
-
-		sampleSetProcessed = NormalizeSamples(sampleSetProcessed);
-		
-		sampleSetProcessed = BoostSamples(sampleSetProcessed);
 
 		switch (sampleProcessingMode) {
 			case 0:
@@ -173,9 +143,13 @@ public class MicrophoneInput : MonoBehaviour {
 				break;
 		}
 
-		//DrawDebugLines();
+		// Boost the data for visual output
+		sampleSetProcessed = BoostSamples(sampleSetProcessed);
 
-		
+		// Testing SSVEP peak locations
+		//sampleSetProcessed[ssvepLowValues[0]] = 1.0f;
+		//sampleSetProcessed[ssvepHighValues[0]] = 0.8f;
+		//DrawDebugLines();
 		//Debug.Log(sampleSetProcessed[0].ToString());
 
 		if (useClamp) {
@@ -183,22 +157,19 @@ public class MicrophoneInput : MonoBehaviour {
 			_eqView.UpdateEQClamped(sampleSetProcessed, leftClamp, rightClamp);
 		} else {
 			_eqView.UpdateEQClamped(sampleSetProcessed, 0.0f, 1.0f);
-			//_eqView.UpdateEQHzRange(processedSamples, fTarget, fWidth, fMax/2);
 		}
 		
 		//Debug.Log(samples[512].ToString());
-				// Copy samplesets to previous sample sets before reading in
+		// Copy samplesets to previous sample sets for use in averaging
 		for (int i = 0; i < sampleSetSize; i++) {
 			sampleSetPrev[sampleSetCounter,i] = sampleSet[i];
 			//sampleSetProcessedPrev[sampleSetCounter,i] = sampleSetProcessed[i];
 		}
+
+		// Increment the counter used to identify which previous sample set to use next
 		sampleSetCounter = (sampleSetCounter + 1) % maxSamples;
 
 	}
-
-	// void NoProcessSamples () {
-	// 	System.Array.Copy(samples,processedSamples,numSamples);
-	// }
 
 	static float[] NormalizeSamples(float[] sIn) {
 		float[] sOut = new float[sIn.Length];
