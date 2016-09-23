@@ -1,17 +1,19 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 //using UnityEngine.Microphone;
 
 public class MicrophoneInput : MonoBehaviour {
 
 	public bool readSamplesOn = true;
 	public AudioSource audio;
-	private float[] samples;
-	private float[] processedSamples;
-	private float[] lastSamples;
-	private float[] smallSamples;
-	private List<float[]> smallSampleArrays;
+	private float[] samples;				//full range of recorded samples
+	private float[] sampleSet;				//small subset of samples used for analysis
+	private float[] sampleSetAvg;				//small subset of samples used for analysis
+	private float[,] sampleSetPrev;			//saved from previous read
+	private float[] sampleSetProcessed;		//processed for interpretation
+	private float[,] sampleSetProcessedPrev;	//saved from previous read
 	public EQView _eqView;
 	public bool useMicrophone = true;
 	public bool useClamp = true;
@@ -23,9 +25,13 @@ public class MicrophoneInput : MonoBehaviour {
 	public int fWidth = 120;
 	private int startValue;
 	private int endValue;
+	private int sampleSetSize;
 	private int numSamplesTaken = 0;
-	public int maxSampesTaken = 0;
-	public int sampleAverageWidth = 0;
+	public bool averageOverTime = false;
+	public int maxSamples = 0;				//Set to 0 for infinite samples
+	private int sampleSetCounter = 0;
+	private bool useMaxSamples;
+	public int sAvgWidth = 0;
 	public int sampleProcessingMode = 0;
 	private int numSamples = 8192;
 	private float fMax;
@@ -38,15 +44,45 @@ public class MicrophoneInput : MonoBehaviour {
 		InitializeAudio();
 	}
 
+	// Update is called once per frame
+	void Update () {
+		if (readSamplesOn) {
+			ReadSamples();
+		}
+	}
+
+	public void ResetSamples() {
+		audio.GetSpectrumData (samples, 0, specFFTwindow);
+		for (int i = 0; i < numSamples; i++) {
+			samples[i] = Mathf.Abs(samples[i]);
+		}
+		numSamplesTaken = 0;
+	}
+
 	void InitializeAudio () {
 		audio.loop = true;
 		//audio.clip.set(audioClips[activeAudioClip]);
 		samples = new float[numSamples];
-		lastSamples = new float[numSamples];
-		processedSamples = new float[numSamples];
-		fMax = AudioSettings.outputSampleRate;
+		
+		fMax = AudioSettings.outputSampleRate / 2;
+		startValue = Mathf.FloorToInt((fTarget - (fWidth / 2)) * numSamples / fMax);
+		endValue = Mathf.FloorToInt((fTarget + (fWidth / 2)) * numSamples / fMax);
+		sampleSetSize = endValue - startValue;
+
+		if (maxSamples > 0 ) {
+			useMaxSamples = true;
+		} else {
+			useMaxSamples = false;
+			maxSamples = 1;
+		}
+		sampleSet = new float[sampleSetSize];
+		sampleSetPrev = new float[maxSamples,sampleSetSize];
+		sampleSetProcessed = new float[sampleSetSize];
+		sampleSetProcessedPrev = new float[maxSamples,sampleSetSize];
+		sampleSetAvg = new float[sampleSetSize];
+
 		//fMax = inputHz;
-		Debug.Log(fMax.ToString());
+		Debug.Log("fMax: "+fMax.ToString());
 		if (useMicrophone) {
 			audio.clip = Microphone.Start("Built-in Microphone", true, 10, inputHz);
 			while (Microphone.GetPosition(null) <= 0){}
@@ -55,10 +91,10 @@ public class MicrophoneInput : MonoBehaviour {
 		audio.Play();
 		audio.GetSpectrumData (samples, 0, specFFTwindow);
 
-		for (int i = 0; i < numSamples; i++) {
+		//for (int i = 0; i < numSamples; i++) {
 			//samples[i] = Mathf.Abs(samples[i]);
-			samples[i] = 0.0f;
-		}
+			//samples[i] = 0.0f;
+		//}
 
 		// startValue = Mathf.FloorToInt((fTarget - (fWidth / 2)) * numSamples / fMax);
 		// endValue = Mathf.FloorToInt((fTarget + (fWidth / 2)) * numSamples / fMax);
@@ -72,62 +108,180 @@ public class MicrophoneInput : MonoBehaviour {
 		// }
 	}
 
-	public void ResetSamples() {
+	void ReadSamples () {
+
+		//System.Array.Copy(sampleSet,sampleSetPrev,sampleSetSize);
+		//System.Array.Copy(sampleSetProcessed,sampleSetProcessedPrev,sampleSetSize);
+
+		// Read in audio data to samples
 		audio.GetSpectrumData (samples, 0, specFFTwindow);
-		for (int i = 0; i < numSamples; i++) {
-			samples[i] = Mathf.Abs(samples[i]);
+		//audio.GetOutputData (samples, 0);
+
+		numSamplesTaken++;
+		
+
+		// Copy a small subset of samples to sampleSet
+		// for (int i = 0; i < sampleSetSize; i++) {
+		// 	sampleSet[i] = samples[i+startValue];
+		// 	//calculate the average by removing the last term and adding the next
+		// }
+		System.Array.Copy(samples,startValue,sampleSet,0,sampleSet.Length);
+
+		// Create a processed sample set
+		System.Array.Copy(sampleSet,sampleSetProcessed,sampleSet.Length);		
+		//Average
+		//Normalize the array
+		
+
+		//Smooth the samples
+
+		// for (int i = 0; i < numSamples; i++) {
+		// 	processedSamples[i] = smoothing * lastProcessedSamples[i] + (1/smoothing) * Mathf.Abs(processedSamples[i])/totalSamples;
+		// 	processedSamples[i] = (lastSamples[i] * numSamplesTaken + Mathf.Abs(processedSamples[i])) / (numSamplesTaken + 1);
+		// }
+
+		//for (int i = 0; i < numSamples; i++) {
+			//samples[i] = smoothing * lastSamples[i] + (1/smoothing) * Mathf.Abs(samples[i])/totalSamples;
+			//samples[i] = (lastSamples[i] * numSamplesTaken + Mathf.Abs(samples[i])) / (numSamplesTaken + 1);
+		//}
+
+		// Average the samples over time.  If maxSamples = 1 this will just retrun the same values
+		if (averageOverTime) {
+			sampleSetAvg = AverageSamplesTime(sampleSetProcessed, sampleSetAvg, sampleSetPrev, numSamplesTaken, sampleSetCounter, useMaxSamples);
+			sampleSetProcessed = sampleSetAvg;
 		}
-		numSamplesTaken = 0;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (readSamplesOn) {
-			ReadSamples();
+
+		sampleSetProcessed = NormalizeSamples(sampleSetProcessed);
+		
+		sampleSetProcessed = BoostSamples(sampleSetProcessed);
+
+		switch (sampleProcessingMode) {
+			case 0:
+				//NoProcessSamples();
+				break;
+			case 1:
+				sampleSetProcessed = AverageSamples(sampleSetProcessed, sAvgWidth);
+				break;
+			case 2:
+				sampleSetProcessed = AverageNeighbourSamples(sampleSetProcessed, sAvgWidth);
+				break;
+			case 3:
+				sampleSetProcessed = PeakSamples(sampleSetProcessed, sAvgWidth);
+				break;
+			case 4:
+				sampleSetProcessed = PeaksOnlySamples(sampleSetProcessed, sAvgWidth);
+				break;
 		}
+
+		//DrawDebugLines();
+
+		
+		//Debug.Log(sampleSetProcessed[0].ToString());
+
+		if (useClamp) {
+			//Used for updating eq with % clamps on either side
+			_eqView.UpdateEQClamped(sampleSetProcessed, leftClamp, rightClamp);
+		} else {
+			_eqView.UpdateEQClamped(sampleSetProcessed, 0.0f, 1.0f);
+			//_eqView.UpdateEQHzRange(processedSamples, fTarget, fWidth, fMax/2);
+		}
+		
+		//Debug.Log(samples[512].ToString());
+				// Copy samplesets to previous sample sets before reading in
+		for (int i = 0; i < sampleSetSize; i++) {
+			sampleSetPrev[sampleSetCounter,i] = sampleSet[i];
+			//sampleSetProcessedPrev[sampleSetCounter,i] = sampleSetProcessed[i];
+		}
+		sampleSetCounter = (sampleSetCounter + 1) % maxSamples;
+
 	}
 
-	void NoProcessSamples () {
-		System.Array.Copy(samples,processedSamples,numSamples);
+	// void NoProcessSamples () {
+	// 	System.Array.Copy(samples,processedSamples,numSamples);
+	// }
+
+	static float[] NormalizeSamples(float[] sIn) {
+		float[] sOut = new float[sIn.Length];
+		float maxSample = sIn.Max();
+		float minSample = sIn.Min();
+		float rangeSample = maxSample - minSample;
+		for (int i = 0; i < sIn.Length; i++) {
+			sOut[i] = (sIn[i] - minSample) /rangeSample;
+		}
+		return sOut;
 	}
 
-	void AverageSamples () {
-		for (int i = 0; i < numSamples; i++) {
-			processedSamples[i] = 0.0f;
-			for (int j = Mathf.Max(i - sampleAverageWidth,0); j < Mathf.Min(i + sampleAverageWidth + 1,numSamples); j++) {
-				processedSamples[i] += samples[j];
+	static float[] BoostSamples(float[] sIn) {
+		float[] sOut = new float[sIn.Length];
+		for (int i = 0; i < sIn.Length; i++) {
+			sOut[i] = Mathf.Sqrt(Mathf.Sqrt(sIn[i]));
+		}
+		return sOut;
+	}
+
+	static float[] AverageSamplesTime(float[] sIn, float[] sAvg, float[,] sPrev, int t, int c, bool useMax) {
+		if (t == 1) {
+			return sIn;
+		}
+		float[] sOut = new float[sIn.Length];
+		int maxS = sPrev.GetLength(0);
+		if ((t < maxS) || !useMax) {
+			for (int i = 0; i < sIn.Length; i++) {
+				sOut[i] = (sAvg[i] * (t-1) + sIn[i]) / t;
 			}
-			processedSamples[i] /= Mathf.Min(i + sampleAverageWidth + 1,numSamples) - Mathf.Max(i - sampleAverageWidth,0);
-			processedSamples[i] = samples[i] - processedSamples[i];
+		} else {	
+			for (int i = 0; i < sIn.Length; i++) {
+				sOut[i] = sAvg[i] + ((sIn[i] - sPrev[c,i]) / maxS);
+			}
 		}
+		return sOut;
+	}
+
+	static float[] AverageSamples(float[] sIn, int w) {
+		float[] sOut = new float[sIn.Length];
+		for (int i = 0; i < sIn.Length; i++) {
+			//sOut[i] = 0.0f;
+			for (int j = Mathf.Max(i - w,0); j < Mathf.Min(i + w + 1,sIn.Length); j++) {
+				sOut[i] += sIn[j];
+			}
+			sOut[i] /= Mathf.Min(i + w + 1,sIn.Length) - Mathf.Max(i - w,0);
+			sOut[i] = sIn[i] - sOut[i];
+		}
+		return sOut;
 	}
 
 
-	void AverageNeighbourSamples () {
-		for (int i = 0; i < numSamples; i++) {
-			processedSamples[i] = Mathf.Abs(samples[i] - Mathf.Lerp(samples[Mathf.Max(i-sampleAverageWidth,0)],samples[Mathf.Min(i+sampleAverageWidth,numSamples-1)],0.5f));
+	static float[] AverageNeighbourSamples(float[] sIn, int w) {
+		float[] sOut = new float[sIn.Length];
+		for (int i = 0; i < sIn.Length; i++) {
+			sOut[i] = Mathf.Abs(sIn[i] - Mathf.Lerp(sIn[Mathf.Max(i-w,0)],sIn[Mathf.Min(i+w,sIn.Length-1)],0.5f));
 		}
+		return sOut;
 	}
 
 
-	void PeakSamples () {
-		for (int i = 0; i < numSamples; i++) {
-			if (samples[i] > samples[Mathf.Max(i-sampleAverageWidth,0)] && samples[i] > samples[Mathf.Min(i+sampleAverageWidth,numSamples-1)]) {
-				processedSamples[i] = Mathf.Abs(samples[i] - Mathf.Lerp(samples[Mathf.Max(i-sampleAverageWidth,0)],samples[Mathf.Min(i+sampleAverageWidth,numSamples-1)],0.5f));
+	static float[] PeakSamples(float[] sIn, int w) {
+		float[] sOut = new float[sIn.Length];
+		for (int i = 0; i < sIn.Length; i++) {
+			if (sIn[i] > sIn[Mathf.Max(i-w,0)] && sIn[i] > sIn[Mathf.Min(i+w,sIn.Length-1)]) {
+				sOut[i] = Mathf.Abs(sIn[i] - Mathf.Lerp(sIn[Mathf.Max(i-w,0)],sIn[Mathf.Min(i+w,sIn.Length-1)],0.5f));
 			} else {
-				processedSamples[i] = 0.0f;
+				sOut[i] = 0.0f;
 			}
 		}
+		return sOut;
 	}
 
-	void PeaksOnlySamples () {
-		for (int i = 0; i < numSamples; i++) {
-			if (samples[i] > samples[Mathf.Max(i-sampleAverageWidth,0)] && samples[i] > samples[Mathf.Min(i+sampleAverageWidth,numSamples-1)]) {
-				processedSamples[i] = 1.0f;
+	static float[] PeaksOnlySamples(float[] sIn, int w) {
+		float[] sOut = new float[sIn.Length];
+		for (int i = 0; i < sIn.Length; i++) {
+			if (sIn[i] > sIn[Mathf.Max(i-w,0)] && sIn[i] > sIn[Mathf.Min(i+w,sIn.Length-1)]) {
+				sOut[i] = 1.0f;
 			} else {
-				processedSamples[i] = 0.0f;
+				sOut[i] = 0.0f;
 			}
 		}
+		return sOut;
 	}
 
 	void DrawDebugLines () {
@@ -152,60 +306,5 @@ public class MicrophoneInput : MonoBehaviour {
 		 }
 	}
 
-	void ReadSamples () {
 
-		System.Array.Copy(samples,lastSamples,numSamples);
-		audio.GetSpectrumData (samples, 0, specFFTwindow);
-		//audio.GetOutputData (samples, 0);
-		//float maxSample = Mathf.Max(samples);
-		float maxSample = Mathf.Max(samples);
-		float totalSamples = 0;
-		for (int i = 0; i < numSamples; i++) {
-			totalSamples += samples[i];
-		}
-
-		for (int i = 0; i < numSamples; i++) {
-			samples[i] = smoothing * lastSamples[i] + (1/smoothing) * Mathf.Abs(samples[i])/totalSamples;
-			//samples[i] = (lastSamples[i] * numSamplesTaken + Mathf.Abs(samples[i])) / (numSamplesTaken + 1);
-		}
-
-		switch (sampleProcessingMode) {
-			case 0:
-				NoProcessSamples();
-				break;
-			case 1:
-				AverageSamples();
-				break;
-			case 2:
-				AverageNeighbourSamples();
-				break;
-			case 3:
-				PeakSamples();
-				break;
-			case 4:
-				PeaksOnlySamples();
-				break;
-		}
-
-		maxSample = Mathf.Max(processedSamples);
-		for (int i = 0; i < numSamples; i++) {
-			processedSamples[i] = processedSamples[i]/maxSample;
-			//samples[i] = (lastSamples[i] * numSamplesTaken + Mathf.Abs(samples[i])) / (numSamplesTaken + 1);
-		}
-
-		//DrawDebugLines();
-
-		numSamplesTaken++;
-
-		if (useClamp) {
-			//Used for updating eq with % clamps on either side
-			_eqView.UpdateEQClamped(processedSamples, leftClamp, rightClamp);
-		} else {
-			//Used for updating eq with a target range specified in Hz
-			_eqView.UpdateEQHzRange(processedSamples, fTarget, fWidth, fMax/2);
-		}
-		
-		//Debug.Log(samples[512].ToString());
-
-	}
 }

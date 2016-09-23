@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 
 public class EQView : MonoBehaviour {
 
 	private Slider[] eqBars;
-	private float max = 0.0f;
+	private float max = 0.000001f;
 	private float groupValues;
 	private int startValue;
 	private int endValue;
@@ -23,21 +24,21 @@ public class EQView : MonoBehaviour {
 	
 	}
 
-	private void UpdateEQ (float[] values) {
+	public void UpdateEQ (float[] values) {
 		//Debug.Log("Length: "+values.Length.ToString()+" Start: "+startValue.ToString()+" End: "+endValue.ToString()+"groupValues: "+groupValues.ToString());
 		//max = Mathf.Max(values);
-		float tempMax = max;
+		float tempMax = 0.0f;
 		for (int i = 0; i < eqBars.Length; i++) {
 			float tempValue = 0.0f;
 			int iGroups = Mathf.RoundToInt(i * groupValues);
 			for (int j = 0; j < groupValues; j++) {
-				tempValue += values[startValue + iGroups + j];
+				tempValue += values[Mathf.Min(startValue + iGroups + j,values.Length-1)];
 			}
 			if (groupValues >= 2.0f) {
 				tempValue /=  Mathf.FloorToInt(groupValues);
 			}
 			//boost values to make them more visible
-			tempValue = Mathf.Sqrt(Mathf.Sqrt(tempValue));
+			//tempValue = Mathf.Sqrt(Mathf.Sqrt(tempValue));
 
 			if (tempValue > tempMax) {
 				tempMax = tempValue;
