@@ -116,6 +116,7 @@ public class MicrophoneInput : MonoBehaviour {
 		// Create a processed sample set
 		System.Array.Copy(sampleSet,sampleSetProcessed,sampleSet.Length);		
 
+		//sampleSetProcessed = FoldSamples(sampleSetProcessed);
 		// Normalize the data
 		sampleSetProcessed = NormalizeSamples(sampleSetProcessed);
 
@@ -147,8 +148,13 @@ public class MicrophoneInput : MonoBehaviour {
 		sampleSetProcessed = BoostSamples(sampleSetProcessed);
 
 		// Testing SSVEP peak locations
-		//sampleSetProcessed[ssvepLowValues[0]] = 1.0f;
-		//sampleSetProcessed[ssvepHighValues[0]] = 0.8f;
+		// if (numSamplesTaken % 5 == 0) {
+		// 	sampleSetProcessed[ssvepLowValues[0]] = 0.95f;
+		// 	sampleSetProcessed[ssvepLowValues[1]] = 0.95f;
+		// 	sampleSetProcessed[ssvepHighValues[0]] = 0.9f;
+		// 	sampleSetProcessed[ssvepHighValues[1]] = 0.9f;	
+		// }
+		
 		//DrawDebugLines();
 		//Debug.Log(sampleSetProcessed[0].ToString());
 
@@ -169,6 +175,14 @@ public class MicrophoneInput : MonoBehaviour {
 		// Increment the counter used to identify which previous sample set to use next
 		sampleSetCounter = (sampleSetCounter + 1) % maxSamples;
 
+	}
+
+	static float[] FoldSamples(float[] sIn) {
+		float[] sOut = new float[Mathf.CeilToInt(sIn.Length/2)];
+		for (int i = 0; i < sOut.Length; i++) {
+			sOut[i] = sIn[i] + sIn[sIn.Length-i-1];
+		}
+		return sOut;
 	}
 
 	static float[] NormalizeSamples(float[] sIn) {
