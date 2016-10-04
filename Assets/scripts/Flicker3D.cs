@@ -6,14 +6,14 @@ public class Flicker3D : MonoBehaviour {
     public Color c2;
     public Material mat;
     public float cycleHz; // Hz, the mesurement of cycles.
-    private int updateCounter;
+    private int updateCounter = 0;
+    private bool swap = false;
 
     float dtime = 0; // delta time
 
     void Awake() {
     	//mat = gameObject.GetComponent<Material>();
         //Application.targetFrameRate = 60;
-        updateCounter = 0;
     }
     // Update is called once per frame
 
@@ -23,6 +23,7 @@ public class Flicker3D : MonoBehaviour {
 
     void Update() {
     	MakeFlicker();
+        //Debug.Log("Seconds: " + Time.time.ToString() + " Flashes: " + updateCounter.ToString() + "Hz expected: " + cycleHz.ToString() + " Hz actual: " + (updateCounter / Time.time).ToString());
     	//Debug.Log((1/Time.deltaTime).ToString());
     }
 
@@ -39,10 +40,15 @@ public class Flicker3D : MonoBehaviour {
         // Cycle between sprites based on the waveform.
         if (wave > 0.0f) {
             mat.color = c1;
-            //print ("Black");
+            if (swap) {
+                updateCounter++;
+                swap = false;
+            }
+            //print ("White");
         } else {
             mat.color = c2;
-            //print ("White");
+            swap = true;
+            //print ("Black");
         }
 
         // prevents dtime from climbing to infinity,
