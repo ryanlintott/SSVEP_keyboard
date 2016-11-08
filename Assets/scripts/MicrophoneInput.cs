@@ -22,8 +22,8 @@ public class MicrophoneInput : MonoBehaviour {
 	public int inputHz;
 	public int fTarget = 1000;
 	public int fWidth = 120;
-	public int ssvepLowF = 12;
-	public int ssvepHighF = 20;
+	public float ssvepLowF = 12.0f;
+	public float ssvepHighF = 20.0f;
 	private int startValue;
 	private int endValue;
 	private int sampleSetSize;
@@ -147,13 +147,17 @@ public class MicrophoneInput : MonoBehaviour {
 		// Boost the data for visual output
 		sampleSetProcessed = BoostSamples(sampleSetProcessed);
 
-		// Testing SSVEP peak locations
-		// if (numSamplesTaken % 5 == 0) {
-		// 	sampleSetProcessed[ssvepLowValues[0]] = 0.95f;
-		// 	sampleSetProcessed[ssvepLowValues[1]] = 0.95f;
-		// 	sampleSetProcessed[ssvepHighValues[0]] = 0.9f;
-		// 	sampleSetProcessed[ssvepHighValues[1]] = 0.9f;	
-		// }
+		//Testing SSVEP peak locations
+		if (numSamplesTaken % 5 == 0) {
+			ssvepLowValues[0] = Mathf.FloorToInt((fTarget - ssvepLowF) * numSamples / fMax) - startValue;
+			ssvepLowValues[1] = Mathf.FloorToInt((fTarget + ssvepLowF) * numSamples / fMax) - startValue;
+			ssvepHighValues[0] = Mathf.FloorToInt((fTarget - ssvepHighF) * numSamples / fMax) - startValue;
+			ssvepHighValues[1] = Mathf.FloorToInt((fTarget + ssvepHighF) * numSamples / fMax) - startValue;	
+			sampleSetProcessed[ssvepLowValues[0]] = 0.2f;
+			sampleSetProcessed[ssvepLowValues[1]] = 0.2f;
+			sampleSetProcessed[ssvepHighValues[0]] = 0.1f;
+			sampleSetProcessed[ssvepHighValues[1]] = 0.1f;	
+		}
 		
 		//DrawDebugLines();
 		//Debug.Log(sampleSetProcessed[0].ToString());

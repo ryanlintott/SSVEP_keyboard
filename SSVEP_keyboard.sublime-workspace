@@ -4,8 +4,24 @@
 		"selected_items":
 		[
 			[
+				"Debu",
+				"Debug.Log((1"
+			],
+			[
+				"up",
+				"updateCounter"
+			],
+			[
+				"toin",
+				"RoundToInt(float f)\tint"
+			],
+			[
+				"R",
+				"Round(float f)\tfloat"
+			],
+			[
 				"mat",
-				"Mathf	Mathf"
+				"Mathf\tMathf"
 			],
 			[
 				"text",
@@ -13,7 +29,7 @@
 			],
 			[
 				"avera",
-				"AverageNeighbourSamples()	void"
+				"AverageNeighbourSamples()\tvoid"
 			],
 			[
 				"sam",
@@ -25,15 +41,15 @@
 			],
 			[
 				"num",
-				"numSamples	int"
+				"numSamples\tint"
 			],
 			[
 				"val",
-				"value	float { get; set; }"
+				"value\tfloat { get; set; }"
 			],
 			[
 				"lo",
-				"Log(object message)	void"
+				"Log(object message)\tvoid"
 			],
 			[
 				"numsam",
@@ -41,7 +57,7 @@
 			],
 			[
 				"a",
-				"Abs(float f)	float"
+				"Abs(float f)\tfloat"
 			],
 			[
 				"bott",
@@ -49,15 +65,15 @@
 			],
 			[
 				"Microphone",
-				"MicrophoneInput	MicrophoneInput"
+				"MicrophoneInput\tMicrophoneInput"
 			],
 			[
 				"Bla",
-				"BlackmanHarris	FFTWindow"
+				"BlackmanHarris\tFFTWindow"
 			],
 			[
 				"to",
-				"ToggleEEG	ToggleEEG"
+				"ToggleEEG\tToggleEEG"
 			],
 			[
 				"eqh",
@@ -81,11 +97,11 @@
 			],
 			[
 				"upda",
-				"UpdateEQ()	void"
+				"UpdateEQ()\tvoid"
 			],
 			[
 				"b",
-				"BlackmanHarris	FFTWindow"
+				"BlackmanHarris\tFFTWindow"
 			],
 			[
 				"f",
@@ -97,7 +113,7 @@
 			],
 			[
 				"floor",
-				"FloorToInt(float f)	int"
+				"FloorToInt(float f)\tint"
 			],
 			[
 				"values",
@@ -105,15 +121,15 @@
 			],
 			[
 				"c",
-				"CopyTo(Array array, int index)	void"
+				"CopyTo(Array array, int index)\tvoid"
 			],
 			[
 				"roun",
-				"RoundToInt(float f)	int"
+				"RoundToInt(float f)\tint"
 			],
 			[
 				"rou",
-				"RoundToInt(float f)	int"
+				"RoundToInt(float f)\tint"
 			],
 			[
 				"value",
@@ -121,19 +137,19 @@
 			],
 			[
 				"get",
-				"GetComponentsInChildren<T>()	T[]"
+				"GetComponentsInChildren<T>()\tT[]"
 			],
 			[
 				"audios",
-				"AudioSource	AudioSource"
+				"AudioSource\tAudioSource"
 			],
 			[
 				"Ge",
-				"GetPosition(string deviceName)	int"
+				"GetPosition(string deviceName)\tint"
 			],
 			[
 				"Getcom",
-				"GetComponent<T>()	T"
+				"GetComponent<T>()\tT"
 			],
 			[
 				"pro",
@@ -141,23 +157,19 @@
 			],
 			[
 				"Sor",
-				"Sort(Array array, IComparer comparer)	void"
-			],
-			[
-				"toin",
-				"FloorToInt(float f)	int"
+				"Sort(Array array, IComparer comparer)\tvoid"
 			],
 			[
 				"ge",
-				"GetComponentsInParent<T>()	T[]"
+				"GetComponentsInParent<T>()\tT[]"
 			],
 			[
 				"ui",
-				"guiElement	Component { get; }"
+				"guiElement\tComponent { get; }"
 			],
 			[
 				"in",
-				"InputText(string t)	void"
+				"InputText(string t)\tvoid"
 			],
 			[
 				"te",
@@ -165,23 +177,23 @@
 			],
 			[
 				"keys",
-				"keys	AnimationCurve.*"
+				"keys\tAnimationCurve.*"
 			],
 			[
 				"Getchil",
-				"GetComponentsInChildren<T>()	T[]"
+				"GetComponentsInChildren<T>()\tT[]"
 			],
 			[
 				"h",
-				"cycleHz	float"
+				"cycleHz\tfloat"
 			],
 			[
 				"for",
-				"foreach	foreach"
+				"foreach\tforeach"
 			],
 			[
 				"getcom",
-				"GetComponents(List<T> results)	void"
+				"GetComponents(List<T> results)\tvoid"
 			],
 			[
 				"s",
@@ -189,19 +201,19 @@
 			],
 			[
 				"col",
-				"color	Color { get; set; }"
+				"color\tColor { get; set; }"
 			],
 			[
 				"color",
-				"ColorSpace	ColorSpace"
+				"ColorSpace\tColorSpace"
 			],
 			[
 				"Col",
-				"Color32	Color32"
+				"Color32\tColor32"
 			],
 			[
 				"sha",
-				"DOShadowStrength(float endValue, float duration)	Tweener"
+				"DOShadowStrength(float endValue, float duration)\tTweener"
 			]
 		]
 	},
@@ -212,6 +224,7 @@
 			"settings":
 			{
 				"buffer_size": 3660,
+				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		},
@@ -219,15 +232,17 @@
 			"file": "Assets/scripts/MicrophoneInput.cs",
 			"settings":
 			{
-				"buffer_size": 6411,
+				"buffer_size": 9731,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "SSVEP_keyboard.sublime-project",
+			"file": "Assets/scripts/RektTransform.cs",
 			"settings":
 			{
-				"buffer_size": 625,
+				"buffer_size": 25494,
+				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		},
@@ -236,14 +251,18 @@
 			"settings":
 			{
 				"buffer_size": 1172,
+				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		},
 		{
+			"contents": "using UnityEngine;\nusing System.Collections;\n\npublic class Flicker3D : MonoBehaviour {\n    public Color c1;\n    public Color c2;\n    public Material mat;\n    public float cycleHz; // Hz, the mesurement of cycles.\n    private int updateCounter = 0;\n    private bool swap = false;\n\n    float dtime = 0; // delta time\n\n    void Awake() {\n    \t//mat = gameObject.GetComponent<Material>();\n        //Application.targetFrameRate = 60;\n    }\n    // Update is called once per frame\n\n    void Start() {\n    \tmat.color = c1;\n    }\n\n    void Update() {\n    \tMakeFlicker();\n        //Debug.Log(\"Seconds: \" + Time.time.ToString() + \" Flashes: \" + updateCounter.ToString() + \"Hz expected: \" + cycleHz.ToString() + \" Hz actual: \" + (updateCounter / Time.time).ToString());\n    \t//Debug.Log((1/Time.deltaTime).ToString());\n    }\n\n    public void MakeFlicker() {\n        // update frequency time-step\n        dtime += Time.deltaTime;\n\n        // Sample the waveform at a specific time.\n        float wave = Mathf.Sin( (dtime * 2.0f * Mathf.PI) * cycleHz);\n\n        //print (dtime);\n        //print (wave);\n\n        // Cycle between sprites based on the waveform.\n        if (wave > 0.0f) {\n            mat.color = c1;\n            // if (swap) {\n            //     updateCounter++;\n            //     swap = false;\n            // }\n            //print (\"White\");\n        } else {\n            mat.color = c2;\n            // swap = true;\n            //print (\"Black\");\n        }\n\n        // prevents dtime from climbing to infinity,\n        // by stepping it back in the waveform to a point\n        // of equal value.\n        if (wave == 0.0f) {\n            dtime = 0.0f;\n        }\n    }\n}\n",
 			"file": "Assets/scripts/Flicker3D.cs",
+			"file_size": 1658,
+			"file_write_time": 131200735290000000,
 			"settings":
 			{
-				"buffer_size": 1325,
+				"buffer_size": 1670,
 				"line_ending": "Unix"
 			}
 		},
@@ -252,6 +271,7 @@
 			"settings":
 			{
 				"buffer_size": 495,
+				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		},
@@ -259,7 +279,8 @@
 			"file": "Assets/scripts/EQView.cs",
 			"settings":
 			{
-				"buffer_size": 2068,
+				"buffer_size": 2121,
+				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		}
@@ -316,15 +337,16 @@
 	"expanded_folders":
 	[
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard",
-		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/Resources/Text"
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets",
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts"
 	],
 	"file_history":
 	[
+		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/SSVEPKeyboardView.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/TextOutputDisplay.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/RektTransform.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/NextLetterProbability.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/EQView.cs",
-		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/SSVEPKeyboardView.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/Flicker.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/LineOutput.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/MicrophoneInput.cs",
@@ -429,7 +451,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -464,10 +486,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 141.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -476,15 +498,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6411,
+						"buffer_size": 9731,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2967,
-								2967
+								4896,
+								4896
 							]
 						],
 						"settings":
@@ -493,49 +515,49 @@
 							"oops":
 							{
 								"19,24": "Using directive is not used by code and can be removed safely.",
-								"330,342": "The private field 'smallSamples' is never assigned",
-								"367,384": "The private field 'smallSampleArrays' is never assigned",
-								"660,670": "The private field 'startValue' is never assigned",
-								"685,693": "The private field 'endValue' is never assigned"
+								"45,50": "Using directive is not used by code and can be removed safely.",
+								"6581,6586": "Parameter can be declared with base type",
+								"6589,6593": "Parameter can be IList"
 							},
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1277.0,
+						"translation.y": 1847.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "SSVEP_keyboard.sublime-project",
+					"file": "Assets/scripts/RektTransform.cs",
 					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 625,
+						"buffer_size": 25494,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								625,
+								0,
 								0
 							]
 						],
 						"settings":
 						{
 							"apply_syntax_touched": true,
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -551,8 +573,8 @@
 						"selection":
 						[
 							[
-								453,
-								453
+								485,
+								485
 							]
 						],
 						"settings":
@@ -580,15 +602,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1325,
+						"buffer_size": 1670,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								561,
-								561
+								1417,
+								1390
 							]
 						],
 						"settings":
@@ -596,7 +618,7 @@
 							"apply_syntax_touched": true,
 							"oops":
 							{
-								"1265,1269": "Comparison of floating point numbers can be unequal due to the differing precision of the two values.",
+								"1595,1599": "Comparison of floating point numbers can be unequal due to the differing precision of the two values.",
 								"19,24": "Using directive is not used by code and can be removed safely."
 							},
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
@@ -604,10 +626,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 37.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -641,7 +663,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -650,15 +672,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2068,
+						"buffer_size": 2121,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								40,
-								19
+								0,
+								0
 							]
 						],
 						"settings":
@@ -677,7 +699,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
