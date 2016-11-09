@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Flicker3D : MonoBehaviour {
@@ -8,6 +8,7 @@ public class Flicker3D : MonoBehaviour {
     public float cycleHz; // Hz, the mesurement of cycles.
     private int updateCounter = 0;
     private bool swap = false;
+    private TouchScreenKeyboard keyboard;
 
     float dtime = 0; // delta time
 
@@ -40,14 +41,14 @@ public class Flicker3D : MonoBehaviour {
         // Cycle between sprites based on the waveform.
         if (wave > 0.0f) {
             mat.color = c1;
-            if (swap) {
-                updateCounter++;
-                swap = false;
-            }
+            // if (swap) {
+            //     updateCounter++;
+            //     swap = false;
+            // }
             //print ("White");
         } else {
             mat.color = c2;
-            swap = true;
+            // swap = true;
             //print ("Black");
         }
 
@@ -58,4 +59,17 @@ public class Flicker3D : MonoBehaviour {
             dtime = 0.0f;
         }
     }
+
+    public void SetHz(float newHz) {
+        if (newHz >= 0) {
+            cycleHz = newHz;
+        }
+    }
+
+    public void SetHzString(string newHzString) {
+        if (newHzString.Length > 0) {
+            SetHz(float.Parse(newHzString));
+        }
+    }
+
 }

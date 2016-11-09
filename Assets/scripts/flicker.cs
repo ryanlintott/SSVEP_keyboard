@@ -13,7 +13,7 @@ public class Flicker : MonoBehaviour {
 
     void Awake() {
     	image = gameObject.GetComponent<Image>();
-        //Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60;
     }
     // Update is called once per frame
     void Update() {
