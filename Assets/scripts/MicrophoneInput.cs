@@ -8,6 +8,7 @@ public class MicrophoneInput : MonoBehaviour {
 
 	public bool readSamplesOn = true;
 	public AudioSource audio;
+	public AudioSource tone;
 	private float[] samples;					//full range of recorded samples
 	private float[] sampleSet;					//small subset of samples used for analysis
 	private float[] sampleSetAvg;				//small subset of samples used for analysis
@@ -31,10 +32,10 @@ public class MicrophoneInput : MonoBehaviour {
 	private int[] ssvepHighValues;
 	private int numSamplesTaken = 0;
 	public bool averageOverTime = false;
-	public int maxSamples = 0;					//Set to 0 for infinite samples
+	public int maxSamples = 0;					//Number of frames to sample.  Set to 0 for infinite samples
 	private int sampleSetCounter = 0;			//Keeps track of location in sampleSetPrev
 	private bool useMaxSamples;
-	public int sAvgWidth = 0;
+	public int sAvgWidth = 1;					//Number of samples to average together. Default: 1 is no averaging
 	public int sampleProcessingMode = 0;
 	private int numSamples = 8192;
 	private float fMax;
@@ -193,9 +194,8 @@ public class MicrophoneInput : MonoBehaviour {
 		float[] sOut = new float[sIn.Length];
 		float maxSample = sIn.Max();
 		float minSample = sIn.Min();
-		float rangeSample = maxSample - minSample;
 		for (int i = 0; i < sIn.Length; i++) {
-			sOut[i] = (sIn[i] - minSample) /rangeSample;
+			sOut[i] = Mathf.InverseLerp(minSample, maxSample, sIn[i]);
 		}
 		return sOut;
 	}
@@ -253,7 +253,8 @@ public class MicrophoneInput : MonoBehaviour {
 		float[] sOut = new float[sIn.Length];
 		for (int i = 0; i < sIn.Length; i++) {
 			if (sIn[i] > sIn[Mathf.Max(i-w,0)] && sIn[i] > sIn[Mathf.Min(i+w,sIn.Length-1)]) {
-				sOut[i] = Mathf.Abs(sIn[i] - Mathf.Lerp(sIn[Mathf.Max(i-w,0)],sIn[Mathf.Min(i+w,sIn.Length-1)],0.5f));
+				//sOut[i] = Mathf.Abs(sIn[i] - Mathf.Lerp(sIn[Mathf.Max(i-w,0)],sIn[Mathf.Min(i+w,sIn.Length-1)],0.5f));
+				sOut[i] = sIn[i] - Mathf.Lerp(sIn[Mathf.Max(i-w,0)],sIn[Mathf.Min(i+w,sIn.Length-1)],0.5f);
 			} else {
 				sOut[i] = 0.0f;
 			}
