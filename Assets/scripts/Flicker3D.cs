@@ -14,7 +14,7 @@ public class Flicker3D : MonoBehaviour {
 
     void Awake() {
     	//mat = gameObject.GetComponent<Material>();
-        //Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60;
     }
     // Update is called once per frame
 
