@@ -9,6 +9,7 @@ public class MicrophoneInput : MonoBehaviour {
 	public bool readSamplesOn = true;
 	public AudioSource audio;
 	public AudioSource tone;
+	public AudioClip demoTone;					//Demo tone to use in the app
 	private float[] samples;					//full range of recorded samples
 	private float[] sampleSet;					//small subset of samples used for analysis
 	private float[] sampleSetAvg;				//small subset of samples used for analysis
@@ -40,11 +41,21 @@ public class MicrophoneInput : MonoBehaviour {
 	private int numSamples = 8192;
 	private float fMax;
 	private FFTWindow specFFTwindow = FFTWindow.Hanning;
+	private float diff = 0.0f;
+	public int diffTrigger = 0;
+	public int triggerTime = 60;				//Number of frames it takes within a range to trigger
+	public float triggerHigh = 0.1f;
+	public float triggerLow = -0.1f;
+	public float triggerResetHigh = 0.001f;
+	public float triggerResetLow = -0.001f;
 	//public int activeAudioClip = 0;
 	//public AudioClip[] audioClips;
 
 	
 	void Awake () {
+		foreach (string device in Microphone.devices) {
+            Debug.Log("Name: " + device);
+        }
 		InitializeAudio();
 	}
 
@@ -61,10 +72,17 @@ public class MicrophoneInput : MonoBehaviour {
 			samples[i] = Mathf.Abs(samples[i]);
 		}
 		numSamplesTaken = 0;
+		diffTrigger = 0;
 	}
 
 	public void NextProcessingMode() {
 		sampleProcessingMode = (sampleProcessingMode + 1)%5;
+	}
+
+	public void MicToggle() {
+		useMicrophone =  !useMicrophone;
+		InitializeAudio();
+		ResetSamples();
 	}
 
 	void InitializeAudio () {
@@ -97,11 +115,13 @@ public class MicrophoneInput : MonoBehaviour {
 		sampleSetProcessedPrev = new float[maxSamples,sampleSetSize];
 		sampleSetAvg = new float[sampleSetSize];
 
-		//fMax = inputHz;
 		Debug.Log("fMax: "+fMax.ToString());
 		if (useMicrophone) {
-			audio.clip = Microphone.Start("Built-in Microphone", true, 10, inputHz);
+			//audio.clip = Microphone.Start("Built-in Microphone", true, 10, inputHz);
+			audio.clip = Microphone.Start(null, true, 10, inputHz);
 			while (Microphone.GetPosition(null) <= 0){}
+		} else {
+			audio.clip = demoTone;
 		}
 		//audio.mute = true;
 		audio.Play();
@@ -152,12 +172,25 @@ public class MicrophoneInput : MonoBehaviour {
 		// Boost the data for visual output
 		sampleSetProcessed = BoostSamples(sampleSetProcessed);
 
+		ssvepLowValues[0] = Mathf.FloorToInt((fTarget - ssvepLowF) * numSamples / fMax) - startValue;
+		ssvepLowValues[1] = Mathf.FloorToInt((fTarget + ssvepLowF) * numSamples / fMax) - startValue;
+		ssvepHighValues[0] = Mathf.FloorToInt((fTarget - ssvepHighF) * numSamples / fMax) - startValue;
+		ssvepHighValues[1] = Mathf.FloorToInt((fTarget + ssvepHighF) * numSamples / fMax) - startValue;	
+		diff = sampleSetProcessed[ssvepHighValues[0]] - sampleSetProcessed[ssvepLowValues[0]];
+		if (diff>triggerHigh) {
+			++diffTrigger;
+		} else if (diff<triggerLow) {
+			--diffTrigger;
+		} else if ((diff<triggerResetHigh) && (diff>triggerResetLow)) {
+			diffTrigger = 0;
+		}
+
+		//Debug.Log("Diff: " + diff.ToString("0.0000"));
+		Debug.Log(string.Format("{0:####.000} Hz", diff));
+		Debug.Log("diffTrigger: " + diffTrigger);
+
 		//Testing SSVEP peak locations
 		if (numSamplesTaken % 5 == 0) {
-			ssvepLowValues[0] = Mathf.FloorToInt((fTarget - ssvepLowF) * numSamples / fMax) - startValue;
-			ssvepLowValues[1] = Mathf.FloorToInt((fTarget + ssvepLowF) * numSamples / fMax) - startValue;
-			ssvepHighValues[0] = Mathf.FloorToInt((fTarget - ssvepHighF) * numSamples / fMax) - startValue;
-			ssvepHighValues[1] = Mathf.FloorToInt((fTarget + ssvepHighF) * numSamples / fMax) - startValue;	
 			sampleSetProcessed[ssvepLowValues[0]] = 0.2f;
 			sampleSetProcessed[ssvepLowValues[1]] = 0.2f;
 			sampleSetProcessed[ssvepHighValues[0]] = 0.1f;

@@ -45,7 +45,12 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		if (_microphoneInput.diffTrigger > _microphoneInput.triggerTime) {
+			HighFrequency();
+		}
+		if (_microphoneInput.diffTrigger < -_microphoneInput.triggerTime) {
+			LowFrequency();
+		}
 	}
 
 	public void LowFrequency () {
