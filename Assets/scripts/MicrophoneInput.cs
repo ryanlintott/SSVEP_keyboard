@@ -63,6 +63,10 @@ public class MicrophoneInput : MonoBehaviour {
 		numSamplesTaken = 0;
 	}
 
+	public void NextProcessingMode() {
+		sampleProcessingMode = (sampleProcessingMode + 1)%5;
+	}
+
 	void InitializeAudio () {
 		audio.loop = true;
 		//audio.clip.set(audioClips[activeAudioClip]);
