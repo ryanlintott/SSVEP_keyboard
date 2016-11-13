@@ -26,6 +26,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	public NextLetterProbability _nextLetterProbability;
 	public MicrophoneInput _microphoneInput;
 	public int letterDelay = 3;
+	public bool useSSVEP = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -45,12 +46,18 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (_microphoneInput.diffTrigger > _microphoneInput.triggerTime) {
-			HighFrequency();
+		if (useSSVEP) {
+			if (_microphoneInput.diffTrigger > _microphoneInput.triggerTime) {
+				HighFrequency();
+			}
+			if (_microphoneInput.diffTrigger < -_microphoneInput.triggerTime) {
+				LowFrequency();
+			}
 		}
-		if (_microphoneInput.diffTrigger < -_microphoneInput.triggerTime) {
-			LowFrequency();
-		}
+	}
+
+	public void ToggleUseSSVEP () {
+		useSSVEP = !useSSVEP;
 	}
 
 	public void LowFrequency () {
