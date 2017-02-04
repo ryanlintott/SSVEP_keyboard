@@ -16,6 +16,10 @@ Other repositories that are a part of the smartphone BCI Project:
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+## What is SSVEP?
+
+- [A Quick Intro to SSVEP](http://synaptitude.me/blog/a-quick-intro-to-ssvep-steady-state-visually-evoked-potential/)
+
 ## The Unity App
 
 The **SSVEP Keyboard** app is built in Unity and can run on following platforms:

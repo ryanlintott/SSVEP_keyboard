@@ -1,9 +1,9 @@
 Library
 Temp
-*.csproj
-*.sln
-*.userprefs
-*.mp4
+.csproj
+.sln
+.userprefs
+.mp4
 Assets/Resources/Audio/*.wav
 Assets/Resources/*.mp4
 
@@ -15,12 +15,12 @@ obj
 
 #Sublime ignore
 # cache files for sublime text
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
+.tmlanguage.cache
+.tmPreferences.cache
+.stTheme.cache
 
 # workspace files are user-specific
-*.sublime-workspace
+.sublime-workspace
 
 # project files should be checked into the repository, unless a significant
 # proportion of contributors will probably not be using SublimeText
