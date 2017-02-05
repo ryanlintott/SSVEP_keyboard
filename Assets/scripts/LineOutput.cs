@@ -16,12 +16,13 @@ public class LineOutput : MonoBehaviour {
     void OnAudioRead(float[] data) {
         int count = 0;
         while (count < data.Length) {
-            data[count] = Mathf.Sign(Mathf.Sin(2 * Mathf.PI * frequency * position / samplerate));
+            //data[count] = Mathf.Sign(Mathf.Sin(2 * Mathf.PI * frequency * position / samplerate));
+            data[count] = Mathf.Sin(2 * Mathf.PI * frequency * position / (float)samplerate);
             position++;
             count++;
         }
     }
-    
+
     void OnAudioSetPosition(int newPosition) {
         position = newPosition;
     }
