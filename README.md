@@ -56,7 +56,16 @@ The Flicker app can do the following:
 - Be sure to choose frequencies that divide evenly into 60Hz for accurate flickers
 - Note that the screen refresh rate (displayed in the app) should be 60fps for this to work correctly on more frequencies.
 
-To Do:
+### Issue with microphone on iOS
+If you have errors when building with XCode this may be the cause. On iOS you need to request permission to use the microphone. For some reason Unity isn't adding this request but you can add it manually. Look for the error and see if it says anything about adding a key to Info.plist
+
+You may need to manually add a key to Info.plist:
+NSMicrophoneUsageDescription
+
+with a string explaining the use:
+Microphone data used as an input for EEG data from the BCI device
+
+### To Do
 
 - Replace the UI keyboard letters with 3d objects to acheive correct flickers with updates at 60fps
 - Combine the Flicker app with the Keyboard app with a toggle
