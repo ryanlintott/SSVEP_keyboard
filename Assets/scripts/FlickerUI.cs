@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Flicker : MonoBehaviour {
+public class FlickerUI : MonoBehaviour {
     public Color c1;
     public Color c2;
     private Image image;
@@ -11,7 +11,7 @@ public class Flicker : MonoBehaviour {
     float dtime = 0; // delta time
 
     void Awake() {
-    	image = gameObject.GetComponent<Image>();
+        image = gameObject.GetComponent<Image>();
         Application.targetFrameRate = 60;
     }
     // Update is called once per frame

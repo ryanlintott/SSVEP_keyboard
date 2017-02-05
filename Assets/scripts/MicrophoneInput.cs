@@ -115,7 +115,7 @@ public class MicrophoneInput : MonoBehaviour {
 		sampleSetProcessedPrev = new float[maxSamples,sampleSetSize];
 		sampleSetAvg = new float[sampleSetSize];
 
-		Debug.Log("fMax: "+fMax.ToString());
+		//Debug.Log("fMax: "+fMax.ToString());
 		if (useMicrophone) {
 			//audio.clip = Microphone.Start("Built-in Microphone", true, 10, inputHz);
 			audio.clip = Microphone.Start(null, true, 10, inputHz);
@@ -186,8 +186,8 @@ public class MicrophoneInput : MonoBehaviour {
 		}
 
 		//Debug.Log("Diff: " + diff.ToString("0.0000"));
-		Debug.Log(string.Format("{0:####.000} Hz", diff));
-		Debug.Log("diffTrigger: " + diffTrigger);
+		//Debug.Log(string.Format("{0:####.000} Hz", diff));
+		//Debug.Log("diffTrigger: " + diffTrigger);
 
 		//Testing SSVEP peak locations
 		if (numSamplesTaken % 5 == 0) {
@@ -312,7 +312,7 @@ public class MicrophoneInput : MonoBehaviour {
 	}
 
 	void DrawDebugLines () {
-		Debug.Log(numSamplesTaken.ToString());
+		//Debug.Log(numSamplesTaken.ToString());
 
 		int xScale = 8;
 		int yScale = 400;
