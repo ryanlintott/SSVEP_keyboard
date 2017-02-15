@@ -27,7 +27,9 @@ The **SSVEP Keyboard** app is built in Unity and can run on following platforms:
 - iOS
 - Android
 - macOS
-- windows (not yet tested but theoretically should work)
+- Windows (not yet tested but theoretically should work)
+
+You can download builds for most platforms [here](https://drive.google.com/drive/folders/0B4W4Pn0tIMBXbGUtdmJCMW02dk0?usp=sharing))
 
 ### Current functions of the app
 
