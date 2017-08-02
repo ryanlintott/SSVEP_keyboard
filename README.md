@@ -75,6 +75,7 @@ NSCameraUsageDescription
 ### To Do
 
 - Replace the UI keyboard letters with 3d objects to acheive correct flickers with updates at 60fps
+- Replace Unity's built in FFT function with a custom one and lower the sample rate and possibly increase the bucket count to increase the frequency resolution
 - Combine the Flicker app with the Keyboard app with a toggle
 - Change toggle buttons to actually display their current state
 - Move all buttons behind a menu to clear up the screen

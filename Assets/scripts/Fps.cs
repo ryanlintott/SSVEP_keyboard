@@ -17,7 +17,7 @@ public class Fps : MonoBehaviour {
 		deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
 		float msec = deltaTime * 1000.0f;
 		float fps = 1.0f / deltaTime;
-		string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
+		string text = string.Format("Framerate: {0:0.0} ms ({1:0.} fps) Signal Output: {2:0.} HZ", msec, fps, AudioSettings.outputSampleRate);
 		textOutput.text = text;
 
 	}

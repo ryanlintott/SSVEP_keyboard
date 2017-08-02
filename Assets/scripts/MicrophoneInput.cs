@@ -21,9 +21,11 @@ public class MicrophoneInput : MonoBehaviour {
 	public bool useClamp = true;
 	public float leftClamp = 0.0f;
 	public float rightClamp = 1.0f;
-	public int inputHz;
-	public int fTarget = 1000;
-	public int fWidth = 120;
+	private int sampleRate = 44100;				//44100 typical 
+	public int fTarget = 1000;					//Target in HZ
+	public int fWidth = 120;					//Width of area of interest around target in HZ
+	private int minFreq = 0;
+	private int maxFreq = 0;
 	public float ssvepLowF = 12.0f;
 	public float ssvepHighF = 20.0f;
 	private int startValue;
@@ -38,9 +40,9 @@ public class MicrophoneInput : MonoBehaviour {
 	private bool useMaxSamples;
 	public int sAvgWidth = 1;					//Number of samples to average together. Default: 1 is no averaging
 	public int sampleProcessingMode = 0;
-	private int numSamples = 8192;
-	private float fMax;
-	private FFTWindow specFFTwindow = FFTWindow.Hanning;
+	private int numSamples = 8192;				//Min: 64, Max: 8192
+	private float fMax;							//typically 44100Hz but it has to be read in from the system to be sure. This value can be chaged on iOS or Android but not on Mac or PC
+	private FFTWindow specFFTwindow = FFTWindow.BlackmanHarris;  //Previously Hanning
 	private float diff = 0.0f;
 	public int diffTrigger = 0;
 	public int triggerTime = 60;				//Number of frames it takes within a range to trigger
@@ -89,6 +91,9 @@ public class MicrophoneInput : MonoBehaviour {
 		audio.loop = true;
 		//audio.clip.set(audioClips[activeAudioClip]);
 		samples = new float[numSamples];
+
+		sampleRate = Mathf.FloorToInt(AudioSettings.outputSampleRate);
+		Debug.Log("outputSampleRate: " + sampleRate.ToString());
 		
 		fMax = AudioSettings.outputSampleRate / 2;
 		startValue = Mathf.FloorToInt((fTarget - (fWidth / 2)) * numSamples / fMax);
@@ -115,10 +120,15 @@ public class MicrophoneInput : MonoBehaviour {
 		sampleSetProcessedPrev = new float[maxSamples,sampleSetSize];
 		sampleSetAvg = new float[sampleSetSize];
 
+
 		//Debug.Log("fMax: "+fMax.ToString());
 		if (useMicrophone) {
-			//audio.clip = Microphone.Start("Built-in Microphone", true, 10, inputHz);
-			audio.clip = Microphone.Start(null, true, 10, inputHz);
+			foreach(string s in Microphone.devices) {
+				Microphone.GetDeviceCaps(s, out minFreq, out maxFreq);	
+				Debug.Log("Device Name: " + s + " [" + minFreq.ToString() + "-" + maxFreq.ToString() + "]");
+			}
+			//audio.clip = Microphone.Start("Built-in Microphone", true, 10, sampleRate);
+			audio.clip = Microphone.Start(null, true, 10, sampleRate);
 			while (Microphone.GetPosition(null) <= 0){}
 		} else {
 			audio.clip = demoTone;
