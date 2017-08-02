@@ -277,19 +277,18 @@
 			"file": "README.md",
 			"settings":
 			{
-				"buffer_size": 3742,
+				"buffer_size": 4679,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "README.md"
 			}
 		},
 		{
-			"file": "Assets/scripts/LineOutput.cs",
+			"file": "/Volumes/Backpack/Library/_Standards/_Squint_standards/3dsmax2014/scripts/squint_scripts/squint_startup.ms",
 			"settings":
 			{
-				"buffer_size": 781,
-				"encoding": "UTF-8 with BOM",
-				"line_ending": "Unix"
+				"buffer_size": 5142,
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -304,7 +303,7 @@
 			"file": "Assets/scripts/MicrophoneInput.cs",
 			"settings":
 			{
-				"buffer_size": 11099,
+				"buffer_size": 11107,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -313,7 +312,7 @@
 			"file": "Assets/scripts/Flicker.cs",
 			"settings":
 			{
-				"buffer_size": 1170,
+				"buffer_size": 1169,
 				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
@@ -406,14 +405,11 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard",
-		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets",
-		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/Resources",
-		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/Resources/Text",
-		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts"
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard"
 	],
 	"file_history":
 	[
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/LineOutput.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/SSVEPKeyboardView.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/TextOutputDisplay.cs",
 		"/Users/ryanlintott/Dev/Unity/SSVEP_keyboard/Assets/scripts/RektTransform.cs",
@@ -530,7 +526,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -606,15 +602,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3742,
+						"buffer_size": 4679,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								864,
-								864
+								0,
+								0
 							]
 						],
 						"settings":
@@ -627,48 +623,36 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "Assets/scripts/LineOutput.cs",
+					"file": "/Volumes/Backpack/Library/_Standards/_Squint_standards/3dsmax2014/scripts/squint_scripts/squint_startup.ms",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 781,
+						"buffer_size": 5142,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								31,
-								31
+								4961,
+								4961
 							]
 						],
 						"settings":
 						{
 							"apply_syntax_touched": true,
-							"oops":
-							{
-								"404,408": "'Math' is not a known identifier",
-								"409,411": "Error: Double",
-								"618,622": "'Math' is not a known identifier",
-								"623,626": "'?' does not contain a definition for 'Sin'",
-								"633,634": "Error: Double",
-								"634,635": "Error: Double",
-								"763,767": "'Math' is not a known identifier",
-								"768,770": "Error: Int32"
-							},
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 708.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -698,7 +682,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -707,15 +691,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11099,
+						"buffer_size": 11107,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1745,
-								1745
+								0,
+								0
 							]
 						],
 						"settings":
@@ -744,15 +728,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1170,
+						"buffer_size": 1169,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								345,
-								345
+								0,
+								0
 							]
 						],
 						"settings":

@@ -145,7 +145,7 @@ public class MicrophoneInput : MonoBehaviour {
 		// Normalize the data
 		sampleSetProcessed = NormalizeSamples(sampleSetProcessed);
 
-		// Average the samples over time.  If maxSamples = 1 this will just retrun the same values
+		// Average the samples over time.  If maxSamples = 1 this will just return the same values
 		if (averageOverTime) {
 			sampleSetAvg = AverageSamplesTime(sampleSetProcessed, sampleSetAvg, sampleSetPrev, numSamplesTaken, sampleSetCounter, useMaxSamples);
 			sampleSetProcessed = sampleSetAvg;
