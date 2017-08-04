@@ -5,7 +5,7 @@ using System.Collections;
 public class SSVEPKeyboardView : MonoBehaviour {
 
 	public GridLayoutGroup grid;
-	private Flicker[] gridKeys;
+	private FlickerUI[] gridKeys;
 	private Text[] gridKeyText;
 	private bool keyboardActive = false;
 
@@ -19,7 +19,7 @@ public class SSVEPKeyboardView : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		gridKeys = GetComponentsInChildren<Flicker>();
+		gridKeys = GetComponentsInChildren<FlickerUI>();
 		gridKeyText = GetComponentsInChildren<Text>();
 
 	}
