@@ -16,6 +16,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	private KeyboardKey[] keys;
 	private int toggle;
 	public SSVEPKeyboardView _SSVEPKeyboardView;
+	public SSVEPKeyboardSpriteView _SSVEPKeyboardSpriteView;
 	private string[] keyStrings;
 	private int keysLeft;
 	public TextOutputDisplay _textOutputDisplay;
@@ -151,7 +152,13 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	}
 
 	void UpdateKeyboardKey (KeyboardKey _keyboardKey) {
-		_SSVEPKeyboardView.SetKeyboardKey(_keyboardKey.keyPosition, _keyboardKey.status, _keyboardKey.key);
+		if (_SSVEPKeyboardView != null) {
+			Debug.Log("UI Keyboard");
+			_SSVEPKeyboardView.SetKeyboardKey(_keyboardKey.keyPosition, _keyboardKey.status, _keyboardKey.key);
+		} else {
+			Debug.Log("Sprite Keyboard");
+			_SSVEPKeyboardSpriteView.SetKeyboardKey(_keyboardKey.keyPosition, _keyboardKey.status, _keyboardKey.key);
+		}
 	}
 
 	public void ClearOutput () {
