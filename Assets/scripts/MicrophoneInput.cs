@@ -40,7 +40,7 @@ public class MicrophoneInput : MonoBehaviour {
 	private bool useMaxSamples;
 	public int sAvgWidth = 1;					//Number of samples to average together. Default: 1 is no averaging
 	public int sampleProcessingMode = 0;
-	private int numSamples = 8192;				//Min: 64, Max: 8192
+	private int numSamples = 8192;				//Must be power of 2  Min: 64, Max: 8192
 	private float fMax;							//typically 44100Hz but it has to be read in from the system to be sure. This value can be chaged on iOS or Android but not on Mac or PC
 	private FFTWindow specFFTwindow = FFTWindow.BlackmanHarris;  //Previously Hanning
 	private float diff = 0.0f;
@@ -88,13 +88,22 @@ public class MicrophoneInput : MonoBehaviour {
 	}
 
 	void InitializeAudio () {
+
+		#if UNITY_IOS
+			Debug.Log("iPhone");
+			AudioConfiguration config = AudioSettings.GetConfiguration();
+			config.sampleRate = 11025;
+			AudioSettings.Reset(config);
+		#endif
+
+		//Sample Rate on iOS will hopefully be 11025, this should be the same on Android. Mac and PC can only use 48000
+		sampleRate = Mathf.FloorToInt(AudioSettings.outputSampleRate);
+		Debug.Log("outputSampleRate: " + sampleRate.ToString());
+
 		audio.loop = true;
 		//audio.clip.set(audioClips[activeAudioClip]);
 		samples = new float[numSamples];
 
-		sampleRate = Mathf.FloorToInt(AudioSettings.outputSampleRate);
-		Debug.Log("outputSampleRate: " + sampleRate.ToString());
-		
 		fMax = AudioSettings.outputSampleRate / 2;
 		startValue = Mathf.FloorToInt((fTarget - (fWidth / 2)) * numSamples / fMax);
 		endValue = Mathf.FloorToInt((fTarget + (fWidth / 2)) * numSamples / fMax);
@@ -169,7 +178,7 @@ public class MicrophoneInput : MonoBehaviour {
 				sampleSetProcessed = AverageSamples(sampleSetProcessed, sAvgWidth);
 				break;
 			case 2:
-				sampleSetProcessed = AverageNeighbourSamples(sampleSetProcessed, sAvgWidth);
+				sampleSetProcessed = RelativePeakSamples(sampleSetProcessed, sAvgWidth);
 				break;
 			case 3:
 				sampleSetProcessed = PeakSamples(sampleSetProcessed, sAvgWidth);
@@ -182,16 +191,20 @@ public class MicrophoneInput : MonoBehaviour {
 		// Boost the data for visual output
 		sampleSetProcessed = BoostSamples(sampleSetProcessed);
 
+		//Calculate the bucket numbers for SSVEP low and high values on both ends of the spectrum (even though only the left side is used)
 		ssvepLowValues[0] = Mathf.FloorToInt((fTarget - ssvepLowF) * numSamples / fMax) - startValue;
 		ssvepLowValues[1] = Mathf.FloorToInt((fTarget + ssvepLowF) * numSamples / fMax) - startValue;
 		ssvepHighValues[0] = Mathf.FloorToInt((fTarget - ssvepHighF) * numSamples / fMax) - startValue;
-		ssvepHighValues[1] = Mathf.FloorToInt((fTarget + ssvepHighF) * numSamples / fMax) - startValue;	
+		ssvepHighValues[1] = Mathf.FloorToInt((fTarget + ssvepHighF) * numSamples / fMax) - startValue;
+
+		//Calculate the difference in the height of the low and high frequency peaks.
 		diff = sampleSetProcessed[ssvepHighValues[0]] - sampleSetProcessed[ssvepLowValues[0]];
 		if (diff>triggerHigh) {
 			++diffTrigger;
 		} else if (diff<triggerLow) {
 			--diffTrigger;
 		} else if ((diff<triggerResetHigh) && (diff>triggerResetLow)) {
+			//Reset the diffTrigger value if it drops out of range for low or high triggers
 			diffTrigger = 0;
 		}
 
@@ -199,7 +212,7 @@ public class MicrophoneInput : MonoBehaviour {
 		//Debug.Log(string.Format("{0:####.000} Hz", diff));
 		//Debug.Log("diffTrigger: " + diffTrigger);
 
-		//Testing SSVEP peak locations
+		//Flicker the relevant SSVEP high and low values at regular intervals. This happens after the check has taken place.
 		if (numSamplesTaken % 5 == 0) {
 			sampleSetProcessed[ssvepLowValues[0]] = 0.2f;
 			sampleSetProcessed[ssvepLowValues[1]] = 0.2f;
@@ -273,6 +286,7 @@ public class MicrophoneInput : MonoBehaviour {
 		return sOut;
 	}
 
+	//Each output sample will be an average of itself and w neighbours on each side.
 	static float[] AverageSamples(float[] sIn, int w) {
 		float[] sOut = new float[sIn.Length];
 		for (int i = 0; i < sIn.Length; i++) {
@@ -286,16 +300,18 @@ public class MicrophoneInput : MonoBehaviour {
 		return sOut;
 	}
 
-
-	static float[] AverageNeighbourSamples(float[] sIn, int w) {
+	//Each output sample will be the input sample minus the midpoint between the neighbour vales w away in each direction.
+	//Negative values are zeroed as we're only looking for relative peaks.
+	static float[] RelativePeakSamples(float[] sIn, int w) {
 		float[] sOut = new float[sIn.Length];
 		for (int i = 0; i < sIn.Length; i++) {
-			sOut[i] = Mathf.Abs(sIn[i] - Mathf.Lerp(sIn[Mathf.Max(i-w,0)],sIn[Mathf.Min(i+w,sIn.Length-1)],0.5f));
+			sOut[i] = Mathf.Max(sIn[i] - Mathf.Lerp(sIn[Mathf.Max(i-w,0)],sIn[Mathf.Min(i+w,sIn.Length-1)],0.5f),0);
 		}
 		return sOut;
 	}
 
-
+	//Each output sample will be the input sample minus the midpoint between the neighbour vales w away in each direction.
+	//Any value less than either neighbour is zeroed as we're only looking for true peaks.
 	static float[] PeakSamples(float[] sIn, int w) {
 		float[] sOut = new float[sIn.Length];
 		for (int i = 0; i < sIn.Length; i++) {
@@ -309,6 +325,7 @@ public class MicrophoneInput : MonoBehaviour {
 		return sOut;
 	}
 
+	//Any peaks (measuring sample against neighbour w away) are output as 1 and all other values are zero
 	static float[] PeaksOnlySamples(float[] sIn, int w) {
 		float[] sOut = new float[sIn.Length];
 		for (int i = 0; i < sIn.Length; i++) {
