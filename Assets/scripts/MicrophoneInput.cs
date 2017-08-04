@@ -96,6 +96,13 @@ public class MicrophoneInput : MonoBehaviour {
 			AudioSettings.Reset(config);
 		#endif
 
+		#if UNITY_ANDROID
+			Debug.Log("Android");
+			AudioConfiguration config = AudioSettings.GetConfiguration();
+			config.sampleRate = 11025;
+			AudioSettings.Reset(config);
+		#endif
+
 		//Sample Rate on iOS will hopefully be 11025, this should be the same on Android. Mac and PC can only use 48000
 		sampleRate = Mathf.FloorToInt(AudioSettings.outputSampleRate);
 		Debug.Log("outputSampleRate: " + sampleRate.ToString());
