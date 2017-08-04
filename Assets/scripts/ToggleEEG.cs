@@ -24,11 +24,6 @@ public class ToggleEEG : MonoBehaviour {
 		bottomSmall = eegrect.GetBottom().y;
 		eqHeightSmall = eeggrid.cellSize.y;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	public void ToggleEEGsize () {
 		

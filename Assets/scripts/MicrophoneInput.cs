@@ -42,7 +42,7 @@ public class MicrophoneInput : MonoBehaviour {
 	public int sampleProcessingMode = 0;
 	private int numSamples = 8192;				//Must be power of 2  Min: 64, Max: 8192
 	private float fMax;							//typically 44100Hz but it has to be read in from the system to be sure. This value can be chaged on iOS or Android but not on Mac or PC
-	private FFTWindow specFFTwindow = FFTWindow.BlackmanHarris;  //Previously Hanning
+	private FFTWindow specFFTwindow = FFTWindow.Hanning;  //Previously Hanning
 	private float diff = 0.0f;
 	public int diffTrigger = 0;
 	public int triggerTime = 60;				//Number of frames it takes within a range to trigger

@@ -21,7 +21,7 @@ public class SSVEPKeyboardSpriteView : MonoBehaviour {
 	void Awake () {
 		spriteKeys = GetComponentsInChildren<FlickerSprite>();
 		spriteKeyText = GetComponentsInChildren<TextMesh>();
-
+		Application.targetFrameRate = 60;
 	}
 	
 	// Update is called once per frame
