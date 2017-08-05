@@ -7,8 +7,8 @@ This is a repository for the SSVEP keyboard built primarily for the Smartphone B
 
 Other repositories that are a part of the smartphone BCI Project:
 
-* [SMARTPHONE-BCI](https://github.com/capitancambio/smartphone-bci)
-* [SMARTPHONE-BCI-HARDWARE](https://github.com/jmanart/smartphone-bci-hardware)
+* [SMARTPHONE-BCI](https://github.com/icibici/Android-diagnostic-app)
+* [SMARTPHONE-BCI-HARDWARE](https://github.com/icibici/smartphone-bci-hardware)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
