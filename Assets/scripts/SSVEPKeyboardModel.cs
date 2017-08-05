@@ -165,10 +165,8 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 
 	void UpdateKeyboardKey (KeyboardKey _keyboardKey) {
 		if (_SSVEPKeyboardView != null) {
-			Debug.Log("UI Keyboard");
 			_SSVEPKeyboardView.SetKeyboardKey(_keyboardKey.keyPosition, _keyboardKey.status, _keyboardKey.key);
 		} else {
-			Debug.Log("Sprite Keyboard");
 			_SSVEPKeyboardSpriteView.SetKeyboardKey(_keyboardKey.keyPosition, _keyboardKey.status, _keyboardKey.key);
 		}
 	}

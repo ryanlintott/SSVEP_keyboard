@@ -7,12 +7,16 @@ public class SSVEPKeyboardSpriteView : MonoBehaviour {
 	public GameObject _keyPrefab;
 	public GameObject _keyParent;
 	public GameObject _keyboardArea;
-	private FlickerSprite[] spriteKeys;
+	private Transform[] spriteKeysTransform;
+	private FlickerSprite[] spriteKeysFlicker;
 	private TextMesh[] spriteKeyText;
-	private bool keyboardActive = false;
+	private bool keyboardActive = true;
 	private float keyboardWidth;
 	private float keyboardHeight;
 	private float keyHeight;
+	private float keyScale = 0.5f;
+	private float keySize;
+	private float keyShiftX;
 	private int keyRows;
 	private int keyColumns;
 	private int keyCount;
@@ -35,7 +39,7 @@ public class SSVEPKeyboardSpriteView : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		FlickerKeys();
+		if (keyboardActive) FlickerKeys();
 	}
 
 	void Start () {
@@ -43,45 +47,118 @@ public class SSVEPKeyboardSpriteView : MonoBehaviour {
 	}
 
 	void FlickerKeys () {
-		for (int i = 0; i < spriteKeys.Length; i++) {
-			spriteKeys[i].MakeFlicker();
+		for (int i = 0; i < spriteKeysFlicker.Length; i++) {
+			spriteKeysFlicker[i].MakeFlicker();
 		}
 	}
 
+	private float SquaresInRect (int n, float x, float y) {
+		//max area of a square where n will fit the area
+		float maxA = (x * y) / (float)n;
+
+		//max side of that square
+		float sx = Mathf.Sqrt(maxA);
+		
+		//num squares to cover x side
+		int px = Mathf.CeilToInt(x / sx);
+
+		//size of px squares that fit x side
+		sx = x / (float)px;
+
+		//how many could possibly fit in y?
+		int py = Mathf.FloorToInt(y / sx);
+
+		//how many squares total?
+		if (px * py < n) {
+			//if there's not enough shrink to fit in y
+			py = Mathf.CeilToInt(y / sx);
+
+			if (px * py < n) Debug.Log("ERROR - not enough keys! sx");
+			//size of px squares that fit y side
+			sx = y / py;
+		}
+
+		//try the whole thing again from the other axis
+		
+		//max side of that square
+		float sy = Mathf.Sqrt(maxA);
+		
+		//num squares to cover y side
+		py = Mathf.CeilToInt(y / sy);
+
+		//size of py squares that fit y side
+		sy = y / (float)py;
+
+		//how many could possibly fit in x?
+		px = Mathf.FloorToInt(x / sy);
+
+		//how many squares total?
+		if (px * py < n) {
+			//if there's not enough shrink to fit in x
+			px = Mathf.CeilToInt(x / sy);
+
+			if (px * py < n) Debug.Log("ERROR - not enough keys! sy");
+			//size of px squares that fit y side
+			sy = x / (float)px;
+		}
+
+		Debug.Log("sx"+sx+"sy"+sy);
+		return Mathf.Max(sx,sy);
+	}
+
 	public void BuildKeyboard (int numKeys) {
+		//stop flickering for a bit
+		keyboardActive = false;
 
 		//destroy all current keys
-		
-		//divide it by the number of keys
-
-		keyRows = 0;
-		keyCount = 0;
-		keyColumns = 0;
-
-		//Write a better algorithm for figuring out how big the keys need to be. The ideal may still have less rows but with shorter keys to fit more columns
-		while ((keyCount < numKeys) && (keyRows < 10)) {
-			keyRows += 1;
-			keyHeight = keyboardHeight / keyRows;
-			keyColumns = Mathf.FloorToInt(keyboardWidth / keyHeight);
-			keyCount = keyRows * keyColumns;
-			Debug.Log("Keycount: "+keyCount);
+		foreach (Transform child in _keyParent.transform) {
+		    Destroy(child.gameObject);
 		}
+		_keyParent.transform.DetachChildren();
+
+		keyHeight = SquaresInRect(numKeys, keyboardWidth, keyboardHeight);
+		keyRows = Mathf.FloorToInt(keyboardHeight / keyHeight);
+		keyColumns = Mathf.FloorToInt(keyboardWidth / keyHeight);
+		keyShiftX = 0;
+		keySize = (keyHeight / 10f) * keyScale;
 
 		topLeftPos = new Vector3( (-(keyHeight * keyColumns) / 2f) + (keyHeight / 2f), ((keyHeight * keyRows) / 2f) - (keyHeight / 2f), 0f);
 
-		for (int y = 0; y < (keyRows-1); y++) {
-			for (int x = 0; x < (keyColumns-1); x++) {
-				GameObject childKey = Instantiate(_keyPrefab) as GameObject;
-				childKey.transform.rotation = _keyParent.transform.rotation;
-				childKey.transform.parent = _keyParent.transform;
-				childKey.transform.localPosition = new Vector3(topLeftPos.x + (keyHeight * x), topLeftPos.y - (keyHeight * y), topLeftPos.z);
-				childKey.transform.localScale = new Vector3(keyHeight / 10f, keyHeight / 10f, keyHeight / 10f);
+		keyCount = 0;
+		for (int y = 0; y < keyRows; y++) {
+			if (y == keyRows - 1) {
+				//shift to center keys on last row
+				keyShiftX = ((keyColumns - (numKeys - keyCount)) * keyHeight) / (float)(numKeys - keyCount);
+			}
+			for (int x = 0; x < keyColumns; x++) {
+				if (keyCount < numKeys) {
+					keyCount += 1;
+					GameObject childKey = Instantiate(_keyPrefab) as GameObject;
+					childKey.transform.rotation = _keyParent.transform.rotation;
+					childKey.transform.parent = _keyParent.transform;
+					childKey.transform.localPosition = new Vector3(topLeftPos.x + ((keyHeight + keyShiftX) * x) + (keyShiftX / 2f), topLeftPos.y - (keyHeight * y), topLeftPos.z);
+					childKey.transform.localScale = new Vector3(keySize, keySize, keySize);
+
+				}
 			}
 		}
 
-		spriteKeys = _keyParent.GetComponentsInChildren<FlickerSprite>();
+		spriteKeysTransform = _keyParent.GetComponentsInChildren<Transform>();
+		spriteKeysFlicker = _keyParent.GetComponentsInChildren<FlickerSprite>();
 		spriteKeyText = _keyParent.GetComponentsInChildren<TextMesh>();
-		//find each key's position and instantiate a key there
+
+		keyboardActive = true;
+
+	}
+
+	public void ScaleKeys (float scale) {
+
+		keyScale = scale;
+		keySize = (keyHeight / 10f) * keyScale;
+		foreach (Transform childKeyTransform in spriteKeysTransform) {
+			childKeyTransform.localScale = new Vector3(keySize, keySize, keySize);
+		}
+
 	}
 
 	public void SetKeyLetters (string[] keys) {
@@ -91,28 +168,28 @@ public class SSVEPKeyboardSpriteView : MonoBehaviour {
 	}
 
 	public void SetKeyboardKey (int i, int state, string key) {
-		spriteKeys[i].c1 = hzBaseColor;
+		spriteKeysFlicker[i].c1 = hzBaseColor;
 		spriteKeyText[i].text = key;
 		switch (state) {
 			case 0:
-				spriteKeys[i].cycleHz = 0;
-				spriteKeys[i].c2 = hzBaseColor;
+				spriteKeysFlicker[i].cycleHz = 0;
+				spriteKeysFlicker[i].c2 = hzBaseColor;
 				break;
 			case 1:
-				spriteKeys[i].cycleHz = hz1;
-				spriteKeys[i].c2 = hz1Color;
+				spriteKeysFlicker[i].cycleHz = hz1;
+				spriteKeysFlicker[i].c2 = hz1Color;
 				break;
 			case 2:
-				spriteKeys[i].cycleHz = hz2;
-				spriteKeys[i].c2 = hz2Color;
+				spriteKeysFlicker[i].cycleHz = hz2;
+				spriteKeysFlicker[i].c2 = hz2Color;
 				break;
 			case 3:
-				spriteKeys[i].cycleHz = 0;
-				spriteKeys[i].c2 = selectedColor;
+				spriteKeysFlicker[i].cycleHz = 0;
+				spriteKeysFlicker[i].c2 = selectedColor;
 				break;
 			case 4:
-				spriteKeys[i].cycleHz = 0;
-				spriteKeys[i].c2 = baseColor;
+				spriteKeysFlicker[i].cycleHz = 0;
+				spriteKeysFlicker[i].c2 = baseColor;
 				break;
 		}
 	}
