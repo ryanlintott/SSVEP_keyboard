@@ -11,8 +11,9 @@ public struct KeyboardKey {
 
 public class SSVEPKeyboardModel : MonoBehaviour {
 
-	public TextAsset keyboardfile;
-	public int numKeys = 30;
+	public TextAsset[] _keyboardFiles;
+	private int currentKeyboard = 0;
+	private int numKeys;
 	private KeyboardKey[] keys;
 	private int toggle;
 	public SSVEPKeyboardView _SSVEPKeyboardView;
@@ -31,17 +32,11 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		keys = new KeyboardKey[numKeys];
-		keyStrings = keyboardfile.text.Split('\n');
-		for (int i = 0; i < numKeys; i++) {
-			keys[i].key = keyStrings[i];
-			keys[i].status = 0;
-			keys[i].keyPosition = i;
-		}
-		lastLetter = " ";
+		InitializeKeyboard();
 	}
 
 	void Start () {
+		_SSVEPKeyboardSpriteView.BuildKeyboard(numKeys);
 		ResetKeyboardKeys();
 	}
 	
@@ -55,6 +50,27 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 				LowFrequency();
 			}
 		}
+	}
+
+	private void InitializeKeyboard () {
+		keyStrings = _keyboardFiles[currentKeyboard].text.Split('\n');
+		numKeys = keyStrings.Length;
+		keys = new KeyboardKey[numKeys];
+		for (int i = 0; i < numKeys; i++) {
+			keys[i].key = keyStrings[i];
+			keys[i].status = 0;
+			keys[i].keyPosition = i;
+		}
+		lastLetter = " ";
+
+	}
+
+	public void ToggleKeyboard () {
+		currentKeyboard = (currentKeyboard + 1) % _keyboardFiles.Length;
+		InitializeKeyboard ();
+		ClearOutput();
+		_SSVEPKeyboardSpriteView.BuildKeyboard(numKeys);
+		ResetKeyboardKeys();
 	}
 
 	public void ToggleUseSSVEP () {
@@ -84,19 +100,15 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 		keysLeft = 0;
 		toggle = 0;
 		probSum = 0.0f;
-		//Debug.Log("lastLetter: "+lastLetter);
+
 		for (int i = 0; i < numKeys; i++) {
 			if (keys[i].status == state) {
-				//Debug.Log("Last Letter: "+lastLetter+" Key: "+keys[i].key);
 				keys[i].probability = _nextLetterProbability.GetProbability(lastLetter,keys[i].key);
-
 				probSum += keys[i].probability;
-				//Debug.Log(keys[i].probability.ToString());
 			}
 		}
 		halfProbSum = (probSum / 2.0f);
-		//Debug.Log("probSum: "+probSum.ToString());
-		//Debug.Log("halfProbSum: "+halfProbSum.ToString());
+
 		probSum = 0.0f;
 		System.Array.Sort(keys, ProbabilityCondition);
 

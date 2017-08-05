@@ -4,6 +4,46 @@
 		"selected_items":
 		[
 			[
+				"Vecto",
+				"Vector3\tVector3"
+			],
+			[
+				"key",
+				"keyboardWidth\tfloat"
+			],
+			[
+				"_key",
+				"_keyParent\tGameObject"
+			],
+			[
+				"Insta",
+				"Instantiate(Object original, Vector3 position, Quaternion rotation)\tObject"
+			],
+			[
+				"keyboa",
+				"keyboardWidth\tfloat"
+			],
+			[
+				"Ve",
+				"Vector3()\tVector3()"
+			],
+			[
+				"_scr",
+				"_screenRot\tVector3"
+			],
+			[
+				"ro",
+				"rotation\tQuaternion { get; set; }"
+			],
+			[
+				"Vec",
+				"Vector3\tVector3"
+			],
+			[
+				"_",
+				"_screenScale\tVector3"
+			],
+			[
 				"tri",
 				"triggerTime\tint"
 			],
@@ -256,47 +296,38 @@
 	"buffers":
 	[
 		{
-			"file": "Assets/scripts/EQView.cs",
-			"settings":
-			{
-				"buffer_size": 2121,
-				"encoding": "UTF-8 with BOM",
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "README.md",
 			"settings":
 			{
-				"buffer_size": 4458,
+				"buffer_size": 4803,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Assets/scripts/MicrophoneInput.cs",
+			"file": "Assets/scripts/SSVEPKeyboardSpriteView.cs",
 			"settings":
 			{
-				"buffer_size": 13066,
+				"buffer_size": 2870,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/scripts/SSVEPKeyboardModel.cs",
+			"settings":
+			{
+				"buffer_size": 4360,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 882,
 				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/scripts/SSVEPKeyboardView.cs",
-			"settings":
-			{
-				"buffer_size": 1470,
-				"encoding": "UTF-8 with BOM",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/scripts/Fps.cs",
-			"settings":
-			{
-				"buffer_size": 563,
-				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		}
@@ -354,15 +385,23 @@
 	[
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Resources",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Resources/Text",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts"
 	],
 	"file_history":
 	[
-		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/MicrophoneInput.cs",
-		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/README.md",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/Fps.cs",
-		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/ZoomSquares.cs",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Resources/Text/yn.txt",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/FlickerSprite.cs",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/Flicker3D.cs",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/flicker.cs",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/EQView.cs",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/ToggleEEG.cs",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/MicrophoneInput.cs",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/ScreenSizePlane.cs",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/README.md",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/ZoomSquares.cs",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/Flicker.cs",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Resources/Text/keyboard.txt",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/SSVEPKeyboardModel.cs",
@@ -429,6 +468,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"key",
+			"toggle",
+			"_keyboardFiles",
+			"_nextLetterProbability",
+			"lastLetter",
+			"_SSVEPKeyboardView",
 			"sampleRate",
 			"fmax",
 			"inputHz",
@@ -493,60 +538,24 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Assets/scripts/EQView.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2121,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								535,
-								549
-							]
-						],
-						"settings":
-						{
-							"apply_syntax_touched": true,
-							"oops":
-							{
-								"41,46": "Using directive is not used by code and can be removed safely.",
-								"512,517": "Parameter can be declared with base type",
-								"520,526": "Parameter can be IList"
-							},
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "README.md",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4458,
+						"buffer_size": 4803,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1337,
-								1337
+								1232,
+								1232
 							]
 						],
 						"settings":
@@ -555,27 +564,27 @@
 							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 282.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "Assets/scripts/MicrophoneInput.cs",
+					"buffer": 1,
+					"file": "Assets/scripts/SSVEPKeyboardSpriteView.cs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13066,
+						"buffer_size": 2870,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3096,
-								3096
+								2334,
+								2334
 							]
 						],
 						"settings":
@@ -583,65 +592,74 @@
 							"apply_syntax_touched": true,
 							"oops":
 							{
-								"10080,10085": "Use 'var' keyword",
-								"1014,1020": "Name should have prefix '_'. (Rule 'Fields').",
-								"10662,10667": "Use 'var' keyword",
-								"1103,1104": "Initializing field by default value is redundant",
-								"11132,11137": "Use 'var' keyword",
-								"1129,1130": "Initializing field by default value is redundant",
-								"1146,1155": "Name should have prefix '_'. (Rule 'Fields').",
-								"11722,11727": "Use 'var' keyword",
-								"1179,1189": "Name should have prefix '_'. (Rule 'Fields').",
-								"12043,12049": "Convert to constant",
-								"12061,12067": "Convert to constant",
-								"12081,12088": "Convert to constant",
-								"12103,12110": "Convert to constant",
-								"1369,1370": "Initializing field by default value is redundant",
-								"1385,1400": "Name should have prefix '_'. (Rule 'Fields').",
-								"1403,1408": "Initializing field by default value is redundant",
-								"1422,1432": "Name should have prefix '_'. (Rule 'Fields').",
-								"1435,1436": "Initializing field by default value is redundant",
-								"1535,1536": "Initializing field by default value is redundant",
-								"1624,1633": "Name should have prefix '_'. (Rule 'Fields').",
-								"1723,1743": "Name should have prefix '_'. (Rule 'Fields').",
-								"1746,1747": "Initializing field by default value is redundant",
-								"1762,1772": "Convert to constant",
+								"1406,1407": "Assignment is redundant",
 								"19,24": "Using directive is not used by code and can be removed safely.",
-								"192,205": "Name should have prefix '_'. (Rule 'Fields').",
-								"2094,2095": "Initializing field by default value is redundant",
-								"2112,2123": "Name should have prefix '_'. (Rule 'Fields').",
-								"2126,2127": "Initializing field by default value is redundant",
-								"2141,2152": "Name should have prefix '_'. (Rule 'Fields').",
-								"2230,2241": "Name should have prefix '_'. (Rule 'Fields').",
-								"2264,2274": "Name should have prefix '_'. (Rule 'Fields').",
-								"2298,2314": "Name should have prefix '_'. (Rule 'Fields').",
-								"2339,2354": "Name should have prefix '_'. (Rule 'Fields').",
-								"234,239": "Name should have prefix '_'. (Rule 'Fields').",
-								"261,265": "Name should have prefix '_'. (Rule 'Fields').",
-								"285,293": "Name should have prefix '_'. (Rule 'Fields').",
-								"3403,3413": "Redundant ToString() call",
-								"45,50": "Using directive is not used by code and can be removed safely.",
-								"4807,4814": "Redundant ToString() call",
-								"4834,4841": "Redundant ToString() call",
-								"785,798": "Name should have prefix '_'. (Rule 'Fields').",
-								"820,828": "Name should have prefix '_'. (Rule 'Fields').",
-								"851,860": "Name should have prefix '_'. (Rule 'Fields').",
-								"863,864": "Initializing field by default value is redundant",
-								"883,893": "Name should have prefix '_'. (Rule 'Fields').",
-								"8832,8837": "Use 'var' keyword",
-								"9047,9052": "Use 'var' keyword",
-								"9319,9324": "Use 'var' keyword",
-								"9514,9519": "Parameter can be declared with base type",
-								"9522,9526": "Parameter can be IList",
-								"9555,9556": "Parameter can be IComparable",
-								"9610,9615": "Use 'var' keyword",
-								"967,974": "Name should have prefix '_'. (Rule 'Fields')."
+								"2310,2311": "Parameter can be IComparable",
+								"2317,2322": "Parameter can be IComparable",
+								"2331,2334": "Parameter can be IComparable",
+								"306,320": "Convert to constant",
+								"323,328": "Initializing field by default value is redundant",
+								"41,46": "Using directive is not used by code and can be removed safely.",
+								"460,469": "Name should have prefix '_'. (Rule 'Fields').",
+								"485,496": "Name should have prefix '_'. (Rule 'Fields').",
+								"515,523": "Name should have prefix '_'. (Rule 'Fields').",
+								"542,550": "Name should have prefix '_'. (Rule 'Fields').",
+								"569,582": "Name should have prefix '_'. (Rule 'Fields').",
+								"601,604": "Name should have prefix '_'. (Rule 'Fields').",
+								"623,626": "Name should have prefix '_'. (Rule 'Fields')."
 							},
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 720.0,
+						"translation.y": 777.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Assets/scripts/SSVEPKeyboardModel.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4360,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1568,
+								1568
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"oops":
+							{
+								"111,114": "Name should have prefix '_'. (Rule 'Fields').",
+								"128,134": "Name should have prefix '_'. (Rule 'Fields').",
+								"150,161": "Name should have prefix '_'. (Rule 'Fields').",
+								"175,186": "Name should have prefix '_'. (Rule 'Fields').",
+								"19,24": "Using directive is not used by code and can be removed safely.",
+								"309,310": "Initializing field by default value is redundant",
+								"3178,3180": "Convert to 'return' statement",
+								"3732,3736": "Redundant 'else' keyword",
+								"3913,3925": "no known errors.",
+								"410,428": "'_SSVEPKeyboardView' should start with a lower case letter. (Rule 'Fields')",
+								"462,486": "'_SSVEPKeyboardSpriteView' should start with a lower case letter. (Rule 'Fields')",
+								"808,819": "Name should have prefix '_'. (Rule 'Fields').",
+								"838,846": "Name should have prefix '_'. (Rule 'Fields').",
+								"849,854": "Initializing field by default value is redundant"
+							},
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 773.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -649,78 +667,25 @@
 				},
 				{
 					"buffer": 3,
-					"file": "Assets/scripts/SSVEPKeyboardView.cs",
+					"file": ".gitignore",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1470,
+						"buffer_size": 882,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								147,
-								147
+								284,
+								284
 							]
 						],
 						"settings":
 						{
 							"apply_syntax_touched": true,
-							"oops":
-							{
-								"142,146": "Name should have prefix '_'. (Rule 'Fields').",
-								"222,236": "Convert to constant",
-								"239,244": "Initializing field by default value is redundant",
-								"261,270": "Name should have prefix '_'. (Rule 'Fields').",
-								"286,297": "Name should have prefix '_'. (Rule 'Fields').",
-								"316,324": "Name should have prefix '_'. (Rule 'Fields').",
-								"343,351": "Name should have prefix '_'. (Rule 'Fields').",
-								"370,383": "Name should have prefix '_'. (Rule 'Fields').",
-								"402,405": "Name should have prefix '_'. (Rule 'Fields').",
-								"41,46": "Using directive is not used by code and can be removed safely.",
-								"424,427": "Name should have prefix '_'. (Rule 'Fields').",
-								"930,931": "Parameter can be IComparable",
-								"937,942": "Parameter can be IComparable",
-								"951,954": "Parameter can be IComparable"
-							},
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 20.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Assets/scripts/Fps.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 563,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								392,
-								392
-							]
-						],
-						"settings":
-						{
-							"apply_syntax_touched": true,
-							"oops":
-							{
-								"131,132": "Initializing field by default value is redundant",
-								"150,160": "Name should have prefix '_'. (Rule 'Fields').",
-								"41,46": "Using directive is not used by code and can be removed safely."
-							},
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
