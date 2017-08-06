@@ -1,5 +1,5 @@
 # SSVEP Keyboard
-v0.06
+v0.07
 
 This is a repository for the SSVEP keyboard built primarily for the Smartphone BCI
 
@@ -37,6 +37,8 @@ To use the app, it must be connected to the Smartphone BCI (see instructions [he
 
 The Keyboard app can do the following:
 
+- two keyboards! Y/N and English with next letter preditiction
+- scalable keys
 - Output a 1Khz tone via the headphone jack to act as a carrier wave for the Smartphone BCI
 - Read a signal from the microphone and output the frequecy bands from 940-1060Hz
 - Toggle the mode to display these signal bands with various processing methods applied to view peaks (Sorry as modes are currently unlabelled. The default mode is the one with no zero values, please use that one)
