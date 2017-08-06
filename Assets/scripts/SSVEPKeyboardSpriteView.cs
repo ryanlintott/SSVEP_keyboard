@@ -7,7 +7,6 @@ public class SSVEPKeyboardSpriteView : MonoBehaviour {
 	public GameObject _keyPrefab;
 	public GameObject _keyParent;
 	public GameObject _keyboardArea;
-	private Transform[] spriteKeysTransform;
 	private FlickerSprite[] spriteKeysFlicker;
 	private TextMesh[] spriteKeyText;
 	private bool keyboardActive = true;
@@ -120,7 +119,8 @@ public class SSVEPKeyboardSpriteView : MonoBehaviour {
 		keyRows = Mathf.FloorToInt(keyboardHeight / keyHeight);
 		keyColumns = Mathf.FloorToInt(keyboardWidth / keyHeight);
 		keyShiftX = 0;
-		keySize = (keyHeight / 10f) * keyScale;
+		keySize = (keyHeight / 10f);
+		keyScale = 0.5f;
 
 		topLeftPos = new Vector3( (-(keyHeight * keyColumns) / 2f) + (keyHeight / 2f), ((keyHeight * keyRows) / 2f) - (keyHeight / 2f), 0f);
 
@@ -138,12 +138,12 @@ public class SSVEPKeyboardSpriteView : MonoBehaviour {
 					childKey.transform.parent = _keyParent.transform;
 					childKey.transform.localPosition = new Vector3(topLeftPos.x + ((keyHeight + keyShiftX) * x) + (keyShiftX / 2f), topLeftPos.y - (keyHeight * y), topLeftPos.z);
 					childKey.transform.localScale = new Vector3(keySize, keySize, keySize);
+					childKey.transform.GetChild(0).transform.localScale = new Vector3(keyScale, keyScale, keyScale);
 
 				}
 			}
 		}
 
-		spriteKeysTransform = _keyParent.GetComponentsInChildren<Transform>();
 		spriteKeysFlicker = _keyParent.GetComponentsInChildren<FlickerSprite>();
 		spriteKeyText = _keyParent.GetComponentsInChildren<TextMesh>();
 
@@ -155,8 +155,8 @@ public class SSVEPKeyboardSpriteView : MonoBehaviour {
 
 		keyScale = scale;
 		keySize = (keyHeight / 10f) * keyScale;
-		foreach (Transform childKeyTransform in spriteKeysTransform) {
-			childKeyTransform.localScale = new Vector3(keySize, keySize, keySize);
+		foreach (FlickerSprite childKey in spriteKeysFlicker) {
+			childKey.gameObject.transform.localScale = new Vector3(keySize, keySize, keySize);
 		}
 
 	}
