@@ -29,7 +29,7 @@ The **SSVEP Keyboard** app is built in Unity (currently version 2017.1.0f3) and 
 - Android (untested but should work)
 
 You can download builds for Android [here](https://drive.google.com/drive/folders/0B4W4Pn0tIMBXbGUtdmJCMW02dk0?usp=sharing))
-For the iOS version please contact me directly and I can add you to the beta testers via TestFlight
+For the iOS version please contact me directly (hello[at]abetterwaytodo.com[dot]com) and I can add you to the beta testers via TestFlight
 
 ### Current functions of the app
 
