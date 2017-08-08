@@ -56,8 +56,8 @@ public class MicrophoneInput : MonoBehaviour {
 	
 	void Awake () {
 		foreach (string device in Microphone.devices) {
-            Debug.Log("Name: " + device);
-        }
+			Debug.Log("Name: " + device);
+		}
 		InitializeAudio();
 	}
 
@@ -143,6 +143,7 @@ public class MicrophoneInput : MonoBehaviour {
 				Microphone.GetDeviceCaps(s, out minFreq, out maxFreq);	
 				Debug.Log("Device Name: " + s + " [" + minFreq.ToString() + "-" + maxFreq.ToString() + "]");
 			}
+
 			//audio.clip = Microphone.Start("Built-in Microphone", true, 10, sampleRate);
 			audio.clip = Microphone.Start(null, true, 10, sampleRate);
 			while (Microphone.GetPosition(null) <= 0){}
@@ -353,7 +354,7 @@ public class MicrophoneInput : MonoBehaviour {
 		int xoffset = 3000;
 		int yoffset = 1000;
 		for (int i = 1; i < numSamples-1; i++) {
-		 	Debug.DrawLine (new Vector3 ((i - 1)*xScale-xoffset, samples[i]*yScale-yoffset, 0),
+			Debug.DrawLine (new Vector3 ((i - 1)*xScale-xoffset, samples[i]*yScale-yoffset, 0),
 						new Vector3 (i*xScale-xoffset, samples[i + 1]*yScale-yoffset, 0), Color.red);
 
 			Debug.DrawLine (new Vector3 ((i - 1)*xScale-xoffset, Mathf.Log(samples[i])*yScale-yoffset, 0),
