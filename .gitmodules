@@ -1,0 +1,3 @@
+[submodule "Assets/unity-ui-extensions"]
+	path = Assets/unity-ui-extensions
+	url = https://ryanlintott@bitbucket.org/UnityUIExtensions/unity-ui-extensions.git

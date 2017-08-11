@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"Uni",
+				"UnityEngine\tUnityEngine"
+			],
+			[
+				"get",
+				"GetComponents(Type type, List<Component> results)\tvoid"
+			],
+			[
+				"Ve",
+				"Vector2\tVector2"
+			],
+			[
+				"_fi",
+				"_fitWidth\tbool"
+			],
+			[
+				"_lock",
+				"_lockToPosition\tbool"
+			],
+			[
 				"chil",
 				"GetChild(int index)\tTransform"
 			],
@@ -78,10 +98,6 @@
 			[
 				"Insta",
 				"Instantiate(Object original, Vector3 position, Quaternion rotation)\tObject"
-			],
-			[
-				"Ve",
-				"Vector3()\tVector3()"
 			],
 			[
 				"_scr",
@@ -256,10 +272,6 @@
 				"values.Length"
 			],
 			[
-				"get",
-				"GetComponentsInChildren<T>()\tT[]"
-			],
-			[
 				"audios",
 				"AudioSource\tAudioSource"
 			],
@@ -342,6 +354,32 @@
 				"buffer_size": 4213,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/scripts/ScreenSizePlane.cs",
+			"settings":
+			{
+				"buffer_size": 1677,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/scripts/ChartLineDataUI.cs",
+			"settings":
+			{
+				"buffer_size": 739,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/unity-ui-extensions/Scripts/Primitives/UILineRenderer.cs",
+			"settings":
+			{
+				"buffer_size": 11140,
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -445,10 +483,15 @@
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Resources",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Resources/Text",
-		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts"
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/unity-ui-extensions",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/unity-ui-extensions/Scripts",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/unity-ui-extensions/Scripts/Primitives"
 	],
 	"file_history":
 	[
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/unity-ui-extensions/Scripts/Primitives/UIPrimitiveBase.cs",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/unity-ui-extensions/Scripts/Primitives/UILineRenderer.cs",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/ZoomSquares.cs",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/Fps.cs",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Resources/Text/yn.txt",
@@ -526,6 +569,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Update",
+			"eq",
 			"keyboardActive",
 			"build",
 			"key",
@@ -598,7 +643,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -627,11 +672,113 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
+					"file": "Assets/scripts/ScreenSizePlane.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1677,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								662,
+								662
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"oops":
+							{
+								"0,5": "Using directive is not used by code and can be removed safely.",
+								"26,31": "Using directive is not used by code and can be removed safely."
+							},
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Assets/scripts/ChartLineDataUI.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 739,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								739,
+								739
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"oops":
+							{
+								"100,110": "Unknown Resolver Error",
+								"170,184": "'UILineRenderer' is not a known identifier",
+								"487,501": "'UILineRenderer' is not a known identifier",
+								"504,505": "Cannot convert from ? to [UnknownType UILineRenderer]"
+							},
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Assets/unity-ui-extensions/Scripts/Primitives/UILineRenderer.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11140,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								404,
+								404
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
 					"file": "Assets/scripts/MicrophoneInput.cs",
 					"semi_transient": false,
 					"settings":
@@ -710,14 +857,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1646.0,
+						"translation.y": 1746.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 5,
 					"file": "Assets/scripts/SSVEPKeyboardSpriteView.cs",
 					"semi_transient": false,
 					"settings":
@@ -729,8 +876,8 @@
 						"selection":
 						[
 							[
-								4954,
-								4954
+								122,
+								122
 							]
 						],
 						"settings":
@@ -758,14 +905,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 143.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 6,
 					"file": "Assets/scripts/PinchZoom.cs",
 					"semi_transient": false,
 					"settings":
@@ -801,11 +948,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 7,
 					"file": "Assets/scripts/SSVEPKeyboardModel.cs",
 					"semi_transient": false,
 					"settings":
@@ -817,8 +964,8 @@
 						"selection":
 						[
 							[
-								241,
-								241
+								1182,
+								1184
 							]
 						],
 						"settings":
@@ -845,14 +992,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 192.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 8,
 					"file": ".gitignore",
 					"semi_transient": false,
 					"settings":
@@ -877,7 +1024,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 8,
 					"type": "text"
 				}
 			]

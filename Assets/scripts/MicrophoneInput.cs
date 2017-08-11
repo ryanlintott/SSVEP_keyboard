@@ -17,6 +17,7 @@ public class MicrophoneInput : MonoBehaviour {
 	private float[] sampleSetProcessed;			//processed for interpretation
 	private float[,] sampleSetProcessedPrev;	//saved from previous read
 	public EQView _eqView;
+	public ChartLineDataUI _chartLineDataUI;
 	public bool useMicrophone = true;
 	public bool useClamp = true;
 	public float leftClamp = 0.0f;
@@ -35,9 +36,9 @@ public class MicrophoneInput : MonoBehaviour {
 	private int[] ssvepHighValues;
 	private int numSamplesTaken = 0;
 	public bool averageOverTime = false;
-	public int maxSamples = 0;					//Number of frames to sample.  Set to 0 for infinite samples
+	public int _avgTimeSamples = 0;					//Number of frames to sample.  Set to 0 for infinite samples
 	private int sampleSetCounter = 0;			//Keeps track of location in sampleSetPrev
-	private bool useMaxSamples;
+	private bool useMaxSamples = false;
 	public int sAvgWidth = 1;					//Number of samples to average together. Default: 1 is no averaging
 	public int sampleProcessingMode = 0;
 	private int numSamples = 8192;				//Must be power of 2  Min: 64, Max: 8192
@@ -122,18 +123,18 @@ public class MicrophoneInput : MonoBehaviour {
 
 		ssvepHighValues = new int[2];
 		ssvepHighValues[0] = Mathf.FloorToInt((fTarget - ssvepHighF) * numSamples / fMax) - startValue;
-		ssvepHighValues[1] = Mathf.FloorToInt((fTarget + ssvepHighF) * numSamples / fMax) - startValue;		
-
-		if (maxSamples > 0 ) {
+		ssvepHighValues[1] = Mathf.FloorToInt((fTarget + ssvepHighF) * numSamples / fMax) - startValue;
+		
+		if (_avgTimeSamples > 0 ) {
 			useMaxSamples = true;
 		} else {
 			useMaxSamples = false;
-			maxSamples = 1;
+			_avgTimeSamples = 1;
 		}
 		sampleSet = new float[sampleSetSize];
-		sampleSetPrev = new float[maxSamples,sampleSetSize];
+		sampleSetPrev = new float[_avgTimeSamples,sampleSetSize];
 		sampleSetProcessed = new float[sampleSetSize];
-		sampleSetProcessedPrev = new float[maxSamples,sampleSetSize];
+		sampleSetProcessedPrev = new float[_avgTimeSamples,sampleSetSize];
 		sampleSetAvg = new float[sampleSetSize];
 
 
@@ -162,15 +163,13 @@ public class MicrophoneInput : MonoBehaviour {
 
 		numSamplesTaken++;
 
+		//Don't normalize until after averaging over time
+
 		// Copy a small subset of samples to sampleSet
 		System.Array.Copy(samples,startValue,sampleSet,0,sampleSet.Length);
 
 		// Create a processed sample set
-		System.Array.Copy(sampleSet,sampleSetProcessed,sampleSet.Length);		
-
-		//sampleSetProcessed = FoldSamples(sampleSetProcessed);
-		// Normalize the data
-		sampleSetProcessed = NormalizeSamples(sampleSetProcessed);
+		System.Array.Copy(sampleSet,sampleSetProcessed,sampleSet.Length);
 
 		// Average the samples over time.  If maxSamples = 1 this will just return the same values
 		if (averageOverTime) {
@@ -196,8 +195,8 @@ public class MicrophoneInput : MonoBehaviour {
 				break;
 		}
 
-		// Boost the data for visual output
-		sampleSetProcessed = BoostSamples(sampleSetProcessed);
+		// Normalize, Boost and then Normalize the data for visual output and diff comparison
+		sampleSetProcessed = NormalizeToZeroAndBoostSamples(sampleSetProcessed);
 
 		//Calculate the bucket numbers for SSVEP low and high values on both ends of the spectrum (even though only the left side is used)
 		ssvepLowValues[0] = Mathf.FloorToInt((fTarget - ssvepLowF) * numSamples / fMax) - startValue;
@@ -231,12 +230,13 @@ public class MicrophoneInput : MonoBehaviour {
 		//DrawDebugLines();
 		//Debug.Log(sampleSetProcessed[0].ToString());
 
-		if (useClamp) {
-			//Used for updating eq with % clamps on either side
-			_eqView.UpdateEQClamped(sampleSetProcessed, leftClamp, rightClamp);
-		} else {
-			_eqView.UpdateEQClamped(sampleSetProcessed, 0.0f, 1.0f);
-		}
+		// if (useClamp) {
+		// 	//Used for updating eq with % clamps on either side
+		// 	_eqView.UpdateEQClamped(sampleSetProcessed, leftClamp, rightClamp);
+		// } else {
+		// 	_eqView.UpdateEQClamped(sampleSetProcessed, 0.0f, 1.0f);
+		// }
+		_chartLineDataUI.ShowDataOneD(sampleSetProcessed);
 		
 		//Debug.Log(samples[512].ToString());
 		// Copy samplesets to previous sample sets for use in averaging
@@ -246,7 +246,7 @@ public class MicrophoneInput : MonoBehaviour {
 		}
 
 		// Increment the counter used to identify which previous sample set to use next
-		sampleSetCounter = (sampleSetCounter + 1) % maxSamples;
+		sampleSetCounter = (sampleSetCounter + 1) % _avgTimeSamples;
 
 	}
 
@@ -254,6 +254,19 @@ public class MicrophoneInput : MonoBehaviour {
 		float[] sOut = new float[Mathf.CeilToInt(sIn.Length/2)];
 		for (int i = 0; i < sOut.Length; i++) {
 			sOut[i] = sIn[i] + sIn[sIn.Length-i-1];
+		}
+		return sOut;
+	}
+
+	static float[] SubtractAverage(float[] sIn) {
+		float[] sOut = new float[sIn.Length];
+		float sum = 0f;
+		for (int i = 0; i < sIn.Length; i++) {
+			sum += sIn[i];
+		}
+		float avg = sum / (float)sIn.Length;
+		for (int i = 0; i < sIn.Length; i++) {
+			sOut[i] = sIn[i] - avg;
 		}
 		return sOut;
 	}
@@ -268,12 +281,32 @@ public class MicrophoneInput : MonoBehaviour {
 		return sOut;
 	}
 
-	static float[] BoostSamples(float[] sIn) {
+	static float[] NormalizeToZeroSamples(float[] sIn) {
 		float[] sOut = new float[sIn.Length];
+		float maxSample = sIn.Max();
 		for (int i = 0; i < sIn.Length; i++) {
-			sOut[i] = Mathf.Sqrt(Mathf.Sqrt(sIn[i]));
+			sOut[i] = Mathf.InverseLerp(0f, maxSample, sIn[i]);
 		}
 		return sOut;
+	}
+
+	static float[] NormalizeAndBoostSamples(float[] sIn) {
+		float[] sOut = new float[sIn.Length];
+		float maxSample = sIn.Max();
+		float minSample = sIn.Min();
+		for (int i = 0; i < sIn.Length; i++) {
+			sOut[i] = Mathf.Sqrt(Mathf.Sqrt(Mathf.InverseLerp(minSample, maxSample, sIn[i])));
+		}
+		return NormalizeSamples(sOut);
+	}
+
+	static float[] NormalizeToZeroAndBoostSamples(float[] sIn) {
+		float[] sOut = new float[sIn.Length];
+		float maxSample = sIn.Max();
+		for (int i = 0; i < sIn.Length; i++) {
+			sOut[i] = Mathf.Sqrt(Mathf.Sqrt(Mathf.InverseLerp(0f, maxSample, sIn[i])));
+		}
+		return NormalizeSamples(sOut);
 	}
 
 	static float[] AverageSamplesTime(float[] sIn, float[] sAvg, float[,] sPrev, int t, int c, bool useMax) {
