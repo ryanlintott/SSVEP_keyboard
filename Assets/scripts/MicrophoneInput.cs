@@ -35,7 +35,7 @@ public class MicrophoneInput : MonoBehaviour {
 	public float ssvepHighF = 20.0f;			//Flicker speed in Hz for high frequency flashes
 	private int sampleRangeStart;				//The first bucket for FFT samples in our sample range
 	private int sampleRangeEnd;					//The last bucket for FFT samples in our sample range
-	private int numSamples = 8192;				//Must be power of 2  Min: 64, Max: 8192
+	private int numSamples = 4096;				//Must be power of 2  Min: 64, Max: 8192
 
 	private int sampleSetSize;
 	private int[] ssvepLowValues;
@@ -47,6 +47,7 @@ public class MicrophoneInput : MonoBehaviour {
 	private bool useMaxSamples = false;
 	public int sAvgWidth = 1;					//Number of samples to average together. Default: 1 is no averaging
 	public int sampleProcessingMode = 0;
+	public float _logBase = 10f;
 	
 	private FFTWindow specFFTwindow = FFTWindow.Hanning;  //Previously Hanning
 	private float diff = 0.0f;
@@ -206,14 +207,10 @@ public class MicrophoneInput : MonoBehaviour {
 				break;
 		}
 
-		// Normalize, Boost and then Normalize the data for visual output and diff comparison
-		sampleSetProcessed = NormalizeToZeroAndBoostSamples(sampleSetProcessed);
-
-		//Calculate the bucket numbers for SSVEP low and high values on both ends of the spectrum (even though only the left side is used)
-		// ssvepLowValues[0] = Mathf.FloorToInt((fTarget - ssvepLowF) * numSamples / fMax) - sampleRangeStart;
-		// ssvepLowValues[1] = Mathf.FloorToInt((fTarget + ssvepLowF) * numSamples / fMax) - sampleRangeStart;
-		// ssvepHighValues[0] = Mathf.FloorToInt((fTarget - ssvepHighF) * numSamples / fMax) - sampleRangeStart;
-		// ssvepHighValues[1] = Mathf.FloorToInt((fTarget + ssvepHighF) * numSamples / fMax) - sampleRangeStart;
+		// Normalize data for visual output and diff comparison
+		//sampleSetProcessed = LogScale(sampleSetProcessed, _logBase);
+		//sampleSetProcessed = NormalizeToZero(sampleSetProcessed);
+		sampleSetProcessed = NormalizeToZeroDoubleSqrt(sampleSetProcessed);
 
 		//Calculate the difference in the height of the low and high frequency peaks.
 		diff = sampleSetProcessed[ssvepHighValues[0]] - sampleSetProcessed[ssvepLowValues[0]];
@@ -282,7 +279,7 @@ public class MicrophoneInput : MonoBehaviour {
 		return sOut;
 	}
 
-	static float[] NormalizeSamples(float[] sIn) {
+	static float[] Normalize(float[] sIn) {
 		float[] sOut = new float[sIn.Length];
 		float maxSample = sIn.Max();
 		float minSample = sIn.Min();
@@ -292,7 +289,7 @@ public class MicrophoneInput : MonoBehaviour {
 		return sOut;
 	}
 
-	static float[] NormalizeToZeroSamples(float[] sIn) {
+	static float[] NormalizeToZero(float[] sIn) {
 		float[] sOut = new float[sIn.Length];
 		float maxSample = sIn.Max();
 		for (int i = 0; i < sIn.Length; i++) {
@@ -301,23 +298,31 @@ public class MicrophoneInput : MonoBehaviour {
 		return sOut;
 	}
 
-	static float[] NormalizeAndBoostSamples(float[] sIn) {
+	static float[] NormalizeDoubleSqrt(float[] sIn) {
 		float[] sOut = new float[sIn.Length];
 		float maxSample = sIn.Max();
 		float minSample = sIn.Min();
 		for (int i = 0; i < sIn.Length; i++) {
 			sOut[i] = Mathf.Sqrt(Mathf.Sqrt(Mathf.InverseLerp(minSample, maxSample, sIn[i])));
 		}
-		return NormalizeSamples(sOut);
+		return Normalize(sOut);
 	}
 
-	static float[] NormalizeToZeroAndBoostSamples(float[] sIn) {
+	static float[] LogScale(float[] sIn, float logBase) {
+		float[] sOut = new float[sIn.Length];
+		for (int i = 0; i < sIn.Length; i++) {
+			sOut[i] = Mathf.Log(sIn[i]+1f, logBase);
+		}
+		return sOut;
+	}
+
+	static float[] NormalizeToZeroDoubleSqrt(float[] sIn) {
 		float[] sOut = new float[sIn.Length];
 		float maxSample = sIn.Max();
 		for (int i = 0; i < sIn.Length; i++) {
 			sOut[i] = Mathf.Sqrt(Mathf.Sqrt(Mathf.InverseLerp(0f, maxSample, sIn[i])));
 		}
-		return NormalizeSamples(sOut);
+		return NormalizeToZero(sOut);
 	}
 
 	//Average sIn samples with sPrev
