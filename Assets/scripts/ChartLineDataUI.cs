@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
 public class ChartLineDataUI : MonoBehaviour {
@@ -9,11 +10,13 @@ public class ChartLineDataUI : MonoBehaviour {
 	private LineRenderer _line;
 	public Vector2 dataBottomLeftValue = new Vector2(0f, 0f);
 	public Vector2 dataTopRightValue = new Vector2(1f, 1f);
+	public GameObject _verticalMarkerLinePrefab;
+	private string lineTag = "lineTag";
 
 	// Use this for initialization
-	void start () {
+	void Start () {
 		//_UILine = GetComponentInParent<UILineRenderer>();
-		Debug.Log("UILine Points:"+_UILine.Points.Length);
+		//SetVerticalMarkerLine(1f, "test");
 	}
 	
 	// Update is called once per frame
@@ -40,6 +43,32 @@ public class ChartLineDataUI : MonoBehaviour {
 			newData[i] = new Vector2(Mathf.Lerp(dataBottomLeftValue.x, dataTopRightValue.x, ((float)i / (float)values.Length)), values[i]);
 		}
 		UpdateUILine(newData);
+	}
+
+	public static void SetRect(RectTransform trs, float left, float top, float right, float bottom) {
+		trs.offsetMin = new Vector2(left, bottom);
+		trs.offsetMax = new Vector2(-right, -top);
+	}
+
+	public void RemoveVerticalMarkerLines () {
+		foreach (Transform child in transform) {
+			Debug.Log(child.tag);
+			if (child.tag == lineTag) {
+				Destroy(child.gameObject);
+			}
+		}
+	}
+
+	public void SetVerticalMarkerLine (float x, string label) {
+		GameObject line = Instantiate(_verticalMarkerLinePrefab) as GameObject;
+		//line.tag = lineTag;
+		RectTransform rt = line.GetComponent<RectTransform>();
+		rt.parent = GetComponent<RectTransform>();
+		rt.anchorMin = new Vector2(x, 0f);
+		rt.anchorMax = new Vector2(x, 1f);
+		rt.localPosition = new Vector3(0f, 0f, -2f);
+		SetRect(rt, 0f, 0f, -2f, 0f);
+		line.GetComponentInChildren<Text>().text = label;
 	}
 
 }

@@ -111,7 +111,7 @@ public class SSVEPKeyboardSpriteView : MonoBehaviour {
 
 		//destroy all current keys
 		foreach (Transform child in _keyParent.transform) {
-		    Destroy(child.gameObject);
+			Destroy(child.gameObject);
 		}
 		_keyParent.transform.DetachChildren();
 

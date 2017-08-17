@@ -166,6 +166,12 @@ public class MicrophoneInput : MonoBehaviour {
 		_audio.pitch = pitchMultiplier;
 		_audio.Play();
 		_audio.GetSpectrumData (samples, 0, specFFTwindow);
+
+		_chartLineDataUI.RemoveVerticalMarkerLines();
+		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepLowValues[0] / (float)sampleSetProcessed.Length, ssvepLowF.ToString());
+		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepHighValues[0] / (float)sampleSetProcessed.Length, ssvepHighF.ToString());
+		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepLowValues[1] / (float)sampleSetProcessed.Length, ssvepLowF.ToString());
+		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepHighValues[1] / (float)sampleSetProcessed.Length, ssvepHighF.ToString());
 	}
 
 	void ReadSamples () {
@@ -228,12 +234,12 @@ public class MicrophoneInput : MonoBehaviour {
 		//Debug.Log("diffTrigger: " + diffTrigger);
 
 		//Flicker the relevant SSVEP high and low values at regular intervals. This happens after the check has taken place.
-		if (numSamplesTaken % 5 == 0) {
-			sampleSetProcessed[ssvepLowValues[0]] = 0.02f;
-			sampleSetProcessed[ssvepLowValues[1]] = 0.02f;
-			sampleSetProcessed[ssvepHighValues[0]] = 0.01f;
-			sampleSetProcessed[ssvepHighValues[1]] = 0.01f;	
-		}
+		// if (numSamplesTaken % 5 == 0) {
+		// 	sampleSetProcessed[ssvepLowValues[0]] = 0.02f;
+		// 	sampleSetProcessed[ssvepLowValues[1]] = 0.02f;
+		// 	sampleSetProcessed[ssvepHighValues[0]] = 0.01f;
+		// 	sampleSetProcessed[ssvepHighValues[1]] = 0.01f;	
+		// }
 		
 		//DrawDebugLines();
 		//Debug.Log(sampleSetProcessed[0].ToString());
