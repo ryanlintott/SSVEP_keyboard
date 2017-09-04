@@ -15,13 +15,10 @@ public class MicrophoneInput : MonoBehaviour {
 	private float[] sampleSetAvg;				//small subset of samples used for analysis
 	private float[,] sampleSetPrev;				//saved from previous read
 	private float[] sampleSetProcessed;			//processed for interpretation
-	private float[,] sampleSetProcessedPrev;	//saved from previous read
 	public EQView _eqView;
 	public ChartLineDataUI _chartLineDataUI;
 	public bool useMicrophone = true;
 	public bool useClamp = true;
-	public float leftClamp = 0.0f;
-	public float rightClamp = 1.0f;
 
 	private int sampleRate;						//44100 Hz is the typical sample rate
 	private int deviceSampleRateMin;			//Value in Hz
@@ -44,12 +41,11 @@ public class MicrophoneInput : MonoBehaviour {
 	public bool averageOverTime = false;
 	public int _avgTimeSamples = 0;					//Number of frames to sample.  Set to 0 for infinite samples
 	private int sampleSetCounter = 0;			//Keeps track of location in sampleSetPrev
-	private bool useMaxSamples = false;
 	public int sAvgWidth = 1;					//Number of samples to average together. Default: 1 is no averaging
 	public int sampleProcessingMode = 0;
 	public float _logBase = 10f;
 	
-	private FFTWindow specFFTwindow = FFTWindow.Hanning;  //Previously Hanning
+	private FFTWindow specFFTwindow = FFTWindow.Hanning;
 	private float diff = 0.0f;
 	public int diffTrigger = 0;
 	public int triggerTime = 60;				//Number of frames it takes within a range to trigger
@@ -62,9 +58,6 @@ public class MicrophoneInput : MonoBehaviour {
 
 	
 	void Awake () {
-		foreach (string device in Microphone.devices) {
-			Debug.Log("Name: " + device);
-		}
 		InitializeAudio();
 	}
 
@@ -75,15 +68,6 @@ public class MicrophoneInput : MonoBehaviour {
 		}
 	}
 
-	public void ResetSamples() {
-		_audio.GetSpectrumData (samples, 0, specFFTwindow);
-		for (int i = 0; i < numSamples; i++) {
-			samples[i] = Mathf.Abs(samples[i]);
-		}
-		numSamplesTaken = 0;
-		diffTrigger = 0;
-	}
-
 	public void NextProcessingMode() {
 		sampleProcessingMode = (sampleProcessingMode + 1)%5;
 	}
@@ -91,32 +75,49 @@ public class MicrophoneInput : MonoBehaviour {
 	public void MicToggle() {
 		useMicrophone =  !useMicrophone;
 		InitializeAudio();
-		ResetSamples();
+		//ResetSamples();
+	}
+
+	private void SetLowestSampleRateMobile() {
+		//No loger necessary with pitch adjustments
+		#if UNITY_IOS
+			Debug.Log("iPhone");
+			AudioConfiguration config = AudioSettings.GetConfiguration();
+			config.sampleRate = 11025;
+			AudioSettings.Reset(config);
+		#endif
+
+		#if UNITY_ANDROID
+			Debug.Log("Android");
+			AudioConfiguration config = AudioSettings.GetConfiguration();
+			config.sampleRate = 11025;
+			AudioSettings.Reset(config);
+		#endif
+	}
+
+	public void ResetSamples() {
+		samples = new float[numSamples];
+		_audio.GetSpectrumData (samples, 0, specFFTwindow);
+
+		sampleSet = new float[sampleSetSize];
+		sampleSetProcessed = new float[sampleSetSize];
+
+		if (averageOverTime) {
+			sampleSetCounter = 0;
+			sampleSetAvg = new float[sampleSetSize];
+			sampleSetPrev = new float[Mathf.Max(_avgTimeSamples, 1), sampleSetSize];
+		}
+		numSamplesTaken = 0;
+		diffTrigger = 0;
 	}
 
 	void InitializeAudio () {
 
-		// #if UNITY_IOS
-		// 	Debug.Log("iPhone");
-		// 	AudioConfiguration config = AudioSettings.GetConfiguration();
-		// 	config.sampleRate = 11025;
-		// 	AudioSettings.Reset(config);
-		// #endif
-
-		// #if UNITY_ANDROID
-		// 	Debug.Log("Android");
-		// 	AudioConfiguration config = AudioSettings.GetConfiguration();
-		// 	config.sampleRate = 11025;
-		// 	AudioSettings.Reset(config);
-		// #endif
-
-		//Sample Rate on iOS will hopefully be 11025, this should be the same on Android. Mac and PC can only use 48000
+		//Determine the output sample rate
 		sampleRate = Mathf.FloorToInt(AudioSettings.outputSampleRate);
 		Debug.Log("outputSampleRate: " + sampleRate.ToString());
 
-		_audio.loop = true;
-		//audio.clip.set(audioClips[activeAudioClip]);
-		samples = new float[numSamples];
+		
 
 		//finding the best whole number pitchMultiplier we can use to scale up the signal to fix the available frequencies
 		//(sampleRate / 2) gives us the max potential frequency and the rest gives us the maximum frequency we care about
@@ -128,6 +129,8 @@ public class MicrophoneInput : MonoBehaviour {
 		sampleRangeEnd = Mathf.FloorToInt((fTarget + (fRangeWidth / 2)) * fToSampleRange);
 		sampleSetSize = sampleRangeEnd - sampleRangeStart;
 
+		//Set sample location for SSVEP samples
+		//only low and high values [1], those to the right of 1kHz are used at the moment but those on the left are still stored
 		ssvepLowValues = new int[2];
 		ssvepLowValues[0] = Mathf.FloorToInt((fTarget - ssvepLowF) * fToSampleRange) - sampleRangeStart;
 		ssvepLowValues[1] = Mathf.FloorToInt((fTarget + ssvepLowF) * fToSampleRange) - sampleRangeStart;
@@ -135,19 +138,13 @@ public class MicrophoneInput : MonoBehaviour {
 		ssvepHighValues = new int[2];
 		ssvepHighValues[0] = Mathf.FloorToInt((fTarget - ssvepHighF) * fToSampleRange) - sampleRangeStart;
 		ssvepHighValues[1] = Mathf.FloorToInt((fTarget + ssvepHighF) * fToSampleRange) - sampleRangeStart;
-		
-		if (_avgTimeSamples > 0 ) {
-			useMaxSamples = true;
-		} else {
-			useMaxSamples = false;
-			_avgTimeSamples = 1;
-		}
-		sampleSet = new float[sampleSetSize];
-		sampleSetPrev = new float[_avgTimeSamples,sampleSetSize];
-		sampleSetProcessed = new float[sampleSetSize];
-		sampleSetProcessedPrev = new float[_avgTimeSamples,sampleSetSize];
-		sampleSetAvg = new float[sampleSetSize];
 
+		//Add visual guides for marker lines
+		_chartLineDataUI.RemoveVerticalMarkerLines();
+		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepLowValues[0] / (float)sampleSetSize, ssvepLowF.ToString());
+		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepHighValues[0] / (float)sampleSetSize, ssvepHighF.ToString());
+		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepLowValues[1] / (float)sampleSetSize, ssvepLowF.ToString());
+		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepHighValues[1] / (float)sampleSetSize, ssvepHighF.ToString());
 
 		//Debug.Log("fMax: "+fMax.ToString());
 		if (useMicrophone) {
@@ -156,28 +153,25 @@ public class MicrophoneInput : MonoBehaviour {
 				Debug.Log("Device Name: " + s + " [" + deviceSampleRateMin.ToString() + "-" + deviceSampleRateMax.ToString() + "]");
 			}
 
-			//audio.clip = Microphone.Start("Built-in Microphone", true, 10, sampleRate);
+			//_audio.clip = Microphone.Start("Built-in Microphone", true, 10, sampleRate);
 			_audio.clip = Microphone.Start(null, true, 10, sampleRate);
 			while (Microphone.GetPosition(null) <= 0){}
 		} else {
 			_audio.clip = _demoTone;
 		}
-		//audio.mute = true;
-		_audio.pitch = pitchMultiplier;
-		_audio.Play();
-		_audio.GetSpectrumData (samples, 0, specFFTwindow);
 
-		_chartLineDataUI.RemoveVerticalMarkerLines();
-		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepLowValues[0] / (float)sampleSetProcessed.Length, ssvepLowF.ToString());
-		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepHighValues[0] / (float)sampleSetProcessed.Length, ssvepHighF.ToString());
-		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepLowValues[1] / (float)sampleSetProcessed.Length, ssvepLowF.ToString());
-		_chartLineDataUI.SetVerticalMarkerLine((float)ssvepHighValues[1] / (float)sampleSetProcessed.Length, ssvepHighF.ToString());
+		//_audio.mute = true;
+		_audio.pitch = pitchMultiplier;
+		_audio.loop = true;
+		_audio.Play();
+
+		ResetSamples();
+
 	}
 
 	void ReadSamples () {
 		// Read in audio data to samples
 		_audio.GetSpectrumData (samples, 0, specFFTwindow);
-		//audio.GetOutputData (samples, 0);
 
 		numSamplesTaken++;
 
@@ -191,7 +185,19 @@ public class MicrophoneInput : MonoBehaviour {
 
 		// Average the samples over time.  If maxSamples = 1 this will just return the same values
 		if (averageOverTime) {
-			sampleSetAvg = AverageSamplesTime(sampleSetProcessed, sampleSetAvg, sampleSetPrev, numSamplesTaken, sampleSetCounter, useMaxSamples);
+			if (_avgTimeSamples == 0) {
+				sampleSetAvg = AverageSamplesForever(sampleSetProcessed, sampleSetAvg, numSamplesTaken);	
+			} else {
+				sampleSetAvg = AverageSamplesTime(sampleSetProcessed, sampleSetAvg, sampleSetPrev, numSamplesTaken, sampleSetCounter);
+
+				// Copy samplesets to previous sample sets for use in averaging
+				for (int i = 0; i < sampleSetSize; i++) {
+					sampleSetPrev[sampleSetCounter,i] = sampleSet[i];
+				}
+
+				// Increment the counter used to identify which previous sample set to use next
+				sampleSetCounter = (sampleSetCounter + 1) % _avgTimeSamples;
+			}
 			sampleSetProcessed = sampleSetAvg;
 		}
 
@@ -232,36 +238,43 @@ public class MicrophoneInput : MonoBehaviour {
 		//Debug.Log("Diff: " + diff.ToString("0.0000"));
 		//Debug.Log(string.Format("{0:####.000} Hz", diff));
 		//Debug.Log("diffTrigger: " + diffTrigger);
-
-		//Flicker the relevant SSVEP high and low values at regular intervals. This happens after the check has taken place.
-		// if (numSamplesTaken % 5 == 0) {
-		// 	sampleSetProcessed[ssvepLowValues[0]] = 0.02f;
-		// 	sampleSetProcessed[ssvepLowValues[1]] = 0.02f;
-		// 	sampleSetProcessed[ssvepHighValues[0]] = 0.01f;
-		// 	sampleSetProcessed[ssvepHighValues[1]] = 0.01f;	
-		// }
 		
 		//DrawDebugLines();
 		//Debug.Log(sampleSetProcessed[0].ToString());
 
-		// if (useClamp) {
-		// 	//Used for updating eq with % clamps on either side
-		// 	_eqView.UpdateEQClamped(sampleSetProcessed, leftClamp, rightClamp);
-		// } else {
-		// 	_eqView.UpdateEQClamped(sampleSetProcessed, 0.0f, 1.0f);
-		// }
 		_chartLineDataUI.ShowDataOneD(sampleSetProcessed);
-		
-		//Debug.Log(samples[512].ToString());
-		// Copy samplesets to previous sample sets for use in averaging
-		for (int i = 0; i < sampleSetSize; i++) {
-			sampleSetPrev[sampleSetCounter,i] = sampleSet[i];
-			//sampleSetProcessedPrev[sampleSetCounter,i] = sampleSetProcessed[i];
+
+	}
+
+	//Average sIn samples with sAvg equivalent to t (number of elements averaged)
+	static float[] AverageSamplesForever(float[] sIn, float[] sAvg, int n) {
+		if (n == 1) {
+			return sIn;
 		}
+		float[] sOut = new float[sIn.Length];
+		for (int i = 0; i < sIn.Length; i++) {
+			sOut[i] = sAvg[i] + ((sIn[i] - sAvg[i]) / (float)n);
+		}
+		return sOut;
+	}
 
-		// Increment the counter used to identify which previous sample set to use next
-		sampleSetCounter = (sampleSetCounter + 1) % _avgTimeSamples;
-
+	//Average sIn samples with sPrev
+	static float[] AverageSamplesTime(float[] sIn, float[] sAvg, float[,] sPrev, int n, int c) {
+		if (n == 1) {
+			return sIn;
+		}
+		float[] sOut = new float[sIn.Length];
+		int maxS = sPrev.GetLength(0);
+		if (n < maxS) {
+			for (int i = 0; i < sIn.Length; i++) {
+				sOut[i] = sAvg[i] + ((sIn[i] - sAvg[i]) / (float)n);
+			}
+		} else {	
+			for (int i = 0; i < sIn.Length; i++) {
+				sOut[i] = sAvg[i] + ((sIn[i] - sPrev[c,i]) / (float)maxS);
+			}
+		}
+		return sOut;
 	}
 
 	static float[] FoldSamples(float[] sIn) {
@@ -329,25 +342,6 @@ public class MicrophoneInput : MonoBehaviour {
 			sOut[i] = Mathf.Sqrt(Mathf.Sqrt(Mathf.InverseLerp(0f, maxSample, sIn[i])));
 		}
 		return NormalizeToZero(sOut);
-	}
-
-	//Average sIn samples with sPrev
-	static float[] AverageSamplesTime(float[] sIn, float[] sAvg, float[,] sPrev, int t, int c, bool useMax) {
-		if (t == 1) {
-			return sIn;
-		}
-		float[] sOut = new float[sIn.Length];
-		int maxS = sPrev.GetLength(0);
-		if ((t < maxS) || !useMax) {
-			for (int i = 0; i < sIn.Length; i++) {
-				sOut[i] = (sAvg[i] * ((float)t-1f) + sIn[i]) / (float)t;
-			}
-		} else {	
-			for (int i = 0; i < sIn.Length; i++) {
-				sOut[i] = sAvg[i] + ((sIn[i] - sPrev[c,i]) / (float)maxS);
-			}
-		}
-		return sOut;
 	}
 
 	//Each output sample will be an average of itself and w neighbours on each side.
