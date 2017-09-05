@@ -67,6 +67,7 @@ public class ChartLineDataUI : MonoBehaviour {
 		rt.anchorMin = new Vector2(x, 0f);
 		rt.anchorMax = new Vector2(x, 1f);
 		rt.localPosition = new Vector3(0f, 0f, -2f);
+		rt.localScale = new Vector3(1f, 1f, 1f);
 		SetRect(rt, 0f, 0f, -2f, 0f);
 		line.GetComponentInChildren<Text>().text = label;
 	}
