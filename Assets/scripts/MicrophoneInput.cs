@@ -17,6 +17,7 @@ public class MicrophoneInput : MonoBehaviour {
 	private float[] sampleSetProcessed;			//processed for interpretation
 	public EQView _eqView;
 	public ChartLineDataUI _chartLineDataUI;
+	public DiffUI _diffUI;
 	public bool useMicrophone = true;
 	public bool useClamp = true;
 
@@ -39,7 +40,7 @@ public class MicrophoneInput : MonoBehaviour {
 	private int[] ssvepHighValues;
 	private int numSamplesTaken = 0;
 	public bool averageOverTime = false;
-	public int _avgTimeSamples = 0;					//Number of frames to sample.  Set to 0 for infinite samples
+	public int _avgTimeSamples = 0;				//Number of frames to sample.  Set to 0 for infinite samples
 	private int sampleSetCounter = 0;			//Keeps track of location in sampleSetPrev
 	public int sAvgWidth = 1;					//Number of samples to average together. Default: 1 is no averaging
 	public int sampleProcessingMode = 0;
@@ -48,7 +49,7 @@ public class MicrophoneInput : MonoBehaviour {
 	private FFTWindow specFFTwindow = FFTWindow.Hanning;
 	private float diff = 0.0f;
 	public int diffTrigger = 0;
-	public int triggerTime = 60;				//Number of frames it takes within a range to trigger
+	public int triggerTime = 120;				//Number of frames it takes within a range to trigger
 	public float triggerHigh = 0.1f;
 	public float triggerLow = -0.1f;
 	public float triggerResetHigh = 0.001f;
@@ -59,6 +60,10 @@ public class MicrophoneInput : MonoBehaviour {
 	
 	void Awake () {
 		InitializeAudio();
+	}
+
+	void Start () {
+		_diffUI.UpdateTriggers(triggerLow, triggerHigh, triggerResetLow, triggerResetHigh);
 	}
 
 	// Update is called once per frame
@@ -225,7 +230,7 @@ public class MicrophoneInput : MonoBehaviour {
 		sampleSetProcessed = NormalizeToZeroDoubleSqrt(sampleSetProcessed);
 
 		//Calculate the difference in the height of the low and high frequency peaks.
-		diff = sampleSetProcessed[ssvepHighValues[0]] - sampleSetProcessed[ssvepLowValues[0]];
+		diff = (sampleSetProcessed[ssvepHighValues[0]] - sampleSetProcessed[ssvepLowValues[0]]);
 		if (diff>triggerHigh) {
 			++diffTrigger;
 		} else if (diff<triggerLow) {
@@ -234,6 +239,10 @@ public class MicrophoneInput : MonoBehaviour {
 			//Reset the diffTrigger value if it drops out of range for low or high triggers
 			diffTrigger = 0;
 		}
+
+		_diffUI.UpdateDiff(diff);
+		_diffUI.UpdateTriggerPercent(Mathf.RoundToInt(Mathf.Abs((float)diffTrigger / (float)triggerTime)*100f));
+
 
 		//Debug.Log("Diff: " + diff.ToString("0.0000"));
 		//Debug.Log(string.Format("{0:####.000} Hz", diff));
