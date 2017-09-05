@@ -50,10 +50,12 @@ public class MicrophoneInput : MonoBehaviour {
 	private float diff = 0.0f;
 	public int diffTrigger = 0;
 	public int triggerTime = 120;				//Number of frames it takes within a range to trigger
-	public float triggerHigh = 0.1f;
-	public float triggerLow = -0.1f;
-	public float triggerResetHigh = 0.001f;
-	public float triggerResetLow = -0.001f;
+	private float diffMin;
+	private float diffMax;
+	private float triggerHigh;
+	private float triggerLow;
+	private float resetHigh;
+	private float resetLow;
 	//public int activeAudioClip = 0;
 	//public AudioClip[] audioClips;
 
@@ -63,7 +65,7 @@ public class MicrophoneInput : MonoBehaviour {
 	}
 
 	void Start () {
-		_diffUI.UpdateTriggers(triggerLow, triggerHigh, triggerResetLow, triggerResetHigh);
+		ResetDiffValues();
 	}
 
 	// Update is called once per frame
@@ -73,14 +75,25 @@ public class MicrophoneInput : MonoBehaviour {
 		}
 	}
 
+	public void ResetDiffValues() {
+		diffMin = -0.1f;
+		diffMax = 0.1f;
+		triggerHigh = 0.015f;
+		triggerLow = -0.015f;
+		resetHigh = 0.005f;
+		resetLow = -0.005f;
+		_diffUI.SetDiffSettings(diffMin, diffMax, triggerLow, triggerHigh, resetLow, resetHigh);
+		// _diffUI.SetDiffMinMax(diffMin, diffMax);
+		// _diffUI.SetTriggers(triggerLow, triggerHigh, resetLow, resetHigh);
+	}
+
 	public void NextProcessingMode() {
-		sampleProcessingMode = (sampleProcessingMode + 1)%5;
+		sampleProcessingMode = (sampleProcessingMode + 1) % 5;
 	}
 
 	public void MicToggle() {
 		useMicrophone =  !useMicrophone;
 		InitializeAudio();
-		//ResetSamples();
 	}
 
 	private void SetLowestSampleRateMobile() {
@@ -235,7 +248,7 @@ public class MicrophoneInput : MonoBehaviour {
 			++diffTrigger;
 		} else if (diff<triggerLow) {
 			--diffTrigger;
-		} else if ((diff<triggerResetHigh) && (diff>triggerResetLow)) {
+		} else if ((diff<resetHigh) && (diff>resetLow)) {
 			//Reset the diffTrigger value if it drops out of range for low or high triggers
 			diffTrigger = 0;
 		}
@@ -427,5 +440,20 @@ public class MicrophoneInput : MonoBehaviour {
 		 }
 	}
 
+	public void setTriggerLow (float val) {
+		triggerLow = val;
+	}
+
+	public void setTriggerHigh (float val) {
+		triggerHigh = val;
+	}
+
+	public void setResetLow (float val) {
+		resetLow = val;
+	}
+
+	public void setResetHigh (float val) {
+		resetHigh = val;
+	}
 
 }

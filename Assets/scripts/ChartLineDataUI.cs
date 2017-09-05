@@ -52,7 +52,6 @@ public class ChartLineDataUI : MonoBehaviour {
 
 	public void RemoveVerticalMarkerLines () {
 		foreach (Transform child in transform) {
-			Debug.Log(child.tag);
 			if (child.tag == lineTag) {
 				Destroy(child.gameObject);
 			}

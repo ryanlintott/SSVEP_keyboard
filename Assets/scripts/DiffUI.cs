@@ -14,21 +14,9 @@ public class DiffUI : MonoBehaviour {
 	public Slider _resetLowSlider;
 	public Slider _resetHighSlider;
 
-	public float diffMin = -0.1f;
-	public float diffMax = 0.1f;
-
 	// Use this for initialization
 	void Start () {
-		_diffSlider.minValue = diffMin;
-		_diffSlider.maxValue = diffMax;
-		_triggerLowSlider.minValue = diffMin;
-		_triggerLowSlider.maxValue = diffMax;
-		_triggerHighSlider.minValue = diffMin;
-		_triggerHighSlider.maxValue = diffMax;
-		_resetLowSlider.minValue = diffMin;
-		_resetLowSlider.maxValue = diffMax;
-		_resetHighSlider.minValue = diffMin;
-		_resetHighSlider.maxValue = diffMax;
+		
 	}
 	
 	// Update is called once per frame
@@ -45,9 +33,39 @@ public class DiffUI : MonoBehaviour {
 		_diffTime.FillPercent = timePercent;
 	}
 
-	public void UpdateTriggers (float trigLow, float trigHigh, float resetLow, float resetHigh) {
-		_triggerLowSlider.value = trigLow;
-		_triggerHighSlider.value = trigHigh;
+	public void SetDiffSettings (float diffMin, float diffMax, float triggerLow, float triggerHigh, float resetLow, float resetHigh) {
+		_diffSlider.minValue = diffMin;
+		_diffSlider.maxValue = diffMax;
+		_triggerLowSlider.minValue = diffMin;
+		_triggerLowSlider.maxValue = diffMax;
+		_triggerHighSlider.minValue = diffMin;
+		_triggerHighSlider.maxValue = diffMax;
+		_resetLowSlider.minValue = diffMin;
+		_resetLowSlider.maxValue = diffMax;
+		_resetHighSlider.minValue = diffMin;
+		_resetHighSlider.maxValue = diffMax;
+		_triggerLowSlider.value = triggerLow;
+		_triggerHighSlider.value = triggerHigh;
+		_resetLowSlider.value = resetLow;
+		_resetHighSlider.value = resetHigh;
+	}
+
+	public void SetDiffMinMax (float diffMin, float diffMax) {
+		_diffSlider.minValue = diffMin;
+		_diffSlider.maxValue = diffMax;
+		_triggerLowSlider.minValue = diffMin;
+		_triggerLowSlider.maxValue = diffMax;
+		_triggerHighSlider.minValue = diffMin;
+		_triggerHighSlider.maxValue = diffMax;
+		_resetLowSlider.minValue = diffMin;
+		_resetLowSlider.maxValue = diffMax;
+		_resetHighSlider.minValue = diffMin;
+		_resetHighSlider.maxValue = diffMax;
+	}
+
+	public void SetTriggers (float triggerLow, float triggerHigh, float resetLow, float resetHigh) {
+		_triggerLowSlider.value = triggerLow;
+		_triggerHighSlider.value = triggerHigh;
 		_resetLowSlider.value = resetLow;
 		_resetHighSlider.value = resetHigh;
 	}
