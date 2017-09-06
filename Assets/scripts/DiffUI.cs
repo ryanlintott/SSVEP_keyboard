@@ -8,7 +8,6 @@ public class DiffUI : MonoBehaviour {
 
 	public Slider _diffSlider;
 	public UICircle _diffTime;
-	public Text _diffLabel;
 	public Slider _triggerLowSlider;
 	public Slider _triggerHighSlider;
 	public Slider _resetLowSlider;
@@ -26,11 +25,10 @@ public class DiffUI : MonoBehaviour {
 
 	public void UpdateDiff (float diff) {
 		_diffSlider.value = diff;
-		_diffLabel.text = diff.ToString("0.0000");
 	}
 
 	public void UpdateTriggerPercent (int timePercent) {
-		_diffTime.FillPercent = timePercent;
+		_diffTime.FillPercent = Mathf.Min(timePercent, 100);
 	}
 
 	public void SetDiffSettings (float diffMin, float diffMax, float triggerLow, float triggerHigh, float resetLow, float resetHigh) {

@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public class ValueText : MonoBehaviour {
 
-	private Text t;
+	public Text _t;
 
 	// Use this for initialization
 	void Start () {
-		t = GetComponentInParent<Text>();
+		//_t = GetComponent<Text>();
 	}
 
 	public void SetValue (float val) {
-		t.text = val.ToString("0.0000");
+		_t.text = val.ToString("0.0000");
 	}
 }
 

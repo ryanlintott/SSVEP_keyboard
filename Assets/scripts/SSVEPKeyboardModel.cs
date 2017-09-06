@@ -73,8 +73,8 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 		ResetKeyboardKeys();
 	}
 
-	public void ToggleUseSSVEP () {
-		useSSVEP = !useSSVEP;
+	public void ToggleUseSSVEP (bool toggleButton) {
+		useSSVEP = toggleButton;
 	}
 
 	public void LowFrequency () {
