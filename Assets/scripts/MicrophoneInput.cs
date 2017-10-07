@@ -18,11 +18,12 @@ public class MicrophoneInput : MonoBehaviour {
 	public ChartLineDataUI _chartLineDataUI;
 	public DiffUI _diffUI;
 	public bool useMicrophone = true;
-
+	public bool useLowestSampleRate = true;
 	private int sampleRate;						//44100 Hz is the typical sample rate
 	private int deviceSampleRateMin;			//Value in Hz
 	private int deviceSampleRateMax;			//Value in Hz
-	private float pitchMultiplier;				//Pitch multiplier when playing back the audio clip. Used to increase signal resolution
+	public bool autoPitchMultiplier = true;
+	public float pitchMultiplier = 1f;			//Pitch multiplier when playing back the audio clip. Used to increase signal resolution
 	private float fMax;							//half of the sample rate
 	public int fTarget = 1000;					//Target in HZ
 	public int fRangeWidth = 120;				//Width of area of interest around target in HZ
@@ -59,6 +60,9 @@ public class MicrophoneInput : MonoBehaviour {
 
 	
 	void Awake () {
+		if (useLowestSampleRate) {
+			SetLowestSampleRate();
+		}
 		StartCoroutine(InitializeAudio());
 	}
 
@@ -92,21 +96,23 @@ public class MicrophoneInput : MonoBehaviour {
 		StartCoroutine(InitializeAudio());
 	}
 
-	private void SetLowestSampleRateMobile() {
+	private void SetLowestSampleRate() {
 		//No loger necessary with pitch adjustments
-		#if UNITY_IOS
+		AudioConfiguration config = AudioSettings.GetConfiguration();
+
+		#if (UNITY_EDITOR || UNITY_STANDALONE)
+			Debug.Log("Editor or Standalone");
+			config.sampleRate = 44100;
+		#elif UNITY_IOS
 			Debug.Log("iPhone");
-			AudioConfiguration config = AudioSettings.GetConfiguration();
 			config.sampleRate = 11025;
-			AudioSettings.Reset(config);
+		#elif UNITY_ANDROID
+			Debug.Log("Android");
+			config.sampleRate = 11025;
 		#endif
 
-		#if UNITY_ANDROID
-			Debug.Log("Android");
-			AudioConfiguration config = AudioSettings.GetConfiguration();
-			config.sampleRate = 11025;
-			AudioSettings.Reset(config);
-		#endif
+		AudioSettings.Reset(config);
+		Debug.Log("New sample rate is: " + config.sampleRate);
 	}
 
 	public void ResetSamples() {
@@ -133,7 +139,10 @@ public class MicrophoneInput : MonoBehaviour {
 
 		//finding the best whole number pitchMultiplier we can use to scale up the signal to fix the available frequencies
 		//(sampleRate / 2) gives us the max potential frequency and the rest gives us the maximum frequency we care about
-		pitchMultiplier = Mathf.Floor((sampleRate / 2) / (fTarget + (fRangeWidth / 2)));
+		if (autoPitchMultiplier) {
+			pitchMultiplier = Mathf.Floor((sampleRate / 2) / (fTarget + (fRangeWidth / 2)));	
+		}
+		
 		fMax = AudioSettings.outputSampleRate / 2;
 		fToSampleRange = pitchMultiplier * numSamples / fMax;
 
@@ -167,7 +176,9 @@ public class MicrophoneInput : MonoBehaviour {
 			}
 
 			//_audio.clip = Microphone.Start("Built-in Microphone", true, 10, sampleRate);
-			_audio.clip = Microphone.Start(null, true, 10, sampleRate);
+			_audio.clip = Microphone.Start(null, true, 5, sampleRate);
+
+			//Setup audio latency in ms. Use <= 0 for no latency.
 			while (Microphone.GetPosition(null) <= 0){}
 		} else {
 			_audio.clip = _demoTone;
@@ -199,7 +210,7 @@ public class MicrophoneInput : MonoBehaviour {
 		System.Array.Copy(sampleSet,sampleSetProcessed,sampleSet.Length);
 
 		// Average the samples over time.  If maxSamples = 1 this will just return the same values
-		if (averageOverTime) {
+		if ((averageOverTime) && (_avgTimeSamples != 1)) {
 			if (_avgTimeSamples == 0) {
 				sampleSetAvg = AverageSamplesForever(sampleSetProcessed, sampleSetAvg, numSamplesTaken);	
 			} else {
