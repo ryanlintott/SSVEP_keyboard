@@ -1,14 +1,14 @@
 # SSVEP Keyboard
-v0.10
+v0.11
 
-This is a repository for the SSVEP keyboard built primarily for the Smartphone BCI
+This is a repository for the SSVEP keyboard built primarily for the icibici
 
-[Smartphone-bci](https://jmanart.github.io/smartphone-bci-hardware) is a hardware / software platform born with the intention of Developing an EEG under £20.
+[icibici](https://github.com/icibici) is a hardware / software platform born with the intention of Developing an EEG under £20.
 
-Other repositories that are a part of the smartphone BCI Project:
+Other repositories that are a part of the icibici Project:
 
-* [SMARTPHONE-BCI](https://github.com/icibici/Android-diagnostic-app)
-* [SMARTPHONE-BCI-HARDWARE](https://github.com/icibici/smartphone-bci-hardware)
+* [icibici Android diagnostic app](https://github.com/icibici/Android-diagnostic-app)
+* [icibici hardware](https://github.com/icibici/smartphone-bci-hardware)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -27,20 +27,20 @@ The **SSVEP Keyboard** app is built in Unity (currently version 2017.1.0f3) and 
 
 - iOS
 - Android (untested but should work)
-- Mac (untested but should work)
-- PC (untested but should work)
+- Mac (up to v0.10 only. untested but should work)
+- PC (up to v0.10 only. untested but should work)
 
 For the iOS version please contact me directly (hello[at]abetterwaytodo.com[dot]com) and I can add you to the beta testers via TestFlight
 You can download all other builds [here](https://drive.google.com/drive/folders/0B4W4Pn0tIMBXbGUtdmJCMW02dk0?usp=sharing))
 
 ### SSVEP Keyboard app
 
-To use the app, it must be connected to the Smartphone BCI (see instructions [here](https://jmanart.github.io/smartphone-bci-hardware))
+To use the app, it must be connected to the icibici hardware (see instructions [here](https://github.com/icibici/smartphone-bci-hardware))
 
-- You can type on a keyboard using EEG signals from a Smartphone BCI
+- You can type on a keyboard using EEG signals from an icibici device
 - Two keyboards! Y/N and English with next letter preditiction
 - Scalable keyboard keys
-- The app will output a 1Khz tone via the headphone jack to act as a carrier wave for the Smartphone BCI (if you don't have anything plugged in it will emit the tone from your built-in speakers. It's annoying but you'll know the tone is being sent out)
+- The app will output a 1Khz tone via the headphone jack to act as a carrier wave for the icibici (if you don't have anything plugged in it will emit the tone from your built-in speakers. It's annoying but you'll know the tone is being sent out)
 - The app will read a signal from the microphone and display a visual output of the frequecy bands from 940-1060Hz. Touch this output to see a larger version of the graph.
 - Frequency bands 1015Hz and 1020Hz are highlighted. These represent 15Hz and 20Hz signals from the brain (Look for peaks at these points).
 - Use demo signal toggle: Turn this on to play a pre-recorded EEG signal (from my own brain) instead of using the signal from your device
