@@ -1,5 +1,5 @@
 # SSVEP Keyboard
-v0.11
+v0.12
 
 This is a repository for the SSVEP keyboard built primarily for the icibici
 
@@ -27,8 +27,9 @@ The **SSVEP Keyboard** app is built in Unity (currently version 2017.1.0f3) and 
 
 - iOS
 - Android (untested but should work)
-- Mac (up to v0.10 only. untested but should work)
-- PC (up to v0.10 only. untested but should work)
+- Mac (up to v0.10 only)
+- PC (up to v0.10 only)
+(The Mac and PC versions are unlikely to work at the moment due to a bug in the signal pitch multiplication. This bug or a workaround will hopefully be developed in the future but for now these platforms will not be updated. iOS and Android versions work fine as the a lower sample rates can be used to acheive a similar result.)
 
 For the iOS version please contact me directly (hello[at]abetterwaytodo.com[dot]com) and I can add you to the beta testers via TestFlight
 You can download all other builds [here](https://drive.google.com/drive/folders/0B4W4Pn0tIMBXbGUtdmJCMW02dk0?usp=sharing))
@@ -40,10 +41,10 @@ To use the app, it must be connected to the icibici hardware (see instructions [
 - You can type on a keyboard using EEG signals from an icibici device
 - Two keyboards! Y/N and English with next letter preditiction
 - Scalable keyboard keys
-- The app will output a 1Khz tone via the headphone jack to act as a carrier wave for the icibici (if you don't have anything plugged in it will emit the tone from your built-in speakers. It's annoying but you'll know the tone is being sent out)
-- The app will read a signal from the microphone and display a visual output of the frequecy bands from 940-1060Hz. Touch this output to see a larger version of the graph.
-- Frequency bands 1015Hz and 1020Hz are highlighted. These represent 15Hz and 20Hz signals from the brain (Look for peaks at these points).
-- Use demo signal toggle: Turn this on to play a pre-recorded EEG signal (from my own brain) instead of using the signal from your device
+- The app will output a carrier wave signal (1000 Hz default but 5000 Hz might be the best setting to reduce noise) tone via the headphone jack to act as a carrier wave for the icibici (if you don't have anything plugged in it will emit the tone from your built-in speakers. It's annoying but you'll know the tone is being sent out)
+- The app will read a signal from the microphone and display a visual output of the frequecy bands +-60Hz from the carrier signal (default 940-1060 Hz). Touch this output to see a larger version of the graph.
+- Frequency bands relating to the modulated 15Hz and 20Hz brain signals are highlighted. (Look for peaks at these points).
+- Use demo signal toggle: Turn this on to play a pre-recorded EEG signal (from my own brain) instead of using the signal from your device. This will only work correctly when the carrier signal is set to 1000 Hz.
 - Difference visualiser
   - The difference between the values of the peaks at 15Hz and 20Hz is displayed on the bottom of the screen.
   - The white dot displays the current difference.
@@ -58,8 +59,8 @@ To use the app, it must be connected to the icibici hardware (see instructions [
 - Any keypresses will be entered in the output area at the top of the screen. Click this area to clear the output.
 
 Important notes:
-- The framerate needs to be 60 fps for it to work properly.
-- Make sure your phone volume is turned up to abut 80%
+- The framerate needs to be 60 fps for it to work properly. (check this value in the top right corner of the screen)
+- Make sure your phone volume is turned up to abut 80% (too high and it may not work at all, too low and there may be additional noise)
 
 ### Flicker app
 
