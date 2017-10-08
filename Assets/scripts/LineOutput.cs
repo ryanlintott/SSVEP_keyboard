@@ -2,29 +2,44 @@
 using System;
 
 public class LineOutput : MonoBehaviour {
-    public int position = 0;
-    public int samplerate = 44100;
-    public float frequency = 1000;
+	public int position = 0;
+	public int samplerate = 44100;
+	public float frequency = 1000;
 
-    void Start() {
-        AudioClip myClip = AudioClip.Create("MySinusoid", samplerate * 2, 1, samplerate, true, OnAudioRead, OnAudioSetPosition);
-        AudioSource aud = GetComponent<AudioSource>();
-        aud.clip = myClip;
-        aud.Play();
-    }
+	private AudioSource aud;
+	private AudioClip myClip;
 
-    void OnAudioRead(float[] data) {
-        int count = 0;
-        while (count < data.Length) {
-            //data[count] = Mathf.Sign(Mathf.Sin(2 * Mathf.PI * frequency * position / samplerate));
-            data[count] = Mathf.Sin(2 * Mathf.PI * frequency * position / (float)samplerate);
-            position++;
-            count++;
-        }
-    }
+	void Start() {
+		aud = GetComponent<AudioSource>();
+		PlayClip();
+	}
 
-    void OnAudioSetPosition(int newPosition) {
-        position = newPosition;
-    }
+	void PlayClip() {
+		aud.Stop();
+		myClip = AudioClip.Create("MySinusoid", samplerate * 2, 1, samplerate, true, OnAudioRead, OnAudioSetPosition);
+		aud.clip = myClip;
+		aud.Play();
+	}
+
+	public void setFrequencyString (string sVal) {
+		float val = frequency;
+		if (float.TryParse(sVal, out val)) {
+			frequency = val;
+		}
+		PlayClip();
+	}
+
+	void OnAudioRead(float[] data) {
+		int count = 0;
+		while (count < data.Length) {
+			//data[count] = Mathf.Sign(Mathf.Sin(2 * Mathf.PI * frequency * position / samplerate));
+			data[count] = Mathf.Sin(2 * Mathf.PI * frequency * position / (float)samplerate);
+			position++;
+			count++;
+		}
+	}
+
+	void OnAudioSetPosition(int newPosition) {
+	    position = newPosition;
+	}
 }
-

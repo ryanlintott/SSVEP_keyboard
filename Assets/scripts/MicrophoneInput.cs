@@ -32,7 +32,7 @@ public class MicrophoneInput : MonoBehaviour {
 	public float ssvepHighF = 20.0f;			//Flicker speed in Hz for high frequency flashes
 	private int sampleRangeStart;				//The first bucket for FFT samples in our sample range
 	private int sampleRangeEnd;					//The last bucket for FFT samples in our sample range
-	private int numSamples = 4096;				//Must be power of 2  Min: 64, Max: 8192
+	private int numSamples = 8192;				//Must be power of 2  Min: 64, Max: 8192
 
 	private int sampleSetSize;
 	private int[] ssvepLowValues;
@@ -471,6 +471,15 @@ public class MicrophoneInput : MonoBehaviour {
 			triggerTime = val;
 		}
 		ResetSamples();
+	}
+
+	public void setFrequencyString (string sVal) {
+		int val = fTarget;
+		if (int.TryParse(sVal, out val)) {
+			fTarget = val;
+		}
+		StartCoroutine(InitializeAudio());
+		//ResetSamples();
 	}
 
 }
