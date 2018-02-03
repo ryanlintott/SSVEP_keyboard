@@ -18,6 +18,7 @@ public class FlickerSprite : MonoBehaviour {
         //Application.targetFrameRate = 60;
     }
     // Update is called once per frame
+    // Here's a new line
 
     void Start() {
     	_spriteRenderer.color = c1;

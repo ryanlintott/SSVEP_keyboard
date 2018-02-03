@@ -27,7 +27,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	private float halfProbSum;
 	public NextLetterProbability _nextLetterProbability;
 	public MicrophoneInput _microphoneInput;
-	public int letterDelay = 3;
+	public int letterDelay = 2;
 	public bool useSSVEP = false;
 
 	// Use this for initialization
@@ -42,7 +42,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (useSSVEP) {
+		if (useSSVEP)  {
 			if (_microphoneInput.diffTrigger > _microphoneInput.triggerTime) {
 				HighFrequency();
 			}
@@ -67,7 +67,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 
 	public void ToggleKeyboard () {
 		currentKeyboard = (currentKeyboard + 1) % _keyboardFiles.Length;
-		InitializeKeyboard ();
+		InitializeKeyboard();
 		ClearOutput();
 		_SSVEPKeyboardSpriteView.BuildKeyboard(numKeys);
 		ResetKeyboardKeys();
@@ -78,13 +78,17 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	}
 
 	public void LowFrequency () {
+		useSSVEP = false;
 		ChooseKeyState(1);
 		_microphoneInput.ResetSamples();
+		useSSVEP = true;
 	}
 
 	public void HighFrequency () {
+		useSSVEP = false;
 		ChooseKeyState(2);
 		_microphoneInput.ResetSamples();
+		useSSVEP = true;
 	}
 
 	public void ResetKeyboardKeys () {
@@ -93,7 +97,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 			keys[i].status = 0;
 		}
 		ChooseKeyState(0);
-		_microphoneInput.ResetSamples();
+		_microphoneInput.TurnAudioOn();
 	}
 
 	void ChooseKeyState (int state) {
@@ -137,6 +141,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	}
 
 	void PressKeyboardKey () {
+		_microphoneInput.TurnAudioOff();
 		for (int i = 0; i < numKeys; i++) {
 			if (keys[i].status > 0) {
 				// switch (keys[i].key) {
@@ -149,7 +154,10 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 				// }
 				keys[i].status = 3;
 				lastLetter = keys[i].key;
+
+				//this is a bit of a hack but it will only type the first character of the name of the key. It's used for spacebar as the first character is just a space
 				textOutput += lastLetter[0];
+
 				_textOutputDisplay.SetTextOutput(textOutput);
 				//Debug.Log(keys[i].key);
 				

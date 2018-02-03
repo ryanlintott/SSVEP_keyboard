@@ -63,7 +63,7 @@ public class MicrophoneInput : MonoBehaviour {
 		if (useLowestSampleRate) {
 			SetLowestSampleRate();
 		}
-		StartCoroutine(InitializeAudio());
+		TurnAudioOn();
 	}
 
 	void Start () {
@@ -75,6 +75,15 @@ public class MicrophoneInput : MonoBehaviour {
 		if (_readSamplesOn) {
 			ReadSamples();
 		}
+	}
+
+	public void TurnAudioOn() {
+		StartCoroutine(InitializeAudio());
+	}
+
+	public void TurnAudioOff() {
+		_readSamplesOn = false;
+		ResetSamples();
 	}
 
 	public void ResetDiffValues() {
@@ -175,6 +184,7 @@ public class MicrophoneInput : MonoBehaviour {
 				Debug.Log("Device Name: " + s + " [" + deviceSampleRateMin + "-" + deviceSampleRateMax + "]");
 			}
 
+			//_audio.clip = Microphone.Start("AudioBuddy", true, 10, 8000);
 			//_audio.clip = Microphone.Start("Built-in Microphone", true, 10, sampleRate);
 			_audio.clip = Microphone.Start(null, true, 5, sampleRate);
 
