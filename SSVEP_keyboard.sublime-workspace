@@ -456,10 +456,13 @@
 	"buffers":
 	[
 		{
+			"contents": "# SSVEP Keyboard\nv0.13\n\nThis is a repository for the SSVEP keyboard built primarily for the icibici\n\n[icibici](https://github.com/icibici) is a hardware / software platform born with the intention of Developing an EEG under £20.\n\nOther repositories that are a part of the icibici Project:\n\n* [icibici Android diagnostic app](https://github.com/icibici/Android-diagnostic-app)\n* [icibici hardware](https://github.com/icibici/smartphone-bci-hardware)\n\n---------------------------------------------------------------------------------------------------------------------------------------------------------\n\n**WARNING! THIS APP USES FLICKERING LIGHTS! DO NOT USE THIS APP IF YOU HAVE PHOTOSENSITIVE EPILEPSY**\n---------------------------------------------------------------------------------------------------\n\n---------------------------------------------------------------------------------------------------------------------------------------------------------\n\n## What is SSVEP?\n\n- [A Quick Intro to SSVEP](http://synaptitude.me/blog/a-quick-intro-to-ssvep-steady-state-visually-evoked-potential/)\n\n## The Unity App\n\nThe **SSVEP Keyboard** app is built in Unity (currently version 2017.3.0f3) and can run on following platforms:\n\n- iOS\n- Android (untested but should work)\n- Mac (up to v0.10 only)\n- PC (up to v0.10 only)\n- Linux\n(The Mac and PC versions are unlikely to work at the moment due to a bug in the signal pitch multiplication. This bug or a workaround will hopefully be developed in the future but for now these platforms will not be updated. iOS and Android versions work fine as the a lower sample rates can be used to acheive a similar result.)\n\nFor the iOS version please contact me directly (hello[at]abetterwaytodo.com[dot]com) and I can add you to the beta testers via TestFlight\nYou can download all other builds [here](https://drive.google.com/drive/folders/0B4W4Pn0tIMBXbGUtdmJCMW02dk0?usp=sharing))\n\n### SSVEP Keyboard app\n\nTo use the app, it must be connected to the icibici hardware (see instructions [here](https://github.com/icibici/smartphone-bci-hardware))\n\n- You can type on a keyboard using EEG signals from an icibici device\n- Two keyboards! Y/N and English with next letter preditiction\n- Scalable keyboard keys\n- The app will output a carrier wave signal (1000 Hz default but 5000 Hz might be the best setting to reduce noise) tone via the headphone jack to act as a carrier wave for the icibici (if you don't have anything plugged in it will emit the tone from your built-in speakers. It's annoying but you'll know the tone is being sent out)\n- The app will read a signal from the microphone and display a visual output of the frequecy bands +-60Hz from the carrier signal (default 940-1060 Hz). Touch this output to see a larger version of the graph.\n- Frequency bands relating to the modulated 15Hz and 20Hz brain signals are highlighted. (Look for peaks at these points).\n- Use demo signal toggle: Turn this on to play a pre-recorded EEG signal (from my own brain) instead of using the signal from your device. This will only work correctly when the carrier signal is set to 1000 Hz.\n- Difference visualiser\n  - The difference between the values of the peaks at 15Hz and 20Hz is displayed on the bottom of the screen.\n  - The white dot displays the current difference.\n  - A grey line in the middle shows the zero point.\n  - The red and blue lines show the trigger levels for low and high frequency triggers. If the dot moves beyond these lines then trigger timer starts. These lines can be dragged to set the trigger levels based on the signal from different users in different situations.\n  - The trigger timer is visualised by a red cicle around the white dot. When the circle is complete (and detect is on) it will trigger a keypress for the low or high frequency keys.\n  - Average & Trigger Time: This is the time in frames (there should be 60 frames per second) that the white dot needs to be in the trigger region before it triggers a keypress. It's also the amount of frames used to average the signal. If you set it to 1 you will see the raw signal without averaging. 120 frames (2 seconds) is the default setting. A rolling average is used so instead of just dividing the samples into blocks a block of the last set amount of frames is averaged every single frame.\n  - The two grey lines are reset lines. If the white dot moves past them towards the middle then the trigger timer is reset. These lines can also be repositioned.\n- Detect toggle: Turn on to drive the keyboard with your signal using the trigger levels as described above.\n- Use Demo Buttons: The keyboard can be operated manually by clicking the low frequecy and high frequecy buttons, this will simulate what would happen if the device had triggered a low or high frequency signal.\n- Click Idle Reset to reset the input. As the input averages over time this will clear out old data and start fresh. This button is less useful now so you can probably just ignore it.\n- Any keypresses will be entered in the output area at the top of the screen. Click this area to clear the output.\n\nImportant notes:\n- The framerate needs to be 60 fps for it to work properly. (check this value in the top right corner of the screen)\n- Make sure your phone volume is turned up to abut 80% (too high and it may not work at all, too low and there may be additional noise)\n\n### Flicker app\n\nThis app does not do any signal processing. It simply just displays flashing squares as specific frequencies. It could be used for testing with other BCIs or with another phone running the SSVEP keyboard app.\n\n- Display two squares that flicker at two different Hz rates set by the user.\n- Be sure to choose frequencies that divide evenly into 60Hz for accurate flickers (15Hz and 20Hz are used in the keyboard)\n- Note that the screen refresh rate (displayed in the app) should be 60fps for this to work correctly. (For example 30fps will not display 20Hz correctly as it does not divide evenly)\n\n\n",
 			"file": "README.md",
+			"file_size": 5985,
+			"file_write_time": 131622226120000000,
 			"settings":
 			{
-				"buffer_size": 5976,
+				"buffer_size": 5984,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -468,7 +471,7 @@
 			"file": "Assets/scripts/MicrophoneInput.cs",
 			"settings":
 			{
-				"buffer_size": 16285,
+				"buffer_size": 16480,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -495,7 +498,25 @@
 			"file": "Assets/scripts/SSVEPKeyboardModel.cs",
 			"settings":
 			{
-				"buffer_size": 4368,
+				"buffer_size": 4640,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/scripts/SSVEPKeyboardSpriteView.cs",
+			"settings":
+			{
+				"buffer_size": 5338,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/scripts/DiffUI.cs",
+			"settings":
+			{
+				"buffer_size": 2049,
 				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
@@ -563,12 +584,13 @@
 	[
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets",
-		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Resources",
-		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Resources/Text",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Editor",
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Editor/CrossPlatformInput",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts"
 	],
 	"file_history":
 	[
+		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/Editor/CrossPlatformInput/CrossPlatformInputInitialize.cs",
 		"/Users/ryanlintott/Dropbox/Apps/2Do/tod/o_u_k_00cfe30bfd474743b0f5241e16f231bf_p_aeddc909452b40f9b77aab3f49de5bd7_i_b976ae046be24b5ba59928cc06df2386_d_.tod",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/Fps.cs",
 		"/Volumes/Backpack/Dev/SSVEP_keyboard/SSVEP_keyboard/Assets/scripts/LineOutput.cs",
@@ -641,7 +663,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 39.0
 	},
 	"find_in_files":
 	{
@@ -656,6 +678,36 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"ResetKeyboardKeys",
+			"detect",
+			"_readSamplesOn",
+			"ResetSamples",
+			"Awake",
+			"InitializeAudio",
+			"_readSamplesOn",
+			"ReadSamples",
+			"diff",
+			"UpdateTriggerPercent",
+			"ResetKeyboardKeys",
+			"detect",
+			"useSSVEP",
+			"ssvep",
+			"ResetKeyboardKeys",
+			"letterDelay",
+			"samples",
+			"detect",
+			"ChooseKeyState",
+			"samplerate",
+			"sampleRate",
+			"diff",
+			"PressKeyboardKey",
+			"PressKey",
+			"useSSVEP",
+			"toggle",
+			"toggleUse",
+			"ResetKeyboardKeys",
+			"letterDelay",
+			"PressKeyboardKey",
 			"_chartLineDataUI",
 			"smartphone",
 			"SetLowestSampleRate",
@@ -753,24 +805,7 @@
 			"SetKeyStates",
 			"SetKeyboardKey",
 			"SetKeyStates",
-			"SetKeyboardKey",
-			"flicker",
-			"grid",
-			"targetHz",
-			"focusHzWidth",
-			"targetHz",
-			"eq",
-			"b1",
-			"screenSize",
-			"SCALE_LINES_Y",
-			"spectrumHolder",
-			"createFreqBar",
-			"spectrumHolder",
-			"_spinning",
-			"camera",
-			"cookie",
-			"sound",
-			"SoundVO"
+			"SetKeyboardKey"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -787,7 +822,7 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": true,
+		"whole_word": false,
 		"wrap": true
 	},
 	"groups":
@@ -802,15 +837,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5976,
+						"buffer_size": 5984,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4147,
-								4147
+								1331,
+								1331
 							]
 						],
 						"settings":
@@ -819,7 +854,7 @@
 							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 455.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -831,15 +866,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16285,
+						"buffer_size": 16480,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								16263,
-								16263
+								3095,
+								3107
 							]
 						],
 						"settings":
@@ -848,45 +883,45 @@
 							"oops":
 							{
 								"1006,1025": "Name should have prefix '_'. (Rule 'Fields').",
-								"10114,10119": "Parameter can be declared with base type",
-								"10122,10126": "Parameter can be IList",
-								"10174,10179": "Use 'var' keyword",
-								"10414,10419": "Parameter can be declared with base type",
-								"10422,10426": "Parameter can be IList",
-								"10455,10456": "Parameter can be IComparable",
+								"10291,10296": "Parameter can be declared with base type",
+								"10299,10303": "Parameter can be IList",
+								"10351,10356": "Use 'var' keyword",
 								"1048,1063": "Name should have prefix '_'. (Rule 'Fields').",
-								"10497,10502": "Use 'var' keyword",
-								"10880,10885": "Use 'var' keyword",
-								"11094,11099": "Use 'var' keyword",
-								"11386,11391": "Use 'var' keyword",
-								"11661,11666": "Use 'var' keyword",
-								"11902,11907": "Use 'var' keyword",
-								"12220,12225": "Use 'var' keyword",
+								"10591,10596": "Parameter can be declared with base type",
+								"10599,10603": "Parameter can be IList",
+								"10632,10633": "Parameter can be IComparable",
+								"10674,10679": "Use 'var' keyword",
+								"11057,11062": "Use 'var' keyword",
+								"11271,11276": "Use 'var' keyword",
+								"11563,11568": "Use 'var' keyword",
+								"11838,11843": "Use 'var' keyword",
+								"12079,12084": "Use 'var' keyword",
 								"1225,1232": "Name should have prefix '_'. (Rule 'Fields').",
-								"12425,12430": "Use 'var' keyword",
+								"12397,12402": "Use 'var' keyword",
+								"12602,12607": "Use 'var' keyword",
 								"1272,1283": "Name should have prefix '_'. (Rule 'Fields').",
-								"12791,12796": "Use 'var' keyword",
-								"13373,13378": "Use 'var' keyword",
-								"13843,13848": "Use 'var' keyword",
+								"12968,12973": "Use 'var' keyword",
+								"13550,13555": "Use 'var' keyword",
+								"14020,14025": "Use 'var' keyword",
 								"1427,1436": "Name should have prefix '_'. (Rule 'Fields').",
-								"14433,14438": "Use 'var' keyword",
-								"14754,14760": "Convert to constant",
-								"14772,14778": "Convert to constant",
-								"14792,14799": "Convert to constant",
-								"14814,14821": "Convert to constant",
+								"14610,14615": "Use 'var' keyword",
+								"14931,14937": "Convert to constant",
+								"14949,14955": "Convert to constant",
+								"14969,14976": "Convert to constant",
+								"14991,14998": "Convert to constant",
 								"1511,1521": "Name should have prefix '_'. (Rule 'Fields').",
-								"15672,15685": "'setTriggerLow' should start with an upper case letter. (Rule 'Methods')",
-								"15693,15696": "Parameter can be IComparable",
-								"15737,15751": "'setTriggerHigh' should start with an upper case letter. (Rule 'Methods')",
-								"15759,15762": "Parameter can be IComparable",
-								"15804,15815": "'setResetLow' should start with an upper case letter. (Rule 'Methods')",
-								"15823,15826": "Parameter can be IComparable",
-								"15865,15877": "'setResetHigh' should start with an upper case letter. (Rule 'Methods')",
-								"15885,15888": "Parameter can be IComparable",
-								"15928,15941": "'setTimeString' should start with an upper case letter. (Rule 'Methods')",
-								"15970,15981": "Assignment is redundant",
-								"16107,16125": "'setFrequencyString' should start with an upper case letter. (Rule 'Methods')",
-								"16154,16161": "Assignment is redundant",
+								"15849,15862": "'setTriggerLow' should start with an upper case letter. (Rule 'Methods')",
+								"15870,15873": "Parameter can be IComparable",
+								"15914,15928": "'setTriggerHigh' should start with an upper case letter. (Rule 'Methods')",
+								"15936,15939": "Parameter can be IComparable",
+								"15981,15992": "'setResetLow' should start with an upper case letter. (Rule 'Methods')",
+								"16000,16003": "Parameter can be IComparable",
+								"16042,16054": "'setResetHigh' should start with an upper case letter. (Rule 'Methods')",
+								"16062,16065": "Parameter can be IComparable",
+								"16105,16118": "'setTimeString' should start with an upper case letter. (Rule 'Methods')",
+								"16147,16158": "Assignment is redundant",
+								"16284,16302": "'setFrequencyString' should start with an upper case letter. (Rule 'Methods')",
+								"16331,16338": "Assignment is redundant",
 								"1771,1781": "Convert to constant",
 								"1957,1958": "Initializing field by default value is redundant",
 								"1973,1988": "Name should have prefix '_'. (Rule 'Fields').",
@@ -901,7 +936,7 @@
 								"2452,2453": "Initializing field by default value is redundant",
 								"2467,2478": "Name should have prefix '_'. (Rule 'Fields').",
 								"45,50": "Using directive is not used by code and can be removed safely.",
-								"4570,4580": "Redundant ToString() call",
+								"4680,4690": "Redundant ToString() call",
 								"762,775": "Name should have prefix '_'. (Rule 'Fields').",
 								"797,816": "Name should have prefix '_'. (Rule 'Fields')."
 							},
@@ -909,10 +944,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 6395.0,
+						"translation.y": 898.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -954,7 +989,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -970,8 +1005,8 @@
 						"selection":
 						[
 							[
-								275,
-								392
+								212,
+								212
 							]
 						],
 						"settings":
@@ -984,7 +1019,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -993,15 +1028,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4368,
+						"buffer_size": 4640,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1619,
-								1619
+								855,
+								855
 							]
 						],
 						"settings":
@@ -1016,10 +1051,10 @@
 								"1875,1887": "Parameter can be IComparable",
 								"19,24": "Using directive is not used by code and can be removed safely.",
 								"309,310": "Initializing field by default value is redundant",
-								"3248,3250": "Convert to 'return' statement",
-								"3802,3806": "Redundant 'else' keyword",
-								"3983,3995": "no known errors.",
+								"3325,3327": "Convert to 'return' statement",
+								"4074,4078": "Redundant 'else' keyword",
 								"410,428": "'_SSVEPKeyboardView' should start with a lower case letter. (Rule 'Fields')",
+								"4255,4267": "no known errors.",
 								"462,486": "'_SSVEPKeyboardSpriteView' should start with a lower case letter. (Rule 'Fields')",
 								"808,819": "Name should have prefix '_'. (Rule 'Fields').",
 								"838,846": "Name should have prefix '_'. (Rule 'Fields').",
@@ -1029,14 +1064,74 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1272.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Assets/scripts/SSVEPKeyboardSpriteView.cs",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 5338,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Assets/scripts/DiffUI.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2049,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								565,
+								565
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 7,
 					"file": "Assets/scripts/ValueText.cs",
 					"semi_transient": false,
 					"settings":
@@ -1066,7 +1161,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -1078,7 +1173,7 @@
 	},
 	"input":
 	{
-		"height": 31.0
+		"height": 35.0
 	},
 	"layout":
 	{

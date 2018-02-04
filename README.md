@@ -1,5 +1,5 @@
 # SSVEP Keyboard
-v0.12
+v0.13
 
 This is a repository for the SSVEP keyboard built primarily for the icibici
 
@@ -23,16 +23,18 @@ Other repositories that are a part of the icibici Project:
 
 ## The Unity App
 
-The **SSVEP Keyboard** app is built in Unity (currently version 2017.1.0f3) and can run on following platforms:
+The **SSVEP Keyboard** app is built in Unity (currently version 2017.3.0p4) and can run on following platforms:
 
 - iOS
 - Android (untested but should work)
-- Mac (up to v0.10 only)
-- PC (up to v0.10 only)
-(The Mac and PC versions are unlikely to work at the moment due to a bug in the signal pitch multiplication. This bug or a workaround will hopefully be developed in the future but for now these platforms will not be updated. iOS and Android versions work fine as the a lower sample rates can be used to acheive a similar result.)
+- Mac
+- PC (untested but should work)
+- Linux (untested but should work)
+(The Mac, PC and Linux versions have a much lower signal resolution due to hardware limitations. iOS and Android versions work better as lower sample rates can be used to acheive a higher signal resolution.)
 
-For the iOS version please contact me directly (hello[at]abetterwaytodo.com[dot]com) and I can add you to the beta testers via TestFlight
-You can download all other builds [here](https://drive.google.com/drive/folders/0B4W4Pn0tIMBXbGUtdmJCMW02dk0?usp=sharing))
+**[Download link](https://drive.google.com/drive/folders/0B4W4Pn0tIMBXbGUtdmJCMW02dk0?usp=sharing)** for Android, PC, Mac and Linux versions
+
+For the iOS version please contact me directly (hello[at]abetterwaytodo.com[dot]com) and I can add you to the beta testers via TestFlight)
 
 ### SSVEP Keyboard app
 
