@@ -23,10 +23,10 @@ Other repositories that are a part of the icibici Project:
 
 ## The Unity App
 
-The **SSVEP Keyboard** app is built in Unity (currently version 2017.3.0p4) and can run on following platforms:
+The **SSVEP Keyboard** app is built in Unity (currently version 2018.2.6f1) and can run on following platforms:
 
-- iOS
-- Android (untested but should work)
+- iOS (latest build unchanged from previous so should work but currently untested)
+- Android
 - Mac
 - PC (untested but should work)
 - Linux (untested but should work)
