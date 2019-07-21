@@ -3,10 +3,11 @@ v0.13
 
 This is a repository for the SSVEP keyboard built primarily for the icibici
 
-[icibici](https://github.com/icibici) is a hardware / software platform born with the intention of Developing an EEG under £20.
+[icibici](https://icibici.github.io/site/) is a hardware / software platform born with the intention of Developing an EEG under £20.
 
 Other repositories that are a part of the icibici Project:
 
+* [icibici on Github](https://github.com/icibici)
 * [icibici Android diagnostic app](https://github.com/icibici/Android-diagnostic-app)
 * [icibici hardware](https://github.com/icibici/smartphone-bci-hardware)
 
@@ -19,7 +20,7 @@ Other repositories that are a part of the icibici Project:
 
 ## What is SSVEP?
 
-- [A Quick Intro to SSVEP](http://synaptitude.me/blog/a-quick-intro-to-ssvep-steady-state-visually-evoked-potential/)
+- [A Quick Intro to SSVEP](https://web.archive.org/web/20181209171157/http://synaptitude.me/blog/a-quick-intro-to-ssvep-steady-state-visually-evoked-potential/)
 
 ## The Unity App
 
