@@ -15,54 +15,45 @@ public class FlickerSprite : MonoBehaviour {
 
     void Awake() {
     	_spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        //Application.targetFrameRate = 60;
     }
-    // Update is called once per frame
-    // Here's a new line
 
     void Start() {
     	_spriteRenderer.color = c1;
     }
 
-    void Update() {
-    	//MakeFlicker();
-        //Debug.Log("Seconds: " + Time.time.ToString() + " Flashes: " + updateCounter.ToString() + "Hz expected: " + cycleHz.ToString() + " Hz actual: " + (updateCounter / Time.time).ToString());
-    	//Debug.Log((1/Time.deltaTime).ToString());
-    }
-
     public void MakeFlicker() {
-        // update frequency time-step
-        dtime += Time.deltaTime;
 
-        // Sample the waveform at a specific time.
-        float wave = Mathf.Sin( (dtime * 2.0f * Mathf.PI) * cycleHz);
+		// old equation (I was making my own time.time for some reason)
+		//dtime += Time.deltaTime;
+		//float wave = Mathf.Sin( (dtime * 2.0f * Mathf.PI) * cycleHz);
 
-        //print (dtime);
-        //print (wave);
+		// Sin works on RAD not DEG.
+		// Sin wave flashing is best for SSVEP
+		// Time in seconds (mod to keep small values) * Pi (one sin wave per second) * cycleHz (cycleHz sin waves per second) / 2 (half a sin wave per cycleHz)
+		float colorMix = Mathf.InverseLerp(-1f, 1f, Mathf.Sin((Time.time % 10.0f) * Mathf.PI * cycleHz * 2.0f));
 
-        // Cycle between sprites based on the waveform.
-        if (wave > 0.0f) {
-            _spriteRenderer.color = c1;
-            // if (swap) {
-            //     updateCounter++;
-            //     swap = false;
-            // }
-            //print ("White");
-        } else {
-            _spriteRenderer.color = c2;
-            // swap = true;
-            //print ("Black");
-        }
+		_spriteRenderer.color = Color.Lerp(c1, c2, colorMix);
 
-        // prevents dtime from climbing to infinity,
-        // by stepping it back in the waveform to a point
-        // of equal value.
-        if (wave == 0.0f) {
-            dtime = 0.0f;
-        }
-    }
+		// Count cycles (also used if I want full flashing colours insetad of smooth sin wave)
+		if (colorMix > 0.5f) {
+			//_spriteRenderer.color = c1;
+			if (swap) {
+				updateCounter++;
+				swap = false;
+			}
+		} else {
+			//_spriteRenderer.color = c2;
+			swap = true;
+		}
 
-    public void SetHz(float newHz) {
+		//Debug.LogFormat("Cycle Count = {0}", updateCounter);
+		//Debug.LogFormat("Accuracy = {0}", Time.time - (updateCounter / cycleHz));
+
+		Debug.Log("Seconds: " + Time.time.ToString() + " Flashes: " + updateCounter.ToString() + " Hz expected: " + cycleHz.ToString() + " Hz actual: " + (updateCounter / Time.time).ToString());
+		//Debug.Log((1/Time.deltaTime).ToString());
+	}
+
+	public void SetHz(float newHz) {
         if (newHz >= 0) {
             cycleHz = newHz;
         }
