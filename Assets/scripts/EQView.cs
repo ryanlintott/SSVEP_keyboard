@@ -1,27 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.Linq;
 
 public class EQView : MonoBehaviour {
+
+	[SerializeField] private float eqScale = 1.0f;
+	[SerializeField] private float eqCenter = 0.5f;
+	[SerializeField] private float eqShift;
 
 	private Slider[] eqBars;
 	private float max = 0.000001f;
 	private float groupValues;
 	private int startValue;
 	private int endValue;
-	public float eqScale = 1.0f;
-	public float eqCenter = 0.5f;
-	public float eqShift = 0.0f;
 
-	// Use this for initialization
 	void Awake () {
 		eqBars = GetComponentsInChildren<Slider>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	public void UpdateEQ (float[] values) {

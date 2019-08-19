@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 
 public class SSVEPKeyboardSpriteView : MonoBehaviour {
 
-	public GameObject _keyPrefab;
-	public GameObject _keyParent;
-	public GameObject _keyboardArea;
+	[SerializeField] private GameObject _keyPrefab;
+	[SerializeField] private GameObject _keyParent;
+	[SerializeField] private GameObject _keyboardArea;
+	[SerializeField] private Color baseColor;
+	[SerializeField] private Color hzBaseColor;
+	[SerializeField] private Color hz1Color;
+	[SerializeField] private Color hz2Color;
+	[SerializeField] private Color selectedColor;
+	[SerializeField] private float hz1;
+	[SerializeField] private float hz2;
+
 	private FlickerSprite[] spriteKeysFlicker;
 	private TextMesh[] spriteKeyText;
 	private bool keyboardActive = true;
@@ -20,13 +26,7 @@ public class SSVEPKeyboardSpriteView : MonoBehaviour {
 	private int keyColumns;
 	private int keyCount;
 	private Vector3 topLeftPos;
-	public Color baseColor;
-	public Color hzBaseColor;
-    public Color hz1Color;
-    public Color hz2Color;
-    public Color selectedColor;
-    public float hz1;
-    public float hz2;
+
 
 	// Use this for initialization
 	void Awake () {

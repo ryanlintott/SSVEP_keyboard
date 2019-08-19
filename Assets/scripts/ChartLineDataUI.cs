@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
 public class ChartLineDataUI : MonoBehaviour {
 
-	public UILineRenderer _UILine;
+	[SerializeField] private UILineRenderer _UILine;
+	[SerializeField] private Vector2 dataBottomLeftValue = new Vector2(0f, 0f);
+	[SerializeField] private Vector2 dataTopRightValue = new Vector2(1f, 1f);
+	[SerializeField] private GameObject _verticalMarkerLinePrefab;
+
 	private LineRenderer _line;
-	public Vector2 dataBottomLeftValue = new Vector2(0f, 0f);
-	public Vector2 dataTopRightValue = new Vector2(1f, 1f);
-	public GameObject _verticalMarkerLinePrefab;
 	private string lineTag = "lineTag";
 
 	// Use this for initialization

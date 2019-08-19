@@ -1,35 +1,34 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 //using UnityEngine.Microphone;
 
 public class MicrophoneInput : MonoBehaviour {
 
-	public bool _readSamplesOn = true;
-	public AudioSource _audio;
-	public AudioSource _tone;
-	public AudioClip _demoTone;					//Demo tone to use in the app
+	[SerializeField] private bool _readSamplesOn = true;
+	[SerializeField] private AudioSource _audio;
+	[SerializeField] private AudioSource _tone;
+	[SerializeField] private AudioClip _demoTone;					//Demo tone to use in the app
 	private float[] samples;					//full range of recorded samples
 	private float[] sampleSet;					//small subset of samples used for analysis
 	private float[] sampleSetAvg;				//small subset of samples used for analysis
 	private float[,] sampleSetPrev;				//saved from previous read
-	private float[] sampleSetProcessed;			//processed for interpretation
-	public ChartLineDataUI _chartLineDataUI;
-	public DiffUI _diffUI;
-	public bool useMicrophone = true;
-	public bool useLowestSampleRate = true;
+	private float[] sampleSetProcessed;         //processed for interpretation
+	[SerializeField] private ChartLineDataUI _chartLineDataUI;
+	[SerializeField] private DiffUI _diffUI;
+	[SerializeField] private bool useMicrophone = true;
+	[SerializeField] private bool useLowestSampleRate = true;
 	private int sampleRate;						//44100 Hz is the typical sample rate
 	private int deviceSampleRateMin;			//Value in Hz
-	private int deviceSampleRateMax;			//Value in Hz
-	public bool autoPitchMultiplier = true;
-	public float pitchMultiplier = 1f;			//Pitch multiplier when playing back the audio clip. Used to increase signal resolution
-	private float fMax;							//half of the sample rate
-	public int fTarget = 1000;					//Target in HZ
-	public int fRangeWidth = 120;				//Width of area of interest around target in HZ
-	private float fToSampleRange;				//Ratio of frequency to sample range
-	public float ssvepLowF = 15.0f;				//Flicker speed in Hz for low frequency flashes
-	public float ssvepHighF = 20.0f;			//Flicker speed in Hz for high frequency flashes
+	private int deviceSampleRateMax;            //Value in Hz
+	[SerializeField] private bool autoPitchMultiplier = true;
+	[SerializeField] private float pitchMultiplier = 1f;			//Pitch multiplier when playing back the audio clip. Used to increase signal resolution
+	private float fMax;                         //half of the sample rate
+	[SerializeField] private int fTarget = 1000;                  //Target in HZ
+	[SerializeField] private int fRangeWidth = 120;				//Width of area of interest around target in HZ
+	private float fToSampleRange;               //Ratio of frequency to sample range
+	[SerializeField] private float ssvepLowF = 15.0f;             //Flicker speed in Hz for low frequency flashes
+	[SerializeField] private float ssvepHighF = 20.0f;			//Flicker speed in Hz for high frequency flashes
 	private int sampleRangeStart;				//The first bucket for FFT samples in our sample range
 	private int sampleRangeEnd;					//The last bucket for FFT samples in our sample range
 	private int numSamples = 8192;				//Must be power of 2  Min: 64, Max: 8192
@@ -38,12 +37,12 @@ public class MicrophoneInput : MonoBehaviour {
 	private int[] ssvepLowValues;
 	private int[] ssvepHighValues;
 	private int numSamplesTaken = 0;
-	public bool averageOverTime = false;
-	public int _avgTimeSamples = 0;				//Number of frames to sample.  Set to 0 for infinite samples
-	private int sampleSetCounter = 0;			//Keeps track of location in sampleSetPrev
-	public int sAvgWidth = 1;					//Number of samples to average together. Default: 1 is no averaging
-	public int sampleProcessingMode = 0;
-	public float _logBase = 10f;
+	[SerializeField] private bool averageOverTime = false;
+	[SerializeField] private int _avgTimeSamples = 0;				//Number of frames to sample.  Set to 0 for infinite samples
+	private int sampleSetCounter = 0;           //Keeps track of location in sampleSetPrev
+	[SerializeField] private int sAvgWidth = 1;                   //Number of samples to average together. Default: 1 is no averaging
+	[SerializeField] private int sampleProcessingMode = 0;
+	[SerializeField] private float _logBase = 10f;
 	
 	private FFTWindow specFFTwindow = FFTWindow.Hanning;
 	private float diff = 0.0f;
@@ -70,7 +69,6 @@ public class MicrophoneInput : MonoBehaviour {
 		ResetDiffValues();
 	}
 
-	// Update is called once per frame
 	void Update () {
 		if (_readSamplesOn) {
 			ReadSamples();
@@ -110,13 +108,13 @@ public class MicrophoneInput : MonoBehaviour {
 		AudioConfiguration config = AudioSettings.GetConfiguration();
 
 		#if (UNITY_EDITOR || UNITY_STANDALONE)
-			Debug.Log("Editor or Standalone");
+			Debug.Log("Platform: Editor or Standalone");
 			config.sampleRate = 44100;
 		#elif UNITY_IOS
-			Debug.Log("iPhone");
+			Debug.Log("Platform: iPhone");
 			config.sampleRate = 11025;
 		#elif UNITY_ANDROID
-			Debug.Log("Android");
+			Debug.Log("Platform: Android");
 			config.sampleRate = 11025;
 		#endif
 

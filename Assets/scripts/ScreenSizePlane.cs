@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [ExecuteInEditMode]
 public class ScreenSizePlane : MonoBehaviour {
 
-	public Camera _cam;
-	public bool _matchToCam;
-	public Transform _lockPosition;
-	//public float _dist = 1000f;
-	public bool _lockToPosition;
-	public bool _liveMatch;
-	public bool _fitWidth;
-	public bool _fitHeight;
+	[SerializeField] private Camera _cam;
+	[SerializeField] private bool _matchToCam;
+	[SerializeField] private Transform _lockPosition;
+	//[SerializeField] private float _dist = 1000f;
+	[SerializeField] private bool _lockToPosition;
+	[SerializeField] private bool _liveMatch;
+	[SerializeField] private bool _fitWidth;
+	[SerializeField] private bool _fitHeight;
+
 	private Vector3 _screenPos;
 	private Vector3 _screenScale;
 	//private Vector3 _screenRot;

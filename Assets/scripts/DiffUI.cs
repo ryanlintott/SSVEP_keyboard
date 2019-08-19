@@ -1,27 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
 public class DiffUI : MonoBehaviour {
-
-	public Slider _diffSlider;
-	public UICircle _diffTime;
-	public Slider _triggerLowSlider;
-	public Slider _triggerHighSlider;
-	public Slider _resetLowSlider;
-	public Slider _resetHighSlider;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
-	// Update is called once per frame
-	void Update () {
-
-	}
+	[SerializeField] private Slider _diffSlider;
+	[SerializeField] private UICircle _diffTime;
+	[SerializeField] private Slider _triggerLowSlider;
+	[SerializeField] private Slider _triggerHighSlider;
+	[SerializeField] private Slider _resetLowSlider;
+	[SerializeField] private Slider _resetHighSlider;
 
 	public void UpdateDiff (float diff) {
 		_diffSlider.value = diff;

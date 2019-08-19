@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 using RektTransform;
 
 public class ToggleEEG : MonoBehaviour {
@@ -10,7 +8,6 @@ public class ToggleEEG : MonoBehaviour {
 	private RectTransform eegrect;
 	private float smallHeight;
 	private float largeHeight;
-	
 	private bool sizeLarge = false;
 
 	// Use this for initialization

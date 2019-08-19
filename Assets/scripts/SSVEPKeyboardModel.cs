@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 [System.Serializable]
 public struct KeyboardKey {
@@ -11,26 +10,27 @@ public struct KeyboardKey {
 
 public class SSVEPKeyboardModel : MonoBehaviour {
 
-	public TextAsset[] _keyboardFiles;
+	[SerializeField] private TextAsset[] _keyboardFiles;
+	[SerializeField] private SSVEPKeyboardSpriteView _SSVEPKeyboardSpriteView;
+	[SerializeField] private TextOutputDisplay _textOutputDisplay;
+	[SerializeField] private NextLetterProbability _nextLetterProbability;
+	[SerializeField] private MicrophoneInput _microphoneInput;
+	[SerializeField] private int letterDelay = 2;
+	[SerializeField] private bool useSSVEP = false;
+
 	private int currentKeyboard = 0;
 	private int numKeys;
 	private KeyboardKey[] keys;
 	private int toggle;
-	public SSVEPKeyboardView _SSVEPKeyboardView;
-	public SSVEPKeyboardSpriteView _SSVEPKeyboardSpriteView;
+	
 	private string[] keyStrings;
 	private int keysLeft;
-	public TextOutputDisplay _textOutputDisplay;
+	
 	private string textOutput = "";
 	private string lastLetter;
 	private float probSum;
 	private float halfProbSum;
-	public NextLetterProbability _nextLetterProbability;
-	public MicrophoneInput _microphoneInput;
-	public int letterDelay = 2;
-	public bool useSSVEP = false;
-
-	// Use this for initialization
+	
 	void Awake () {
 		InitializeKeyboard();
 	}
@@ -172,11 +172,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	}
 
 	void UpdateKeyboardKey (KeyboardKey _keyboardKey) {
-		if (_SSVEPKeyboardView != null) {
-			_SSVEPKeyboardView.SetKeyboardKey(_keyboardKey.keyPosition, _keyboardKey.status, _keyboardKey.key);
-		} else {
-			_SSVEPKeyboardSpriteView.SetKeyboardKey(_keyboardKey.keyPosition, _keyboardKey.status, _keyboardKey.key);
-		}
+		_SSVEPKeyboardSpriteView.SetKeyboardKey(_keyboardKey.keyPosition, _keyboardKey.status, _keyboardKey.key);
 	}
 
 	public void ClearOutput () {

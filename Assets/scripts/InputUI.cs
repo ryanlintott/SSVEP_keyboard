@@ -1,27 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InputUI : MonoBehaviour {
 
-	public int activePanel = 0;
-	public GameObject[] _panels;
+	[SerializeField] private int activePanel;
+	[SerializeField] private GameObject[] _panels;
 
-	// Use this for initialization
 	void Start () {
 		ActivatePanel();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
 
 	void ActivatePanel () {
 		foreach (GameObject p in _panels) {
-			p.active = false;
+			p.SetActive(false);
 		}
-		_panels[activePanel].active = true;
+
+		if (_panels.Length > activePanel) {
+			_panels[activePanel].SetActive(true);
+		}
 	}
 
 	public void NextPanel () {

@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 using TMPro;
 
 public class Fps : MonoBehaviour {
 
-	private float deltaTime = 0.0f;
-	//public Text textOutput;
-	public TextMeshProUGUI textOutput;
+	[SerializeField] private TextMeshProUGUI textOutput;
+
+	private float deltaTime;
 	
 	void Start () {
 		deltaTime = Time.deltaTime;

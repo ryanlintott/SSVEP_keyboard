@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 
@@ -12,13 +11,10 @@ public class TextOutputDisplay : MonoBehaviour {
 	private string cursorChar = "";
 	private int maxStringLength = 24;
 
-	// Use this for initialization
     void Awake() {
-		//text = gameObject.GetComponent<Text>();
 		text = gameObject.GetComponent<TextMeshProUGUI>();
     }
 	
-	// Update is called once per frame
 	void Update () {
 		if (Time.time - m_TimeStamp >= 0.5) {
 			m_TimeStamp = Time.time;

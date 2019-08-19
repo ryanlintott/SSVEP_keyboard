@@ -1,14 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PinchZoom : MonoBehaviour {
-	public float scaleSpeed = 0.5f;
-	public float minScale = 0.1f;
-	public float maxScale = 1f;
-	public float scale = 0.5f;
 
-	public SSVEPKeyboardSpriteView _SSVEPKeyboardSpriteView;
+	[SerializeField] private float scaleSpeed = 0.5f;
+	[SerializeField] private float minScale = 0.1f;
+	[SerializeField] private float maxScale = 1f;
+	[SerializeField] private float scale = 0.5f;
+
+	[SerializeField] private SSVEPKeyboardSpriteView _SSVEPKeyboardSpriteView;
 
 	void Update() {
 		// If there are two touches on the device...

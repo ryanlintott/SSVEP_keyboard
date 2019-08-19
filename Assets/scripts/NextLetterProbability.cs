@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class NextLetterProbability : MonoBehaviour {
 
+	[SerializeField] private TextAsset nextLetterFile;
+
 	private float[,] letterProbability = new float[27,27];
 	private string[] rawTextLines;
-	public TextAsset nextLetterFile;
 	private int aInt;
 	private int bInt;
 	private bool nonLetter;
 	private int numNonLetters = 4;  //Number of non-letter characters on the keyboard
 	private string test = "_";
-	// Use this for initialization
 
 	void Awake () {
 		//Debug.Log("Test Parse: "+float.Parse("0.02000139453"));
@@ -22,11 +21,6 @@ public class NextLetterProbability : MonoBehaviour {
 			}
 		}
 		//Debug.Log("Probability: "+letterProbability[0,1].ToString());
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	public float GetProbability(string a, string b) {

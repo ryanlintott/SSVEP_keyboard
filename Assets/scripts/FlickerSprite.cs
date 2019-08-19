@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class FlickerSprite : MonoBehaviour {
     public Color c1;
@@ -7,7 +6,7 @@ public class FlickerSprite : MonoBehaviour {
     //public Material mat;
     public float cycleHz; // Hz, the mesurement of cycles.
     private SpriteRenderer _spriteRenderer;
-    private int updateCounter = 0;
+	private int updateCounter;
     private bool swap = false;
     private TouchScreenKeyboard keyboard;
 

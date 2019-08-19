@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System;
 
 public class LineOutput : MonoBehaviour {
-	public int position = 0;
-	public int samplerate = 44100;
-	public float frequency = 1000;
+	[SerializeField] private int position = 0;
+	[SerializeField] private int samplerate = 44100;
+	[SerializeField] private float frequency = 1000;
 
 	private AudioSource aud;
 	private AudioClip myClip;

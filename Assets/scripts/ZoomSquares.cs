@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class ZoomSquares : MonoBehaviour {
-    public float scaleSpeed = 0.5f;
-    public float minScale = 1f;
-    public float maxScale = 2000f;
 
-    public GameObject[] objs;
+    [SerializeField] private float scaleSpeed = 0.5f;
+	[SerializeField] private float minScale = 1f;
+	[SerializeField] private float maxScale = 2000f;
+
+	[SerializeField] private GameObject[] objs;
 
     void Update()
     {
