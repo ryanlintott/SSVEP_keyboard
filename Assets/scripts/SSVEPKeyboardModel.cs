@@ -17,6 +17,7 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 	[SerializeField] private MicrophoneInput _microphoneInput;
 	[SerializeField] private int letterDelay = 2;
 	[SerializeField] private bool useSSVEP = false;
+	[SerializeField] private bool demoButtons;
 
 	private int currentKeyboard = 0;
 	private int numKeys;
@@ -77,18 +78,24 @@ public class SSVEPKeyboardModel : MonoBehaviour {
 		useSSVEP = toggleButton;
 	}
 
+	public void ToggleDemoButtons(bool toggle) {
+		demoButtons = toggle;
+	}
+
 	public void LowFrequency () {
+		bool initialState = useSSVEP;
 		useSSVEP = false;
 		ChooseKeyState(1);
 		_microphoneInput.ResetSamples();
-		useSSVEP = true;
+		useSSVEP = initialState;
 	}
 
 	public void HighFrequency () {
+		bool initialState = useSSVEP;
 		useSSVEP = false;
 		ChooseKeyState(2);
 		_microphoneInput.ResetSamples();
-		useSSVEP = true;
+		useSSVEP = initialState;
 	}
 
 	public void ResetKeyboardKeys () {
