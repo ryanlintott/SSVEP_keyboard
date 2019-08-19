@@ -3,14 +3,12 @@ using UnityEngine;
 public class FlickerSprite : MonoBehaviour {
     public Color c1;
     public Color c2;
-    //public Material mat;
     public float cycleHz; // Hz, the mesurement of cycles.
+
     private SpriteRenderer _spriteRenderer;
 	private int updateCounter;
-    private bool swap = false;
+    private bool swap;
     private TouchScreenKeyboard keyboard;
-
-    float dtime = 0; // delta time
 
     void Awake() {
     	_spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -37,7 +35,7 @@ public class FlickerSprite : MonoBehaviour {
 		if (colorMix > 0.5f) {
 			//_spriteRenderer.color = c1;
 			if (swap) {
-				updateCounter++;
+				//updateCounter++;
 				swap = false;
 			}
 		} else {

@@ -7,9 +7,8 @@ public class TextOutputDisplay : MonoBehaviour {
 	private TextMeshProUGUI text;
 	private string enteredString;
 	private float m_TimeStamp;
-	private bool cursor = false;
+	private bool cursor;
 	private string cursorChar = "";
-	private int maxStringLength = 24;
 
     void Awake() {
 		text = gameObject.GetComponent<TextMeshProUGUI>();

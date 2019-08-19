@@ -10,7 +10,6 @@ public class NextLetterProbability : MonoBehaviour {
 	private int bInt;
 	private bool nonLetter;
 	private int numNonLetters = 4;  //Number of non-letter characters on the keyboard
-	private string test = "_";
 
 	void Awake () {
 		//Debug.Log("Test Parse: "+float.Parse("0.02000139453"));
