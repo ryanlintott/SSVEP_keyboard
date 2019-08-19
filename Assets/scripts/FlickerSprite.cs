@@ -49,7 +49,7 @@ public class FlickerSprite : MonoBehaviour {
 		//Debug.LogFormat("Cycle Count = {0}", updateCounter);
 		//Debug.LogFormat("Accuracy = {0}", Time.time - (updateCounter / cycleHz));
 
-		Debug.Log("Seconds: " + Time.time.ToString() + " Flashes: " + updateCounter.ToString() + " Hz expected: " + cycleHz.ToString() + " Hz actual: " + (updateCounter / Time.time).ToString());
+		//Debug.Log("Seconds: " + Time.time.ToString() + " Flashes: " + updateCounter.ToString() + " Hz expected: " + cycleHz.ToString() + " Hz actual: " + (updateCounter / Time.time).ToString());
 		//Debug.Log((1/Time.deltaTime).ToString());
 	}
 

@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using TMPro;
+
 
 public class TextOutputDisplay : MonoBehaviour {
 
-	private Text text;
+	private TextMeshProUGUI text;
 	private string enteredString;
 	private float m_TimeStamp;
 	private bool cursor = false;
@@ -13,7 +14,8 @@ public class TextOutputDisplay : MonoBehaviour {
 
 	// Use this for initialization
     void Awake() {
-    	text = gameObject.GetComponent<Text>();
+		//text = gameObject.GetComponent<Text>();
+		text = gameObject.GetComponent<TextMeshProUGUI>();
     }
 	
 	// Update is called once per frame

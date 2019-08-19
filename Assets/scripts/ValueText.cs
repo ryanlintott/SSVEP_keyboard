@@ -1,20 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+//using UnityEngine.UI;
+using TMPro;
 
 
 public class ValueText : MonoBehaviour {
 
-	public Text _t;
+	//public Text _t;
+	private TextMeshProUGUI _t;
 
 	// Use this for initialization
-	void Start () {
-		//_t = GetComponent<Text>();
+	void Awake() {
+		_t = gameObject.GetComponent<TextMeshProUGUI>();
+		Debug.Log(_t.ToString());
 	}
 
 	public void SetValue (float val) {
-		_t.text = val.ToString("0.0000");
+		string text = val.ToString("0.0000");
+		_t.text = text;
 	}
 }
 
