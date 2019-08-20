@@ -1,5 +1,5 @@
 # SSVEP Keyboard
-v0.15
+v0.16
 
 This is a repository for the SSVEP keyboard built primarily for the icibici
 
@@ -42,8 +42,8 @@ For the iOS version please contact me directly (hello[at]abetterwaytodo.com[dot]
 To use the app, it must be connected to the icibici hardware (see instructions [here](https://github.com/icibici/smartphone-bci-hardware))
 
 - You can type on a keyboard using EEG signals from an icibici device
-- Two keyboards! Y/N and English with next letter preditiction
-- Scalable keyboard keys
+- Three keyboards! Y/N, 0-9, and English with next letter preditiction
+- Scalable keyboard keys (pinch to scale)
 - The app will output a carrier wave signal (1000 Hz default but 5000 Hz might be the best setting to reduce noise) tone via the headphone jack to act as a carrier wave for the icibici (if you don't have anything plugged in it will emit the tone from your built-in speakers. It's annoying but you'll know the tone is being sent out)
 - The app will read a signal from the microphone and display a visual output of the frequecy bands +-60Hz from the carrier signal (default 940-1060 Hz). Touch this output to see a larger version of the graph.
 - Frequency bands relating to the modulated 15Hz and 20Hz brain signals are highlighted. (Look for peaks at these points).
