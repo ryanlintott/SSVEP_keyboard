@@ -33,9 +33,9 @@ The **SSVEP Keyboard** app is built in Unity (currently version 2019.1.7f1) and 
 - Linux
 (The Mac, PC and Linux versions have a much lower signal resolution due to hardware limitations. They are also older builds but should have similar functionality. iOS and Android versions work better as lower sample rates can be used to acheive a higher signal resolution.)
 
-**[Download link](https://drive.google.com/drive/folders/0B4W4Pn0tIMBXbGUtdmJCMW02dk0?usp=sharing)** for Android, PC, Mac and Linux versions
+**[Android/PC/Mac/Linux Download link](https://drive.google.com/drive/folders/0B4W4Pn0tIMBXbGUtdmJCMW02dk0?usp=sharing)**
 
-For the iOS version please contact me directly (hello[at]abetterwaytodo.com[dot]com) and I can add you to the beta testers via TestFlight)
+**[iOS Download link](https://testflight.apple.com/join/QYT2bQc4)**
 
 ### SSVEP Keyboard app
 
