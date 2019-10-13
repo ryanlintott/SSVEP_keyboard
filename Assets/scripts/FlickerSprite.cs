@@ -4,6 +4,7 @@ public class FlickerSprite : MonoBehaviour {
     public Color c1;
     public Color c2;
     public float cycleHz; // Hz, the mesurement of cycles.
+    public bool alwaysOn = false;
 
     private SpriteRenderer _spriteRenderer;
 	private int updateCounter;
@@ -17,6 +18,10 @@ public class FlickerSprite : MonoBehaviour {
     void Start() {
     	_spriteRenderer.color = c1;
     }
+
+    void Update () {
+		if (alwaysOn) MakeFlicker();
+	}
 
     public void MakeFlicker() {
 
