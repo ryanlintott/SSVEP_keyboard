@@ -1,5 +1,5 @@
 # SSVEP Keyboard
-v0.16
+v0.17
 
 This is a repository for the SSVEP keyboard built primarily for the icibici
 
