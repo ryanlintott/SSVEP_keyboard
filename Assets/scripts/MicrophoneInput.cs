@@ -270,7 +270,7 @@ public class MicrophoneInput : MonoBehaviour {
 		}
 
 		_diffUI.UpdateDiff(diff);
-		_diffUI.UpdateTriggerPercent(Mathf.RoundToInt(Mathf.Abs((float)diffTrigger / (float)triggerTime)*100f));
+		_diffUI.UpdateTriggerPercent(Mathf.Abs((float)diffTrigger / (float)triggerTime));
 
 
 		//Debug.Log("Diff: " + diff.ToString("0.0000"));

@@ -15,8 +15,8 @@ public class DiffUI : MonoBehaviour {
 		_diffSlider.value = diff;
 	}
 
-	public void UpdateTriggerPercent (int timePercent) {
-		_diffTime.FillPercent = Mathf.Min(timePercent, 100);
+	public void UpdateTriggerPercent (float timeProgress) {
+		_diffTime.SetProgress(Mathf.Min(timeProgress, 1));
 	}
 
 	public void SetDiffSettings (float diffMin, float diffMax, float triggerLow, float triggerHigh, float resetLow, float resetHigh) {
