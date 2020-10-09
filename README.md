@@ -1,4 +1,5 @@
 # SSVEP Keyboard
+![ScreenShot](Screenshots/SSVEP_screenshot_03.png)
 v0.18
 
 This is a repository for the SSVEP keyboard built primarily for the icibici
@@ -39,6 +40,8 @@ The **SSVEP Keyboard** app is built in Unity (currently version 2020.1.6f1) and 
 (For iOS you need to add yourself to the beta tester list using the link above)
 
 ### SSVEP Keyboard app
+
+![ScreenShot](Screenshots/SSVEP_screenshot_01.png)
 
 To use the app, it must be connected to the icibici hardware (see instructions [here](https://github.com/icibici/smartphone-bci-hardware))
 
