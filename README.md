@@ -1,5 +1,5 @@
 # SSVEP Keyboard
-v0.17
+v0.18
 
 This is a repository for the SSVEP keyboard built primarily for the icibici
 
@@ -24,7 +24,7 @@ Other repositories that are a part of the icibici Project:
 
 ## The Unity App
 
-The **SSVEP Keyboard** app is built in Unity (currently version 2019.2.9f1) and can run on following platforms:
+The **SSVEP Keyboard** app is built in Unity (currently version 2020.1.6f1) and can run on following platforms:
 
 - iOS
 - Android
@@ -47,6 +47,7 @@ To use the app, it must be connected to the icibici hardware (see instructions [
 - Scalable keyboard keys (pinch to scale)
 - The app will output a carrier wave signal (1000 Hz default but 5000 Hz might be the best setting to reduce noise) tone via the headphone jack to act as a carrier wave for the icibici (if you don't have anything plugged in it will emit the tone from your built-in speakers. It's annoying but you'll know the tone is being sent out)
 - The app will read a signal from the microphone and display a visual output of the frequecy bands +-60Hz from the carrier signal (default 940-1060 Hz). Touch this output to see a larger version of the graph.
+- Red flashes at 15Hz, blue at 20Hz
 - Frequency bands relating to the modulated 15Hz and 20Hz brain signals are highlighted. (Look for peaks at these points).
 - Use demo signal toggle: Turn this on to play a pre-recorded EEG signal (from my own brain) instead of using the signal from your device. This will only work correctly when the carrier signal is set to 1000 Hz.
 - Difference visualiser
